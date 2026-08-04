@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocGov · Criteria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Barlow',sans-serif;font-size:14px;background:#f0f4f8;color:#0d1f3c}
+
+/* ── BRAND TOKENS ── */
+:root{
+  --c-navy:   #002e61;
+  --c-blue:   #214584;
+  --c-vivid:  #2c7dde;
+  --c-sky:    #0095d6;
+  --c-light:  #9ad4ec;
+  --c-white:  #ffffff;
+  --c-bg:     #f0f4f8;
+  --c-card:   #ffffff;
+  --c-border: #dde4ed;
+  --c-text:   #0d1f3c;
+  --c-muted:  #5a6e8a;
+  --c-subtle: #8fa0b4;
+  /* semantic */
+  --c-ok-bg:   #eaf6f0; --c-ok-txt:  #0d6639; --c-ok-bdr:  #9dd9be;
+  --c-warn-bg: #fff8e6; --c-warn-txt:#7a4f00; --c-warn-bdr:#f5cc6b;
+  --c-crit-bg: #fdf0ef; --c-crit-txt:#a0160c; --c-crit-bdr:#f0a09b;
+  --c-info-bg: #eaf3fc; --c-info-txt:#1a4f8a; --c-info-bdr:#97c9ee;
+  --radius:8px; --radius-lg:12px;
+}
+
+/* ── LAYOUT ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:228px;min-height:100vh;background:var(--c-navy);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100}
+.main{margin-left:228px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:12px}
+.logo-svg{width:36px;height:36px;flex-shrink:0}
+.logo-text{color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:.04em;line-height:1.1}
+.logo-sub{color:var(--c-light);font-size:10px;font-weight:400;letter-spacing:.03em;margin-top:2px}
+.sidebar-nav{padding:14px 10px;flex:1}
+.nav-section{font-size:9px;font-weight:700;color:rgba(154,212,236,.6);letter-spacing:.1em;text-transform:uppercase;padding:10px 12px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius);cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-weight:500;transition:background .12s,color .12s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:'Barlow',sans-serif}
+.nav-item i{font-size:17px;flex-shrink:0;color:rgba(154,212,236,.7)}
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-item:hover i{color:var(--c-light)}
+.nav-item.active{background:rgba(44,125,222,.25);color:#fff;border-left:3px solid var(--c-vivid)}
+.nav-item.active i{color:var(--c-vivid)}
+.nav-badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
+.nb-red{background:rgba(240,80,70,.25);color:#ff9e99}
+.nb-yellow{background:rgba(245,196,50,.2);color:#f5cc6b}
+.sidebar-footer{padding:14px 10px;border-top:1px solid rgba(255,255,255,.1)}
+.user-chip{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius)}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--c-vivid);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.user-name{font-size:12px;font-weight:600;color:#fff}
+.user-role{font-size:10px;color:rgba(154,212,236,.7)}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--c-card);border-bottom:1px solid var(--c-border);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--c-navy);letter-spacing:.02em;text-transform:uppercase}
+.page-sub{font-size:11px;color:var(--c-muted);margin-top:1px;font-weight:400}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.status-pill{border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px;border:1px solid}
+.sp-red{background:var(--c-crit-bg);color:var(--c-crit-txt);border-color:var(--c-crit-bdr)}
+.sp-yellow{background:var(--c-warn-bg);color:var(--c-warn-txt);border-color:var(--c-warn-bdr)}
+.sp-blue{background:var(--c-info-bg);color:var(--c-info-txt);border-color:var(--c-info-bdr)}
+.sp-green{background:var(--c-ok-bg);color:var(--c-ok-txt);border-color:var(--c-ok-bdr)}
+.btn-outline{background:none;border:1px solid var(--c-border);border-radius:var(--radius);padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;color:var(--c-blue);display:flex;align-items:center;gap:6px;font-family:'Barlow',sans-serif;transition:border-color .12s,background .12s}
+.btn-outline:hover{border-color:var(--c-vivid);background:var(--c-info-bg)}
+
+/* ── CONTENT ── */
+.content{padding:24px 28px;flex:1}
+.section{display:none}.section.active{display:block}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:16px 18px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--c-vivid)}
+.kpi.ok::before{background:#0d6639}
+.kpi.warn::before{background:#e6a000}
+.kpi.crit::before{background:#a0160c}
+.kpi.brand::before{background:var(--c-navy)}
+.kpi-label{font-size:10px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.kpi-label i{font-size:14px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--c-navy);letter-spacing:-.5px}
+.kpi-foot{font-size:11px;color:var(--c-muted);margin-top:4px}
+.kpi-foot.ok{color:var(--c-ok-txt)}
+.kpi-foot.warn{color:var(--c-warn-txt)}
+.kpi-foot.bad{color:var(--c-crit-txt)}
+
+/* ── CARDS ── */
+.card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--c-navy);letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.card-title i{font-size:17px;color:var(--c-vivid)}
+.card-note{font-size:10px;color:var(--c-subtle);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+
+/* ── HEALTH ── */
+.health-row{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.health-row:last-child{margin-bottom:0}
+.health-label{font-size:12px;font-weight:600;color:var(--c-text);min-width:88px;text-transform:uppercase;letter-spacing:.03em}
+.health-bar{flex:1;height:8px;background:#e8edf3;border-radius:4px;overflow:hidden}
+.health-fill{height:100%;border-radius:4px;transition:width .7s cubic-bezier(.4,0,.2,1)}
+.health-pct{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;min-width:36px;text-align:right}
+.health-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;min-width:72px;text-align:center;text-transform:uppercase;letter-spacing:.04em;border:1px solid}
+.hb-ok  {background:var(--c-ok-bg);color:var(--c-ok-txt);border-color:var(--c-ok-bdr)}
+.hb-warn{background:var(--c-warn-bg);color:var(--c-warn-txt);border-color:var(--c-warn-bdr)}
+.hb-bad {background:var(--c-crit-bg);color:var(--c-crit-txt);border-color:var(--c-crit-bdr)}
+
+/* ── TIPO BARS ── */
+.tipo-row{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.tipo-row:last-child{margin-bottom:0}
+.tipo-name{font-size:12px;color:var(--c-text);min-width:180px;font-weight:500}
+.tipo-bar{flex:1;height:7px;background:#e8edf3;border-radius:4px;overflow:hidden}
+.tipo-fill{height:100%;border-radius:4px}
+.tipo-n{font-size:12px;font-weight:700;color:var(--c-muted);min-width:28px;text-align:right;font-family:'Barlow Condensed',sans-serif}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.03em;text-transform:uppercase;border:1px solid}
+.b-green{background:var(--c-ok-bg);color:var(--c-ok-txt);border-color:var(--c-ok-bdr)}
+.b-red  {background:var(--c-crit-bg);color:var(--c-crit-txt);border-color:var(--c-crit-bdr)}
+.b-yellow{background:var(--c-warn-bg);color:var(--c-warn-txt);border-color:var(--c-warn-bdr)}
+.b-blue {background:var(--c-info-bg);color:var(--c-info-txt);border-color:var(--c-info-bdr)}
+.b-navy {background:#e6eaf2;color:var(--c-navy);border-color:#c5cfe0}
+.b-gray {background:#f0f4f8;color:var(--c-muted);border-color:var(--c-border)}
+
+/* ── ALERT ITEMS ── */
+.alert-item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border-radius:var(--radius);margin-bottom:10px;border:1px solid}
+.alert-item:last-child{margin-bottom:0}
+.alert-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-icon i{font-size:18px}
+.alert-item.sev-crit{background:var(--c-crit-bg);border-color:var(--c-crit-bdr)}
+.alert-item.sev-crit .alert-icon{background:rgba(160,22,12,.12)}.alert-item.sev-crit .alert-icon i{color:var(--c-crit-txt)}
+.alert-item.sev-warn{background:var(--c-warn-bg);border-color:var(--c-warn-bdr)}
+.alert-item.sev-warn .alert-icon{background:rgba(230,160,0,.12)}.alert-item.sev-warn .alert-icon i{color:var(--c-warn-txt)}
+.alert-item.sev-ok{background:var(--c-ok-bg);border-color:var(--c-ok-bdr)}
+.alert-item.sev-ok .alert-icon{background:rgba(13,102,57,.12)}.alert-item.sev-ok .alert-icon i{color:var(--c-ok-txt)}
+.alert-title{font-size:13px;font-weight:700;color:var(--c-navy)}
+.alert-desc{font-size:12px;color:var(--c-muted);margin-top:3px;line-height:1.55}
+.alert-meta{font-size:10px;font-weight:700;color:var(--c-subtle);margin-top:6px;text-transform:uppercase;letter-spacing:.05em}
+.empty-state{color:var(--c-subtle);font-size:12px;text-align:center;padding:20px}
+
+/* ── PLAN ── */
+.plan-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--c-border)}
+.plan-item:last-child{border-bottom:none}
+.plan-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;font-family:'Barlow Condensed',sans-serif}
+.plan-body{flex:1}
+.plan-title{font-size:13px;font-weight:700;color:var(--c-navy)}
+.plan-desc{font-size:12px;color:var(--c-muted);margin-top:3px;line-height:1.5}
+
+/* ── HEAT CELLS ── */
+.heat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.heat-cell{border-radius:var(--radius);padding:14px 16px}
+.heat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;letter-spacing:-.5px}
+.heat-lbl{font-size:11px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+
+/* ── BIZ CARDS ── */
+.biz-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.biz-card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:20px;position:relative;overflow:hidden}
+.biz-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.biz-card.bc-red::after{background:var(--c-crit-txt)}
+.biz-card.bc-yellow::after{background:#e6a000}
+.biz-card.bc-green::after{background:#0d6639}
+.biz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.biz-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-navy);display:flex;align-items:center;gap:7px}
+.biz-name i{font-size:18px;color:var(--c-vivid)}
+.stat-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 0;border-bottom:1px solid #f0f4f8}
+.stat-row:last-of-type{border-bottom:none}
+.stat-key{color:var(--c-muted);font-weight:500}
+.stat-val{font-weight:700;color:var(--c-navy);font-family:'Barlow Condensed',sans-serif;font-size:13px}
+
+/* ── TABLE ── */
+.filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-bar select,.filter-bar input{border:1px solid var(--c-border);border-radius:var(--radius);padding:8px 10px;font-size:12px;font-family:'Barlow',sans-serif;background:var(--c-card);color:var(--c-text);outline:none;font-weight:500}
+.filter-bar select:focus,.filter-bar input:focus{border-color:var(--c-vivid);box-shadow:0 0 0 3px rgba(44,125,222,.15)}
+.filter-bar input{min-width:200px}
+.doc-count{font-size:11px;color:var(--c-subtle);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--c-border);border-radius:var(--radius-lg);background:var(--c-card)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:#f5f8fb;padding:10px 14px;font-weight:700;color:var(--c-muted);text-align:left;border-bottom:1px solid var(--c-border);white-space:nowrap;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+tbody td{padding:10px 14px;border-bottom:1px solid #f5f8fb;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:#fafcff}
+td.doc-name{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:var(--c-navy)}
+td.muted{color:var(--c-muted);font-weight:500}
+.paginator{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:12px;color:var(--c-muted)}
+.paginator button{border:1px solid var(--c-border);background:var(--c-card);border-radius:var(--radius);padding:6px 14px;cursor:pointer;font-family:'Barlow',sans-serif;font-size:12px;font-weight:600;color:var(--c-blue);transition:border-color .12s}
+.paginator button:disabled{opacity:.35;cursor:not-allowed}
+.paginator button:hover:not(:disabled){border-color:var(--c-vivid);color:var(--c-vivid)}
+
+/* ── CHART ── */
+.chart-wrap{position:relative;width:100%}
+.legend-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+.leg-dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:middle}
+.leg-item{font-size:11px;color:var(--c-muted);display:flex;align-items:center;font-weight:500}
+
+/* ── VENCIMIENTO BOXES ── */
+.venc-box{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:var(--radius);border:1px solid;margin-bottom:10px}
+.venc-box:last-child{margin-bottom:0}
+.venc-label{font-size:12px;font-weight:600;color:var(--c-text)}
+.venc-num{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.3px}
+
+/* ── CRITERIN ── */
+.src-bar-wrap{margin-bottom:14px}
+.src-label-row{display:flex;justify-content:space-between;margin-bottom:5px}
+.src-label{font-size:12px;font-weight:600;color:var(--c-text)}
+.src-count{font-size:11px;color:var(--c-muted)}
+.src-bar{height:9px;background:#e8edf3;border-radius:5px;overflow:hidden}
+.src-fill{height:100%;border-radius:5px}
+
+/* ── DIVIDER ── */
+.divider{border:none;border-top:1px solid var(--c-border);margin:16px 0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:820px){
+  .sidebar{display:none}.main{margin-left:0}
+  .kpi-strip,.biz-cards,.grid-3{grid-template-columns:1fr 1fr}
+  .grid-2{grid-template-columns:1fr}
+  .heat-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .kpi-strip,.biz-cards,.grid-3,.grid-2{grid-template-columns:1fr}
+}
+
+/* ── GLOBAL FILTER STRIP ── */
+.filter-strip{background:#fff;border-bottom:1px solid var(--c-border);padding:0 28px;height:46px;display:flex;align-items:center;gap:8px;position:sticky;top:58px;z-index:49}
+.filter-strip-label{font-size:10px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.07em;margin-right:4px;white-space:nowrap}
+.fs-select{border:1px solid var(--c-border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:'Barlow',sans-serif;font-weight:600;background:var(--c-bg);color:var(--c-navy);outline:none;cursor:pointer;transition:border-color .12s,background .12s}
+.fs-select:focus{border-color:var(--c-vivid);box-shadow:0 0 0 2px rgba(44,125,222,.15)}
+.fs-tag{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid;transition:all .12s;white-space:nowrap;font-family:'Barlow',sans-serif;background:none}
+.fs-tag.active-neg-onshore{background:#dbeafe;color:#1e3a8a;border-color:#93c5fd}
+.fs-tag.active-neg-offshore{background:#e0e7ff;color:#312e81;border-color:#a5b4fc}
+.fs-tag.active-neg-mercado{background:#dde4ed;color:var(--c-navy);border-color:#b0bfd0}
+.fs-tag.inactive{background:var(--c-bg);color:var(--c-muted);border-color:var(--c-border)}
+.fs-tag.inactive:hover{border-color:var(--c-vivid);color:var(--c-navy)}
+.fs-divider{width:1px;height:22px;background:var(--c-border);flex-shrink:0;margin:0 4px}
+.fs-tipo-tag{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:all .12s;white-space:nowrap;font-family:'Barlow',sans-serif}
+.fs-tipo-tag.on{background:var(--c-info-bg);color:var(--c-info-txt);border-color:var(--c-info-bdr)}
+.fs-tipo-tag.off{background:var(--c-bg);color:var(--c-muted);border-color:var(--c-border);text-decoration:line-through;opacity:.6}
+.fs-tipo-tag:hover{opacity:1}
+.fs-reset{margin-left:auto;font-size:11px;font-weight:600;color:var(--c-vivid);background:none;border:none;cursor:pointer;font-family:'Barlow',sans-serif;padding:4px 8px;border-radius:var(--radius);transition:background .12s}
+.fs-reset:hover{background:var(--c-info-bg)}
+.filter-strip-active-hint{font-size:10px;color:var(--c-vivid);font-weight:700;background:var(--c-info-bg);border:1px solid var(--c-info-bdr);border-radius:20px;padding:2px 8px;margin-left:4px}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <svg class="logo-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Criteria logo">
+        <g transform="translate(60,60)">
+          <path d="M0-46 C8-44,20-34,24-20 L14-18 C11-28,5-36,0-38Z" fill="#9ad4ec" opacity=".9"/>
+          <path d="M0-46 C-8-44,-10-38,0-38 L0-46Z" fill="#214584"/>
+          <path d="M24-20 C32-6,28,12,16,24 L10,16 C18,8,20-4,14-18Z" fill="#2c7dde" opacity=".9"/>
+          <path d="M16,24 C2,36,-16,34,-26,20 L-18,14 C-10,24,4,26,10,16Z" fill="#9ad4ec" opacity=".85"/>
+          <path d="M-26,20 C-36,6,-32,-12,-20,-24 L-14,-16 C-22,-8,-24,4,-18,14Z" fill="#2c7dde" opacity=".8"/>
+          <path d="M-20,-24 C-8,-34,8,-36,20,-28 L16,-20 C6,-26,-6,-24,-14,-16Z" fill="#214584" opacity=".9"/>
+          <path d="M2-36 C10-34,18-26,20-16 L12-14 C10-22,4-28,2-30Z" fill="#ffffff" opacity=".25"/>
+          <path d="M20-16 C26-4,22,10,12,20 L8,14 C16,6,18-6,12-14Z" fill="#ffffff" opacity=".2"/>
+        </g>
+      </svg>
+      <div>
+        <div class="logo-text">CRITERIA</div>
+        <div class="logo-sub">Gobierno Documental</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Vistas</div>
+      <button class="nav-item active" onclick="showTab('overview')">
+        <i class="ti ti-layout-dashboard"></i> Resumen general
+      </button>
+      <button class="nav-item" onclick="showTab('negocios')">
+        <i class="ti ti-building"></i> Por negocio
+      </button>
+      <button class="nav-item" onclick="showTab('alertas')">
+        <i class="ti ti-bell"></i> Alertas
+        <span class="nav-badge nb-red" id="badge-alertas">0</span>
+      </button>
+      <button class="nav-item" onclick="showTab('criticos')">
+        <i class="ti ti-shield"></i> Críticos
+        <span class="nav-badge nb-yellow" id="badge-criticos">0</span>
+      </button>
+      <button class="nav-item" onclick="showTab('docs')">
+        <i class="ti ti-table"></i> Explorador
+      </button>
+      <div class="nav-section" style="margin-top:8px">Agente IA</div>
+      <button class="nav-item" onclick="showTab('criterin')">
+        <i class="ti ti-robot"></i> Estado CriterIN
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar">MA</div>
+        <div>
+          <div class="user-name">Made</div>
+          <div class="user-role">Analista de Procesos</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─── -->
+  <div class="main">
+    <header class="topbar" id="topbar">
+      <div>
+        <div class="page-title" id="page-title">Resumen general</div>
+        <div class="page-sub" id="page-sub">503 documentos · actualizado junio 2026</div>
+      </div>
+      <div class="topbar-right">
+        <div class="status-pill sp-red" id="pill-vencidos"><i class="ti ti-calendar-x" style="font-size:13px"></i><span id="pill-vencidos-txt">186 vencidos</span></div>
+        <div class="status-pill sp-yellow" id="pill-incompletos"><i class="ti ti-alert-circle" style="font-size:13px"></i><span id="pill-incompletos-txt">57 incompletos</span></div>
+        <div class="status-pill sp-blue" id="pill-salud"><i class="ti ti-activity" style="font-size:13px"></i><span id="pill-salud-txt">88.7% salud</span></div>
+        <button class="btn-outline"><i class="ti ti-download" style="font-size:14px"></i>Exportar</button>
+      </div>
+    </header>
+
+    <!-- ─── GLOBAL FILTER STRIP ─── -->
+    <div class="filter-strip" id="filterStrip">
+      <span class="filter-strip-label">Filtrar:</span>
+
+      <button class="fs-tag active-neg-onshore" id="tag-onshore" onclick="toggleNeg('ONSHORE')">
+        <i class="ti ti-building-bank" style="font-size:12px"></i> ONSHORE
+      </button>
+      <button class="fs-tag active-neg-offshore" id="tag-offshore" onclick="toggleNeg('OFFSHORE')">
+        <i class="ti ti-world" style="font-size:12px"></i> OFFSHORE
+      </button>
+      <button class="fs-tag active-neg-mercado" id="tag-mercado" onclick="toggleNeg('MERCADO')">
+        <i class="ti ti-chart-line" style="font-size:12px"></i> MERCADO
+      </button>
+
+      <div class="fs-divider"></div>
+
+      <span class="filter-strip-label">Tipo:</span>
+      <button class="fs-tipo-tag on" id="tipo-informativo" onclick="toggleTipo('DOC. INFORMATIVO')">Doc. Informativo</button>
+      <button class="fs-tipo-tag on" id="tipo-formulario"  onclick="toggleTipo('FORMULARIO')">Formulario</button>
+      <button class="fs-tipo-tag on" id="tipo-instructivo" onclick="toggleTipo('INSTRUCTIVO')">Instructivo</button>
+      <button class="fs-tipo-tag on" id="tipo-manual"      onclick="toggleTipo('MANUAL')">Manual</button>
+      <button class="fs-tipo-tag on" id="tipo-proceso"     onclick="toggleTipo('PROCESO')">Proceso</button>
+
+      <span id="active-hint" class="filter-strip-active-hint" style="display:none">Filtros activos</span>
+      <button class="fs-reset" onclick="resetFilters()" title="Quitar todos los filtros">✕ Resetear</button>
+    </div>
+
+    <div class="content">
+
+      <!-- ════ OVERVIEW ════ -->
+      <div id="sec-overview" class="section active">
+        <div class="kpi-strip">
+          <div class="kpi brand">
+            <div class="kpi-label"><i class="ti ti-files"></i>Total docs</div>
+            <div class="kpi-value" id="kpi-total">503</div>
+            <div class="kpi-foot">3 líneas de negocio</div>
+          </div>
+          <div class="kpi ok">
+            <div class="kpi-label"><i class="ti ti-circle-check"></i>Completos</div>
+            <div class="kpi-value" id="kpi-completos">446</div>
+            <div class="kpi-foot ok" id="kpi-completos-foot">88.7% del total</div>
+          </div>
+          <div class="kpi crit">
+            <div class="kpi-label"><i class="ti ti-alert-circle"></i>Incompletos</div>
+            <div class="kpi-value" id="kpi-incompletos">57</div>
+            <div class="kpi-foot bad" id="kpi-incompletos-foot">11.3% — requieren acción</div>
+          </div>
+          <div class="kpi crit">
+            <div class="kpi-label"><i class="ti ti-calendar-x"></i>Vencidos</div>
+            <div class="kpi-value" id="kpi-vencidos">186</div>
+            <div class="kpi-foot bad" id="kpi-vencidos-foot">Renovación inmediata</div>
+          </div>
+          <div class="kpi warn">
+            <div class="kpi-label"><i class="ti ti-activity"></i>Salud global</div>
+            <div class="kpi-value" id="kpi-salud">88.7%</div>
+            <div class="kpi-foot warn" id="kpi-salud-foot">Meta ≥ 90%</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-activity"></i>Índice de salud por negocio</div></div>
+            <div id="healthRowsBody">
+              <div class="health-row" id="health-row-mercado">
+                <div class="health-label">Mercado</div>
+                <div class="health-bar"><div class="health-fill" id="hbar-mercado"></div></div>
+                <div class="health-pct" id="hpct-mercado"></div>
+                <span class="health-badge" id="hbadge-mercado"></span>
+              </div>
+              <div class="health-row" id="health-row-offshore">
+                <div class="health-label">Offshore</div>
+                <div class="health-bar"><div class="health-fill" id="hbar-offshore"></div></div>
+                <div class="health-pct" id="hpct-offshore"></div>
+                <span class="health-badge" id="hbadge-offshore"></span>
+              </div>
+              <div class="health-row" id="health-row-onshore">
+                <div class="health-label">Onshore</div>
+                <div class="health-bar"><div class="health-fill" id="hbar-onshore"></div></div>
+                <div class="health-pct" id="hpct-onshore"></div>
+                <span class="health-badge" id="hbadge-onshore"></span>
+              </div>
+            </div>
+            <div class="empty-state" id="health-empty-msg" style="display:none">Ningún negocio seleccionado</div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div class="card-title"><i class="ti ti-clock"></i>Vencimientos</div>
+            </div>
+            <div class="venc-box" style="background:var(--c-crit-bg);border-color:var(--c-crit-bdr)">
+              <div class="venc-label">Ya vencidos</div>
+              <div class="venc-num" style="color:var(--c-crit-txt)" id="venc-vencidos">186</div>
+            </div>
+            <div class="venc-box" style="background:var(--c-warn-bg);border-color:var(--c-warn-bdr)">
+              <div class="venc-label">Vencen en 30 días</div>
+              <div class="venc-num" style="color:var(--c-warn-txt)">37</div>
+            </div>
+            <div class="venc-box" style="background:var(--c-info-bg);border-color:var(--c-info-bdr)">
+              <div class="venc-label">Vencen en 90 días</div>
+              <div class="venc-num" style="color:var(--c-info-txt)">6</div>
+            </div>
+            <div style="font-size:10px;color:var(--c-subtle);margin-top:2px">"Vencen en 30/90 días" son cifras del repositorio completo (sin desagregar por negocio)</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Distribución por tipo</div></div>
+            <div id="tipoDistBody"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-pie"></i>Estado de vigencia</div></div>
+            <div class="chart-wrap" style="height:195px">
+              <canvas id="vigenciaChart" role="img" aria-label="Estado de vigencia por negocio"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ NEGOCIOS ════ -->
+      <div id="sec-negocios" class="section">
+        <div class="biz-cards" id="bizCardsBody"></div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Comparativo por negocio</div></div>
+          <div class="chart-wrap" style="height:250px"><canvas id="bizChart" role="img" aria-label="Comparativo documentos por negocio"></canvas></div>
+          <div class="legend-row">
+            <div class="leg-item"><span class="leg-dot" style="background:#0d6639"></span>Completos</div>
+            <div class="leg-item"><span class="leg-dot" style="background:#a0160c"></span>Incompletos</div>
+            <div class="leg-item"><span class="leg-dot" style="background:var(--c-vivid)"></span>Críticos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ ALERTAS ════ -->
+      <div id="sec-alertas" class="section">
+        <div class="grid-2">
+          <div>
+            <div class="card" style="margin-bottom:16px">
+              <div class="card-head"><div class="card-title" style="color:var(--c-crit-txt)"><i class="ti ti-alert-triangle" style="color:var(--c-crit-txt)"></i>Alertas críticas</div></div>
+              <div id="alertCritBody"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><div class="card-title" style="color:var(--c-warn-txt)"><i class="ti ti-alert-circle" style="color:var(--c-warn-txt)"></i>Alertas de atención</div></div>
+              <div id="alertWarnBody"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-list-check"></i>Plan de acción</div></div>
+            <div id="planBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ CRÍTICOS ════ -->
+      <div id="sec-criticos" class="section">
+        <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-shield"></i>Total críticos</div><div class="kpi-value" id="kpi-crit-total">216</div><div class="kpi-foot" id="kpi-crit-total-foot">43% del repositorio</div></div>
+          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-shield-check"></i>Críticos completos</div><div class="kpi-value" id="kpi-crit-completos">215</div><div class="kpi-foot ok" id="kpi-crit-completos-foot">99.5% — meta ≥ 95% ✓</div></div>
+          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-shield-off"></i>Críticos caducados</div><div class="kpi-value" id="kpi-crit-caducados">48</div><div class="kpi-foot bad" id="kpi-crit-caducados-foot">Meta: 0 — urgente</div></div>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head"><div class="card-title"><i class="ti ti-layout-grid"></i>Estado de críticos por negocio</div></div>
+          <div class="heat-grid" id="heatGridBody"></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Críticos por tipo</div></div>
+            <div id="critTipoBody"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>% vigencia — críticos</div></div>
+            <div class="chart-wrap" style="height:180px"><canvas id="critVigChart" role="img" aria-label="Porcentaje de vigencia en críticos por negocio"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ EXPLORADOR ════ -->
+      <div id="sec-docs" class="section">
+        <div style="font-size:11px;color:var(--c-subtle);margin-bottom:12px">Muestra ilustrativa de documentos representativos por línea de negocio — el repositorio completo cuenta con 503 documentos (ver Resumen general).</div>
+        <div class="filter-bar">
+          <select id="f-negocio" onchange="filterDocs()">
+            <option value="">Todos los negocios</option>
+            <option value="MERCADO">Mercado</option>
+            <option value="OFFSHORE">Offshore</option>
+            <option value="ONSHORE">Onshore</option>
+          </select>
+          <select id="f-estado" onchange="filterDocs()">
+            <option value="">Todos los estados</option>
+            <option value="Vigente">Vigente</option>
+            <option value="Caducado">Caducado</option>
+          </select>
+          <select id="f-riesgo" onchange="filterDocs()">
+            <option value="">Todos los riesgos</option>
+            <option value="CRITICO">Crítico</option>
+            <option value="NO CRITICO">No crítico</option>
+          </select>
+          <select id="f-condicion" onchange="filterDocs()">
+            <option value="">Toda condición</option>
+            <option value="Completo">Completo</option>
+            <option value="incompleto">Incompleto</option>
+          </select>
+          <input type="text" id="f-search" placeholder="Buscar por nombre..." oninput="filterDocs()">
+        </div>
+        <div id="doc-count" class="doc-count"></div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Negocio</th><th>Nombre del documento</th><th>Tipo</th><th>Etapa</th><th>Estado</th><th>Riesgo</th><th>Condición</th></tr></thead>
+            <tbody id="docBody"></tbody>
+          </table>
+        </div>
+        <div class="paginator" id="doc-paginator"></div>
+      </div>
+
+      <!-- ════ CRITERIN ════ -->
+      <div id="sec-criterin" class="section">
+        <div class="kpi-strip" style="grid-template-columns:repeat(4,1fr)">
+          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-robot"></i>Docs en CriterIN</div><div class="kpi-value" id="kpi-cin-total">503</div><div class="kpi-foot">Total indexados</div></div>
+          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-circle-check"></i>Fuentes activas</div><div class="kpi-value" id="kpi-cin-activas">334</div><div class="kpi-foot ok">Vigentes y completos</div></div>
+          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-alert-triangle"></i>Fuentes en riesgo</div><div class="kpi-value" id="kpi-cin-riesgo">169</div><div class="kpi-foot bad">Vencidos o incompletos</div></div>
+          <div class="kpi warn"><div class="kpi-label"><i class="ti ti-activity"></i>Calidad del agente</div><div class="kpi-value" id="kpi-cin-calidad">66.4%</div><div class="kpi-foot warn">% fuentes confiables</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-database"></i>Vigencia de fuentes por negocio</div></div>
+            <div id="srcBarsBody"></div>
+            <div id="cinRiskBox" style="margin-top:16px;padding:14px 16px;background:var(--c-crit-bg);border:1px solid var(--c-crit-bdr);border-radius:var(--radius)">
+              <div style="font-size:12px;font-weight:700;color:var(--c-crit-txt);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em"><i class="ti ti-alert-triangle" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Riesgo para CriterIN</div>
+              <div class="risk-text" style="font-size:12px;color:var(--c-muted);line-height:1.55">MERCADO tiene 153 documentos caducados activos. El agente puede estar respondiendo consultas con datos desactualizados de Research &amp; Strategy.</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-list-check"></i>Acciones para mejorar la calidad</div></div>
+            <div id="cinPlanBody"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+
+/* ════ MASTER AGGREGATE (cifras reales del repositorio de 503 documentos) ════
+   La tabla `allDocs` al final de este archivo es una muestra ilustrativa para
+   el Explorador (algunas filas agrupan varios documentos, ej. "(40 docs)"),
+   por lo que no puede usarse para recalcular los totales oficiales. Estos
+   agregados por negocio sí están completos y son consistentes entre sí. */
+const NEGS=['ONSHORE','OFFSHORE','MERCADO'];
+const TIPOS=['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO'];
+const TIPO_LABELS={'DOC. INFORMATIVO':'Documento informativo','FORMULARIO':'Formulario','INSTRUCTIVO':'Instructivo','MANUAL':'Manual','PROCESO':'Proceso'};
+const BRAND={navy:'#002e61',blue:'#214584',vivid:'#2c7dde',sky:'#0095d6',light:'#9ad4ec'};
+const TIPO_COLORS={'DOC. INFORMATIVO':BRAND.vivid,'FORMULARIO':BRAND.sky,'INSTRUCTIVO':BRAND.light,'MANUAL':BRAND.blue,'PROCESO':'#8fa0b4'};
+const gridColor='#e8edf3';
+
+const GF = {
+  negocios: new Set(['ONSHORE','OFFSHORE','MERCADO']),
+  tipos: new Set(['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO'])
+};
+
+function toggleNeg(neg){
+  if(GF.negocios.has(neg)) GF.negocios.delete(neg);
+  else GF.negocios.add(neg);
+  updateFilterUI();
+  refreshAllViews();
+}
+
+function toggleTipo(tipo){
+  if(GF.tipos.has(tipo)) GF.tipos.delete(tipo);
+  else GF.tipos.add(tipo);
+  updateFilterUI();
+  refreshAllViews();
+}
+
+function resetFilters(){
+  GF.negocios=new Set(['ONSHORE','OFFSHORE','MERCADO']);
+  GF.tipos=new Set(['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO']);
+  updateFilterUI();
+  refreshAllViews();
+}
+
+function updateFilterUI(){
+  ['onshore','offshore','mercado'].forEach(n=>{
+    const el=document.getElementById('tag-'+n);
+    const neg=n.toUpperCase();
+    if(GF.negocios.has(neg)){el.className='fs-tag active-neg-'+n;}
+    else{el.className='fs-tag inactive';}
+  });
+  const tipoMap={'DOC. INFORMATIVO':'informativo','FORMULARIO':'formulario','INSTRUCTIVO':'instructivo','MANUAL':'manual','PROCESO':'proceso'};
+  for(const[tipo,id] of Object.entries(tipoMap)){
+    const el=document.getElementById('tipo-'+id);
+    el.className='fs-tipo-tag '+(GF.tipos.has(tipo)?'on':'off');
+  }
+  const isFiltered = GF.negocios.size<3 || GF.tipos.size<5;
+  document.getElementById('active-hint').style.display = isFiltered ? '' : 'none';
+}
+
+function applyGF(docs){
+  return docs.filter(d=>GF.negocios.has(d[0])&&GF.tipos.has(d[2]));
+}
+
+/* ════ AGGREGATIONS ════
+   BIZ: totales reales por negocio (reconstruidos a partir de las cifras
+   oficiales del reporte — se validaron cruzando salud%, % vigencia de
+   críticos y barras de fuentes de CriterIN, y todas coinciden). */
+const BIZ={
+  ONSHORE: {total:107,comp:75, incomp:32,crit:64,critVig:52,critCad:10,critSin:2,vig:93, cad:10, sin:4,tipoPrincipal:'Formulario'},
+  OFFSHORE:{total:137,comp:112,incomp:25,crit:98,critVig:98,critCad:0, critSin:0,vig:137,cad:0,  sin:0,tipoPrincipal:'Formulario'},
+  MERCADO: {total:259,comp:259,incomp:0, crit:54,critVig:14,critCad:38,critSin:2,vig:104,cad:153,sin:2,tipoPrincipal:'Doc. informativo'}
+};
+const TIPO_DIST={'DOC. INFORMATIVO':287,'FORMULARIO':145,'INSTRUCTIVO':60,'MANUAL':6,'PROCESO':5};
+const CRIT_TIPO_DIST={'FORMULARIO':145,'DOC. INFORMATIVO':67,'MANUAL':2,'PROCESO':2};
+const CRIT_COMPLETOS_TOTAL=215; // no hay desagregado por negocio en el reporte fuente
+
+function selectedNegs(){return NEGS.filter(n=>GF.negocios.has(n));}
+function sumBiz(field,negs){return negs.reduce((s,n)=>s+BIZ[n][field],0);}
+
+function computeOverviewKPIs(){
+  const negs=selectedNegs();
+  const total=sumBiz('total',negs);
+  const comp=sumBiz('comp',negs);
+  const incomp=sumBiz('incomp',negs);
+  const cad=sumBiz('cad',negs);
+  const salud=total? (comp/total*100).toFixed(1) : '0.0';
+  return{total,comp,incomp,cad,salud,negs};
+}
+
+/* ════ ALERTS + PLAN (shared logic) ════ */
+function buildAlerts(){
+  const crit=[], warn=[], ok=[];
+  const negs=selectedNegs();
+
+  const cadTotal=sumBiz('cad',negs);
+  if(cadTotal>0){
+    const byNeg=negs.map(n=>({n,c:BIZ[n].cad})).filter(x=>x.c>0).sort((a,b)=>b.c-a.c);
+    const top=byNeg[0];
+    crit.push({icon:'ti-calendar-x',title:`${cadTotal} documentos vencidos`,
+      desc:`Principalmente en ${top.n} (${top.c}). Vigencia vencida en el repositorio — CriterIN puede estar respondiendo con información desactualizada.`,
+      meta:'Impacto directo en CriterIN · Acción inmediata'});
+  }
+  const incompTotal=sumBiz('incomp',negs);
+  if(incompTotal>0){
+    const byNeg=negs.map(n=>({n,c:BIZ[n].incomp,pct:BIZ[n].total?Math.round(BIZ[n].incomp/BIZ[n].total*100):0})).filter(x=>x.c>0).sort((a,b)=>b.c-a.c);
+    const descParts=byNeg.map(x=>`${x.n}: ${x.c} (${x.pct}%)`).join('. ');
+    crit.push({icon:'ti-file-x',title:`${incompTotal} documentos incompletos`,
+      desc:`${descParts}. Metadata incompleta impide clasificación y búsqueda correcta por el agente.`,
+      meta:byNeg.map(x=>x.n).join(' · ')+' · 30 días para resolver'});
+  }
+  const critCadTotal=sumBiz('critCad',negs);
+  if(critCadTotal>0){
+    const byNeg=negs.map(n=>({n,c:BIZ[n].critCad})).filter(x=>x.c>0);
+    const descParts=byNeg.map(x=>`${x.n}: ${x.c}`).join(', ');
+    crit.push({icon:'ti-shield-x',title:`${critCadTotal} documentos críticos caducados`,
+      desc:`${descParts}. Documentos esenciales para operaciones o cumplimiento regulatorio con vigencia expirada.`,
+      meta:'Riesgo regulatorio directo · Urgente'});
+  }
+  negs.forEach(n=>{
+    const pct=BIZ[n].total?Math.round(BIZ[n].comp/BIZ[n].total*100):0;
+    if(pct<90){
+      warn.push({icon:'ti-trending-down',title:`${n} con salud ${pct<75?'crítica':'baja'}: ${pct}%`,
+        desc:`Gap de ${90-pct} puntos respecto a la meta del 90%.${BIZ[n].incomp>0?` Completar los ${BIZ[n].incomp} documentos incompletos resolvería este indicador.`:''}`,
+        meta:`Meta: 90% · Gap actual: −${90-pct}%`});
+    } else {
+      ok.push({icon:'ti-circle-check',title:`${n} saludable: ${pct}%`,
+        desc:`Salud igual o por encima de la meta del 90%.`,
+        meta:`Vigencia y metadata en buen estado`});
+    }
+  });
+  return{crit,warn,ok};
+}
+
+function buildPlanItems(){
+  const {crit,warn}=buildAlerts();
+  return [...crit.map(a=>({title:a.title,desc:a.desc,sev:'crit'})),...warn.map(a=>({title:a.title,desc:a.desc,sev:'warn'}))].slice(0,5);
+}
+
+function alertHTML(a,sevCls){
+  return `<div class="alert-item ${sevCls}"><div class="alert-icon"><i class="ti ${a.icon}"></i></div><div><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div><div class="alert-meta">${a.meta}</div></div></div>`;
+}
+
+function renderNumberedPlan(containerId){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const items=buildPlanItems();
+  if(!items.length){el.innerHTML='<div class="empty-state">Sin acciones pendientes — todos los indicadores están en meta.</div>';return;}
+  el.innerHTML=items.map((it,i)=>{
+    const isCrit=it.sev==='crit';
+    const numBg=isCrit?'var(--c-crit-bg)':'var(--c-warn-bg)';
+    const numTxt=isCrit?'var(--c-crit-txt)':'var(--c-warn-txt)';
+    const badgeCls=isCrit?'b-red':'b-yellow';
+    const days=isCrit?'7 días':'30 días';
+    return `<div class="plan-item">
+      <div class="plan-num" style="background:${numBg};color:${numTxt}">${i+1}</div>
+      <div class="plan-body"><div class="plan-title">${it.title}</div><div class="plan-desc">${it.desc}</div></div>
+      <span class="badge ${badgeCls}" style="margin-top:2px;flex-shrink:0">${days}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderEmojiPlan(containerId){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const items=buildPlanItems();
+  const emojis=['⚡','📋','🔒','🤖'];
+  const badgeLabels=['Urgente','Alta','Media','Planificar'];
+  const badgeCls=['b-red','b-yellow','b-blue','b-gray'];
+  if(!items.length){el.innerHTML='<div class="empty-state">Sin acciones pendientes para los filtros seleccionados.</div>';return;}
+  el.innerHTML=items.slice(0,4).map((it,i)=>`<div class="plan-item">
+    <div class="plan-num" style="background:#f0f4f8;color:var(--c-muted);font-size:16px">${emojis[i%emojis.length]}</div>
+    <div class="plan-body"><div class="plan-title">${it.title}</div><div class="plan-desc">${it.desc}</div></div>
+    <span class="badge ${badgeCls[i%badgeCls.length]}" style="flex-shrink:0">${badgeLabels[i%badgeLabels.length]}</span>
+  </div>`).join('');
+}
+
+/* ════ GLOBAL HEADER (topbar pills + sidebar badges) ════ */
+function setKPI(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+
+function updateGlobalHeader(){
+  const k=computeOverviewKPIs();
+  setKPI('pill-vencidos-txt', k.cad+' vencidos');
+  setKPI('pill-incompletos-txt', k.incomp+' incompletos');
+  setKPI('pill-salud-txt', k.salud+'% salud');
+  const pv=document.getElementById('pill-vencidos'); if(pv) pv.className='status-pill '+(k.cad>0?'sp-red':'sp-green');
+  const pi=document.getElementById('pill-incompletos'); if(pi) pi.className='status-pill '+(k.incomp>0?'sp-yellow':'sp-green');
+  const ps=document.getElementById('pill-salud'); if(ps) ps.className='status-pill '+(k.salud>=90?'sp-green':k.salud>=80?'sp-blue':'sp-yellow');
+
+  const {crit,warn}=buildAlerts();
+  const badgeAlertas=document.getElementById('badge-alertas');
+  if(badgeAlertas){const n=crit.length+warn.length;badgeAlertas.textContent=n;badgeAlertas.style.display=n>0?'':'none';}
+  const critCad=sumBiz('critCad',k.negs);
+  const badgeCrit=document.getElementById('badge-criticos');
+  if(badgeCrit){badgeCrit.textContent=critCad;badgeCrit.style.display=critCad>0?'':'none';}
+}
+
+const PAGE_TITLES={
+  overview: 'Resumen general',
+  negocios: 'Por negocio',
+  alertas:  'Alertas activas',
+  criticos: 'Documentos críticos',
+  docs:     'Explorador de documentos',
+  criterin: 'Estado CriterIN',
+};
+
+function updatePageSub(tab){
+  const el=document.getElementById('page-sub');
+  if(!el) return;
+  if(tab==='overview'){
+    const k=computeOverviewKPIs();
+    el.textContent=`${k.total} documentos · actualizado junio 2026`;
+  } else if(tab==='negocios'){
+    const active=selectedNegs();
+    el.textContent= active.length? active.join(' · ') : 'Ningún negocio seleccionado';
+  } else if(tab==='alertas'){
+    const {crit,warn,ok}=buildAlerts();
+    el.textContent=`${crit.length+warn.length+ok.length} alertas — ${crit.length} críticas, ${warn.length} de atención, ${ok.length} positiva${ok.length===1?'':'s'}`;
+  } else if(tab==='criticos'){
+    const negs=selectedNegs();
+    el.textContent=`${sumBiz('crit',negs)} críticos · ${sumBiz('critCad',negs)} caducados`;
+  } else if(tab==='docs'){
+    el.textContent='Filtrar y buscar en el repositorio (muestra ilustrativa)';
+  } else if(tab==='criterin'){
+    el.textContent='Calidad de fuentes del agente IA';
+  }
+}
+
+if(typeof Chart!=='undefined'){
+  Chart.defaults.font.family="'Barlow', sans-serif";
+  Chart.defaults.font.size=11;
+  Chart.defaults.color="#5a6e8a";
+}
+
+let bizChartInst=null,vigChartInst=null,critVigChartInst=null;
+
+function showTab(id){
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes("'"+id+"'")));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.getElementById('page-title').textContent=PAGE_TITLES[id]||'';
+  refreshAllViews();
+}
+
+function refreshAllViews(){
+  updateGlobalHeader();
+  const activeTab=document.querySelector('.section.active')?.id?.replace('sec-','');
+  if(activeTab==='overview') renderOverview();
+  if(activeTab==='negocios') renderNegociosView();
+  if(activeTab==='criticos') renderCriticos();
+  if(activeTab==='docs'){filterDocs();renderDocsPage();}
+  if(activeTab==='criterin') renderCriterIN();
+  if(activeTab==='alertas') renderAlertas();
+  updatePageSub(activeTab);
+}
+
+/* ════ TIPO DISTRIBUTION (reusable — usa las tablas agregadas por tipo) ════ */
+function renderTipoDistFromTable(containerId,table){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const rows=TIPOS.filter(t=>GF.tipos.has(t)).map(t=>({t,c:table[t]||0})).filter(r=>r.c>0).sort((a,b)=>b.c-a.c);
+  const total=rows.reduce((s,r)=>s+r.c,0);
+  if(!rows.length){el.innerHTML='<div class="empty-state">Sin tipos seleccionados</div>';return;}
+  el.innerHTML=rows.map(r=>{
+    const pct=total?Math.round(r.c/total*100):0;
+    return `<div class="tipo-row"><div class="tipo-name">${TIPO_LABELS[r.t]}</div><div class="tipo-bar"><div class="tipo-fill" style="width:${pct}%;background:${TIPO_COLORS[r.t]}"></div></div><div class="tipo-n">${r.c}</div></div>`;
+  }).join('');
+}
+
+/* ════ OVERVIEW ════ */
+function renderOverview(){
+  const k=computeOverviewKPIs();
+  setKPI('kpi-total',k.total);
+  setKPI('kpi-completos',k.comp);
+  setKPI('kpi-incompletos',k.incomp);
+  setKPI('kpi-vencidos',k.cad);
+  setKPI('kpi-salud',k.salud+'%');
+  setKPI('venc-vencidos',k.cad);
+
+  const pctCompletos=k.total? (k.comp/k.total*100).toFixed(1):'0.0';
+  setKPI('kpi-completos-foot',pctCompletos+'% del total');
+  const pctIncompletos=k.total? (k.incomp/k.total*100).toFixed(1):'0.0';
+  setKPI('kpi-incompletos-foot', k.incomp>0? (pctIncompletos+'% — requieren acción') : 'Todo completo ✓');
+  setKPI('kpi-vencidos-foot', k.cad>0? 'Renovación inmediata' : 'Sin vencidos ✓');
+  const saludFoot=document.getElementById('kpi-salud-foot');
+  if(saludFoot){const s=parseFloat(k.salud);saludFoot.textContent = s>=90? 'Meta ≥ 90% ✓' : 'Meta ≥ 90%'; saludFoot.className='kpi-foot '+(s>=90?'ok':'warn');}
+
+  renderVigenciaChart(k.negs.map(n=>BIZ[n].vig),k.negs.map(n=>BIZ[n].cad),k.negs.map(n=>BIZ[n].sin),k.negs);
+
+  const healthEmpty=document.getElementById('health-empty-msg');
+  const healthBody=document.getElementById('healthRowsBody');
+  if(GF.negocios.size===0){
+    if(healthEmpty) healthEmpty.style.display='';
+    if(healthBody) healthBody.style.display='none';
+  } else {
+    if(healthEmpty) healthEmpty.style.display='none';
+    if(healthBody) healthBody.style.display='';
+    NEGS.forEach(n=>{
+      const key=n.toLowerCase();
+      const row=document.getElementById('health-row-'+key);
+      if(!row) return;
+      if(!GF.negocios.has(n)){row.style.display='none';return;}
+      row.style.display='';
+      const pct=Math.round(BIZ[n].comp/BIZ[n].total*100);
+      const color=pct>=90?'#0d6639':pct>=75?'#e6a000':'#a0160c';
+      const badgeCls=pct>=90?'hb-ok':pct>=75?'hb-warn':'hb-bad';
+      const badgeTxt=pct>=90?'Saludable':pct>=75?'Atención':'Crítico';
+      const bar=document.getElementById('hbar-'+key); if(bar){bar.style.width=pct+'%';bar.style.background=color;}
+      const pctEl=document.getElementById('hpct-'+key); if(pctEl){pctEl.textContent=pct+'%';pctEl.style.color=color;}
+      const badge=document.getElementById('hbadge-'+key); if(badge){badge.className='health-badge '+badgeCls;badge.textContent=badgeTxt;}
+    });
+  }
+
+  renderTipoDistFromTable('tipoDistBody',TIPO_DIST);
+}
+
+/* ════ NEGOCIOS ════ */
+function renderNegociosView(){
+  const el=document.getElementById('bizCardsBody');
+  if(el){
+    const active=selectedNegs();
+    if(!active.length){
+      el.innerHTML='<div class="empty-state" style="grid-column:1/-1">Ningún negocio seleccionado</div>';
+    } else {
+      const icons={ONSHORE:'ti-building-bank',OFFSHORE:'ti-world',MERCADO:'ti-chart-line'};
+      const labels={ONSHORE:'Onshore',OFFSHORE:'Offshore',MERCADO:'Mercado'};
+      el.innerHTML=active.map(n=>{
+        const s=BIZ[n];
+        const pct=Math.round(s.comp/s.total*100);
+        const cardCls=pct>=90?'bc-green':pct>=75?'bc-yellow':'bc-red';
+        const badgeCls=pct>=90?'b-green':pct>=75?'b-yellow':'b-red';
+        const barColor=pct>=90?'#0d6639':pct>=75?'#e6a000':'#a0160c';
+        return `<div class="biz-card ${cardCls}">
+          <div class="biz-header"><div class="biz-name"><i class="ti ${icons[n]}"></i>${labels[n]}</div><span class="badge ${badgeCls}">${pct}% salud</span></div>
+          <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">${s.total}</div></div>
+          <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-ok-txt)">${s.comp}</div></div>
+          <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-crit-txt)">${s.incomp}</div></div>
+          <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">${s.crit}</div></div>
+          <div class="stat-row"><div class="stat-key">Vigentes</div><div class="stat-val">${s.vig}</div></div>
+          <div class="stat-row"><div class="stat-key">Caducados</div><div class="stat-val" style="color:var(--c-crit-txt)">${s.cad}</div></div>
+          <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val" style="color:var(--c-warn-txt)">${s.sin}</div></div>
+          <div class="stat-row"><div class="stat-key">Tipo principal</div><div class="stat-val">${s.tipoPrincipal}</div></div>
+          <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${barColor};border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: ${pct}% · Meta: 90%${pct>=90?' ✓':''}</div></div>
+        </div>`;
+      }).join('');
+    }
+  }
+  renderBizChart();
+}
+
+/* ════ CRÍTICOS ════ */
+function renderCriticos(){
+  const negs=selectedNegs();
+  const critTotal=sumBiz('crit',negs);
+  const critCad=sumBiz('critCad',negs);
+
+  setKPI('kpi-crit-total',critTotal);
+  setKPI('kpi-crit-completos',CRIT_COMPLETOS_TOTAL);
+  setKPI('kpi-crit-caducados',critCad);
+  setKPI('kpi-crit-total-foot', (sumBiz('total',negs)? Math.round(critTotal/sumBiz('total',negs)*100):0)+'% del repositorio');
+  setKPI('kpi-crit-caducados-foot', critCad>0? 'Meta: 0 — urgente' : 'Meta cumplida ✓');
+
+  const heatBody=document.getElementById('heatGridBody');
+  if(heatBody){
+    if(!negs.length||critTotal===0){
+      heatBody.innerHTML='<div class="empty-state" style="grid-column:1/-1">Sin documentos críticos para los filtros seleccionados</div>';
+    } else {
+      heatBody.innerHTML=negs.map(n=>{
+        const s=BIZ[n];
+        return `<div class="heat-cell" style="background:var(--c-info-bg)"><div class="heat-val" style="color:var(--c-info-txt)">${s.critVig}</div><div class="heat-lbl" style="color:var(--c-blue)">${n} · vigentes</div></div>
+        <div class="heat-cell" style="background:${s.critCad>0?'var(--c-crit-bg)':'var(--c-ok-bg)'}"><div class="heat-val" style="color:${s.critCad>0?'var(--c-crit-txt)':'var(--c-ok-txt)'}">${s.critCad}</div><div class="heat-lbl" style="color:${s.critCad>0?'var(--c-crit-txt)':'var(--c-ok-txt)'}">${n} · caducados</div></div>`;
+      }).join('');
+    }
+  }
+
+  renderTipoDistFromTable('critTipoBody',CRIT_TIPO_DIST);
+  renderCritVigChart(negs);
+}
+
+/* ════ ALERTAS ════ */
+function renderAlertas(){
+  const {crit,warn,ok}=buildAlerts();
+  const critBody=document.getElementById('alertCritBody');
+  if(critBody){
+    critBody.innerHTML= crit.length? crit.map(a=>alertHTML(a,'sev-crit')).join('') : '<div class="empty-state">Sin alertas críticas para los filtros seleccionados</div>';
+  }
+  const warnBody=document.getElementById('alertWarnBody');
+  if(warnBody){
+    const items=[...warn.map(a=>({...a,sevCls:'sev-warn'})),...ok.map(a=>({...a,sevCls:'sev-ok'}))];
+    warnBody.innerHTML= items.length? items.map(a=>alertHTML(a,a.sevCls)).join('') : '<div class="empty-state">Sin novedades</div>';
+  }
+  renderNumberedPlan('planBody');
+}
+
+/* ════ CRITERIN ════ */
+function renderCriterIN(){
+  const srcBody=document.getElementById('srcBarsBody');
+  if(srcBody){
+    const active=selectedNegs();
+    if(!active.length){
+      srcBody.innerHTML='<div class="empty-state">Ningún negocio seleccionado</div>';
+    } else {
+      srcBody.innerHTML=active.map(n=>{
+        const s=BIZ[n];
+        const pct=Math.round(s.vig/s.total*100);
+        const color=pct>=90?'#0d6639':pct>=60?'#e6a000':'#a0160c';
+        return `<div class="src-bar-wrap"><div class="src-label-row"><span class="src-label">${n}</span><span class="src-count">${s.vig} vigentes / ${s.total} total</span></div><div class="src-bar"><div class="src-fill" style="width:${pct}%;background:${color}"></div></div></div>`;
+      }).join('');
+    }
+  }
+
+  const riskBox=document.getElementById('cinRiskBox');
+  if(riskBox){
+    const worst=selectedNegs().map(n=>({n,cad:BIZ[n].cad})).filter(x=>x.cad>0).sort((a,b)=>b.cad-a.cad)[0];
+    if(worst){
+      riskBox.style.display='';
+      const txt=riskBox.querySelector('.risk-text');
+      if(txt) txt.textContent=`${worst.n} tiene ${worst.cad} documentos caducados activos. El agente puede estar respondiendo consultas con datos desactualizados.`;
+    } else {
+      riskBox.style.display='none';
+    }
+  }
+
+  renderEmojiPlan('cinPlanBody');
+}
+
+/* ════ CHARTS ════ */
+function renderVigenciaChart(vig,cad,sin,labels){
+  const ctx=document.getElementById('vigenciaChart');
+  if(!ctx||typeof Chart==='undefined') return;
+  if(vigChartInst){vigChartInst.destroy();vigChartInst=null;}
+  vigChartInst=new Chart(ctx,{type:'bar',data:{
+    labels:labels&&labels.length?labels:NEGS,
+    datasets:[
+      {label:'Vigente',data:vig,backgroundColor:BRAND.vivid,borderRadius:4},
+      {label:'Caducado',data:cad,backgroundColor:'#f0a09b',borderRadius:4},
+      {label:'Sin estado',data:sin,backgroundColor:'#c5cfe0',borderRadius:4}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:gridColor}}}}});
+}
+
+function renderBizChart(){
+  const ctx=document.getElementById('bizChart');
+  if(!ctx||typeof Chart==='undefined') return;
+  if(bizChartInst){bizChartInst.destroy();bizChartInst=null;}
+  const negs=selectedNegs();
+  bizChartInst=new Chart(ctx,{type:'bar',data:{
+    labels:negs,
+    datasets:[
+      {label:'Completos',data:negs.map(n=>BIZ[n].comp),backgroundColor:BRAND.vivid,borderRadius:4},
+      {label:'Incompletos',data:negs.map(n=>BIZ[n].incomp),backgroundColor:'#f0a09b',borderRadius:4},
+      {label:'Críticos',data:negs.map(n=>BIZ[n].crit),backgroundColor:BRAND.light,borderRadius:4}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:gridColor}}}}});
+}
+
+function renderCritVigChart(negs){
+  const ctx=document.getElementById('critVigChart');
+  if(!ctx||typeof Chart==='undefined') return;
+  if(critVigChartInst){critVigChartInst.destroy();critVigChartInst=null;}
+  const data=negs.map(n=>{
+    const s=BIZ[n];
+    const base=s.critVig+s.critCad+s.critSin;
+    return base? Math.round(s.critVig/base*100):0;
+  });
+  critVigChartInst=new Chart(ctx,{type:'bar',data:{
+    labels:negs,
+    datasets:[{label:'% vigentes',data,backgroundColor:negs.map(n=>n==='ONSHORE'?BRAND.vivid:n==='OFFSHORE'?'#0d6639':'#f0a09b'),borderRadius:4}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,max:100,grid:{color:gridColor},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}});
+}
+
+/* ════ MASTER DATA ════ */
+const allDocs=[
+  ["MERCADO","Manual_20250703","MANUAL","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Coyuntura_001 al 021","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV_Local_001 al 004","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV_Comité_Global (múltiples)","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_001 al 015","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_001 al 014","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Reporte_Obligaciones_Negociables (5)","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico (14 docs)","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
+  ["MERCADO","Comite_Local (40 docs)","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Criteria_Perfiles de Inversion","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Seleccion de Fondos Locales","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Seleccion ETF 2026","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Seleccion_de_Fondos_Mutuos_2026","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Carteras_Recomendadas_FAD (múltiples)","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
+  ["MERCADO","Carteras_Recomendadas_Internacionales","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
+  ["MERCADO","Carteras_Recomendadas_Locales","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
+  ["MERCADO","Factsheets Fondos Internacionales (30+)","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Cobertura VIST / YPF / TGS (5 docs)","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Calculadora_Bonos_Soberanos","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Calculadora_Obligaciones_Negociables","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["MERCADO","Semaforos IPC / EMAE / Saldo Comercial","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","View Grandes Gestoras (10 docs)","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Consenso Variables Macro Bloomberg","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","FAL Criteria 2026","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Manual_Operaciones_Integrado_2026","MANUAL","Seguimiento","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","INFORME KYC PJ con actividad comercial","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","INFORME KYC PJ sin actividad comercial","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","INFORME KYC PF","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_New_Account_Form_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_Brokerage_Agreement_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_Self_Certification_Tax_Compliant","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Joint_Account_Agreement_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Margin_Agreement_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W8 BEN / W9 / W8 BEN-E","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Formularios StoneX Individual (8 docs)","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Formularios StoneX Corporativa (8 docs)","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Formularios XP Corporativa (8 docs)","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Tarifario Criteria Vigente","DOC. INFORMATIVO","Transferencia","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Grilla Acuerdos Plataformas","DOC. INFORMATIVO","Transferencia","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","LOA CASH AGENTE","FORMULARIO","Transferencia","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form Corestone Wet / Electronic","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","NPL Préstamos XP (Interest/Lending/T4)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","StoneX-EnvioDocs","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Transfer OUT Cash","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","ACAT Stonex, XP, EFG, Procapital","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Transfer ACH Stonex","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo W8 / W9 Asana","INSTRUCTIVO","Seguimiento","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Aviso de Viaje / Compra","INSTRUCTIVO","Seguimiento","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Tarjeta Corestone / StoneX","INSTRUCTIVO","Seguimiento","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","F-AR 1 PH APERTURA DE CUENTA","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 1 PJ APERTURA DE CUENTA","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 10 KYC PH","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 10 KYC PJ","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC VIGENTE","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC versiones históricas","FORMULARIO","Apertura","Caducado","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A.2 DDJJ PEP (PH y PJ)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A.3 DDJJ FATCA / OCDE","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A.4 DDJJ SO (PH y PJ)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A.5 DDJJ Inversor Calificado","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A.8 Perfil Riesgo (PH y PJ)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 11 Cuentas Administradas PH/PJ","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 12 Cierre Cuenta (PH y PJ)","FORMULARIO","Baja","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 13 PJ Perfil Riesgo Inversor","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 9 PH / PJ Cambio de Mail","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
+  ["ONSHORE","E FAR OP4/OP5 Transferencias Títulos","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","DDJJ VNEI Garantizados MAV","FORMULARIO","Inversión","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Modelo Depósito USD garantía MAV","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Circular MAV 005-2026","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","INSTRUCCION CABLES BONY","FORMULARIO","Transferencia","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Proceso Apertura de Cuenta Onshore","PROCESO","Apertura","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Proceso Alta MAV","PROCESO","Apertura","Vigente","CRITICO","incompleto"],
+  ["ONSHORE","Manual Onboarding Cliente Onshore","MANUAL","Apertura","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Criteria Propuesta a Comerciales 2026","DOC. INFORMATIVO","Captación","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Tarifas MÁXIMAS Aranceles Onshore","DOC. INFORMATIVO","Transferencia","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Definiciones Apertura de Cuenta","DOC. INFORMATIVO","Apertura","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo Apertura Criteria Digital","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Guia Alta PH Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Guia Alta PJ Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Guia Migración a Criteria Digital","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo DocuSign v.Clientes","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Manual Asana para Comerciales","MANUAL","Transferencia","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Cr_Manual-para-Comerciales-ARG","PROCESO","Transferencia","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Procedimiento videollamada PH / PJ","PROCESO","Apertura","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Proceso Régimen Simplificado Ganancias","MANUAL","Seguimiento","Vigente","NO CRITICO","Completo"],
+];
+
+let currentPage=1;
+const pageSize=15;
+let filteredDocs=[...allDocs];
+
+function filterDocs(){
+  const neg=document.getElementById('f-negocio').value;
+  const est=document.getElementById('f-estado').value;
+  const rie=document.getElementById('f-riesgo').value;
+  const con=document.getElementById('f-condicion').value;
+  const srch=document.getElementById('f-search').value.toLowerCase();
+  filteredDocs=allDocs.filter(d=>{
+    if(!GF.negocios.has(d[0]))return false;
+    if(!GF.tipos.has(d[2]))return false;
+    if(neg&&d[0]!==neg)return false;
+    if(est&&!d[4].toLowerCase().includes(est.toLowerCase()))return false;
+    if(rie&&d[5]!==rie)return false;
+    if(con&&!d[6].toLowerCase().includes(con.toLowerCase()))return false;
+    if(srch&&!d[1].toLowerCase().includes(srch))return false;
+    return true;
+  });
+  currentPage=1;
+  renderDocsPage();
+}
+
+function renderDocsPage(){
+  const total=filteredDocs.length;
+  document.getElementById('doc-count').textContent=total+' documentos encontrados';
+  const start=(currentPage-1)*pageSize;
+  const page=filteredDocs.slice(start,start+pageSize);
+  const tbody=document.getElementById('docBody');
+  if(!page.length){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:36px;color:#8fa0b4;font-size:13px">Sin resultados para los filtros seleccionados</td></tr>';
+  } else {
+    tbody.innerHTML=page.map(d=>{
+      const negC=d[0]==='ONSHORE'?'b-blue':d[0]==='OFFSHORE'?'b-navy':'b-gray';
+      const estC=d[4]==='Vigente'?'b-green':'b-red';
+      const rieC=d[5]==='CRITICO'?'b-red':'b-gray';
+      const conC=d[6].toLowerCase()==='incompleto'?'b-yellow':'b-green';
+      return`<tr><td><span class="badge ${negC}">${d[0]}</span></td><td class="doc-name" title="${d[1]}">${d[1]}</td><td class="muted">${d[2]}</td><td class="muted">${d[3]}</td><td><span class="badge ${estC}">${d[4]}</span></td><td><span class="badge ${rieC}">${d[5]}</span></td><td><span class="badge ${conC}">${d[6]}</span></td></tr>`;
+    }).join('');
+  }
+  const totalPages=Math.ceil(total/pageSize);
+  document.getElementById('doc-paginator').innerHTML=totalPages>1
+    ?`<button onclick="gotoPage(${currentPage-1})"${currentPage<=1?' disabled':''}>← Anterior</button><span>Página ${currentPage} de ${totalPages}</span><button onclick="gotoPage(${currentPage+1})"${currentPage>=totalPages?' disabled':''}>Siguiente →</button>`:'';
+}
+
+function gotoPage(p){currentPage=Math.max(1,Math.min(p,Math.ceil(filteredDocs.length/pageSize)));renderDocsPage();}
+
+window.addEventListener('DOMContentLoaded',()=>{updateFilterUI();refreshAllViews();filterDocs();renderDocsPage();});
+</script>
+</body>
+</html>
