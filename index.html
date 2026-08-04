@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocGov · Criteria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Barlow',sans-serif;font-size:14px;background:#f0f4f8;color:#0d1f3c}
+
+/* ── BRAND TOKENS ── */
+:root{
+  --c-navy:   #002e61;
+  --c-blue:   #214584;
+  --c-vivid:  #2c7dde;
+  --c-sky:    #0095d6;
+  --c-light:  #9ad4ec;
+  --c-white:  #ffffff;
+  --c-bg:     #f0f4f8;
+  --c-card:   #ffffff;
+  --c-border: #dde4ed;
+  --c-text:   #0d1f3c;
+  --c-muted:  #5a6e8a;
+  --c-subtle: #8fa0b4;
+  /* semantic */
+  --c-ok-bg:   #eaf6f0; --c-ok-txt:  #0d6639; --c-ok-bdr:  #9dd9be;
+  --c-warn-bg: #fff8e6; --c-warn-txt:#7a4f00; --c-warn-bdr:#f5cc6b;
+  --c-crit-bg: #fdf0ef; --c-crit-txt:#a0160c; --c-crit-bdr:#f0a09b;
+  --c-info-bg: #eaf3fc; --c-info-txt:#1a4f8a; --c-info-bdr:#97c9ee;
+  --radius:8px; --radius-lg:12px;
+}
+
+/* ── LAYOUT ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:228px;min-height:100vh;background:var(--c-navy);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100}
+.main{margin-left:228px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar-logo{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:12px}
+.logo-svg{width:36px;height:36px;flex-shrink:0}
+.logo-text{color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:.04em;line-height:1.1}
+.logo-sub{color:var(--c-light);font-size:10px;font-weight:400;letter-spacing:.03em;margin-top:2px}
+.sidebar-nav{padding:14px 10px;flex:1}
+.nav-section{font-size:9px;font-weight:700;color:rgba(154,212,236,.6);letter-spacing:.1em;text-transform:uppercase;padding:10px 12px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--radius);cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-weight:500;transition:background .12s,color .12s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:'Barlow',sans-serif}
+.nav-item i{font-size:17px;flex-shrink:0;color:rgba(154,212,236,.7)}
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-item:hover i{color:var(--c-light)}
+.nav-item.active{background:rgba(44,125,222,.25);color:#fff;border-left:3px solid var(--c-vivid)}
+.nav-item.active i{color:var(--c-vivid)}
+.nav-badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
+.nb-red{background:rgba(240,80,70,.25);color:#ff9e99}
+.nb-yellow{background:rgba(245,196,50,.2);color:#f5cc6b}
+.sidebar-footer{padding:14px 10px;border-top:1px solid rgba(255,255,255,.1)}
+.user-chip{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius)}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--c-vivid);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.user-name{font-size:12px;font-weight:600;color:#fff}
+.user-role{font-size:10px;color:rgba(154,212,236,.7)}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--c-card);border-bottom:1px solid var(--c-border);padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--c-navy);letter-spacing:.02em;text-transform:uppercase}
+.page-sub{font-size:11px;color:var(--c-muted);margin-top:1px;font-weight:400}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.status-pill{border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px;border:1px solid}
+.sp-red{background:var(--c-crit-bg);color:var(--c-crit-txt);border-color:var(--c-crit-bdr)}
+.sp-yellow{background:var(--c-warn-bg);color:var(--c-warn-txt);border-color:var(--c-warn-bdr)}
+.sp-blue{background:var(--c-info-bg);color:var(--c-info-txt);border-color:var(--c-info-bdr)}
+.sp-green{background:var(--c-ok-bg);color:var(--c-ok-txt);border-color:var(--c-ok-bdr)}
+.btn-outline{background:none;border:1px solid var(--c-border);border-radius:var(--radius);padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;color:var(--c-blue);display:flex;align-items:center;gap:6px;font-family:'Barlow',sans-serif;transition:border-color .12s,background .12s}
+.btn-outline:hover{border-color:var(--c-vivid);background:var(--c-info-bg)}
+
+/* ── CONTENT ── */
+.content{padding:24px 28px;flex:1}
+.section{display:none}.section.active{display:block}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:16px 18px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--c-vivid)}
+.kpi.ok::before{background:#0d6639}
+.kpi.warn::before{background:#e6a000}
+.kpi.crit::before{background:#a0160c}
+.kpi.brand::before{background:var(--c-navy)}
+.kpi-label{font-size:10px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.kpi-label i{font-size:14px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--c-navy);letter-spacing:-.5px}
+.kpi-foot{font-size:11px;color:var(--c-muted);margin-top:4px}
+.kpi-foot.ok{color:var(--c-ok-txt)}
+.kpi-foot.warn{color:var(--c-warn-txt)}
+.kpi-foot.bad{color:var(--c-crit-txt)}
+
+/* ── CARDS ── */
+.card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--c-navy);letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.card-title i{font-size:17px;color:var(--c-vivid)}
+.card-note{font-size:10px;color:var(--c-subtle);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+
+/* ── HEALTH ── */
+.health-row{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.health-row:last-child{margin-bottom:0}
+.health-label{font-size:12px;font-weight:600;color:var(--c-text);min-width:88px;text-transform:uppercase;letter-spacing:.03em}
+.health-bar{flex:1;height:8px;background:#e8edf3;border-radius:4px;overflow:hidden}
+.health-fill{height:100%;border-radius:4px;transition:width .7s cubic-bezier(.4,0,.2,1)}
+.health-pct{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;min-width:36px;text-align:right}
+.health-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;min-width:72px;text-align:center;text-transform:uppercase;letter-spacing:.04em;border:1px solid}
+.hb-ok  {background:var(--c-ok-bg);color:var(--c-ok-txt);border-color:var(--c-ok-bdr)}
+.hb-warn{background:var(--c-warn-bg);color:var(--c-warn-txt);border-color:var(--c-warn-bdr)}
+.hb-bad {background:var(--c-crit-bg);color:var(--c-crit-txt);border-color:var(--c-crit-bdr)}
+
+/* ── TIPO BARS ── */
+.tipo-row{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.tipo-row:last-child{margin-bottom:0}
+.tipo-name{font-size:12px;color:var(--c-text);min-width:180px;font-weight:500}
+.tipo-bar{flex:1;height:7px;background:#e8edf3;border-radius:4px;overflow:hidden}
+.tipo-fill{height:100%;border-radius:4px}
+.tipo-n{font-size:12px;font-weight:700;color:var(--c-muted);min-width:28px;text-align:right;font-family:'Barlow Condensed',sans-serif}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.03em;text-transform:uppercase;border:1px solid}
+.b-green{background:var(--c-ok-bg);color:var(--c-ok-txt);border-color:var(--c-ok-bdr)}
+.b-red  {background:var(--c-crit-bg);color:var(--c-crit-txt);border-color:var(--c-crit-bdr)}
+.b-yellow{background:var(--c-warn-bg);color:var(--c-warn-txt);border-color:var(--c-warn-bdr)}
+.b-blue {background:var(--c-info-bg);color:var(--c-info-txt);border-color:var(--c-info-bdr)}
+.b-navy {background:#e6eaf2;color:var(--c-navy);border-color:#c5cfe0}
+.b-gray {background:#f0f4f8;color:var(--c-muted);border-color:var(--c-border)}
+
+/* ── ALERT ITEMS ── */
+.alert-item{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;border-radius:var(--radius);margin-bottom:10px;border:1px solid}
+.alert-item:last-child{margin-bottom:0}
+.alert-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-icon i{font-size:18px}
+.alert-item.sev-crit{background:var(--c-crit-bg);border-color:var(--c-crit-bdr)}
+.alert-item.sev-crit .alert-icon{background:rgba(160,22,12,.12)}.alert-item.sev-crit .alert-icon i{color:var(--c-crit-txt)}
+.alert-item.sev-warn{background:var(--c-warn-bg);border-color:var(--c-warn-bdr)}
+.alert-item.sev-warn .alert-icon{background:rgba(230,160,0,.12)}.alert-item.sev-warn .alert-icon i{color:var(--c-warn-txt)}
+.alert-item.sev-ok{background:var(--c-ok-bg);border-color:var(--c-ok-bdr)}
+.alert-item.sev-ok .alert-icon{background:rgba(13,102,57,.12)}.alert-item.sev-ok .alert-icon i{color:var(--c-ok-txt)}
+.alert-title{font-size:13px;font-weight:700;color:var(--c-navy)}
+.alert-desc{font-size:12px;color:var(--c-muted);margin-top:3px;line-height:1.55}
+.alert-meta{font-size:10px;font-weight:700;color:var(--c-subtle);margin-top:6px;text-transform:uppercase;letter-spacing:.05em}
+.empty-state{color:var(--c-subtle);font-size:12px;text-align:center;padding:20px}
+
+/* ── PLAN ── */
+.plan-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--c-border)}
+.plan-item:last-child{border-bottom:none}
+.plan-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;font-family:'Barlow Condensed',sans-serif}
+.plan-body{flex:1}
+.plan-title{font-size:13px;font-weight:700;color:var(--c-navy)}
+.plan-desc{font-size:12px;color:var(--c-muted);margin-top:3px;line-height:1.5}
+
+/* ── HEAT CELLS ── */
+.heat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.heat-cell{border-radius:var(--radius);padding:14px 16px}
+.heat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;letter-spacing:-.5px}
+.heat-lbl{font-size:11px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+
+/* ── BIZ CARDS ── */
+.biz-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.biz-card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:20px;position:relative;overflow:hidden}
+.biz-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.biz-card.bc-red::after{background:var(--c-crit-txt)}
+.biz-card.bc-yellow::after{background:#e6a000}
+.biz-card.bc-green::after{background:#0d6639}
+.biz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.biz-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-navy);display:flex;align-items:center;gap:7px}
+.biz-name i{font-size:18px;color:var(--c-vivid)}
+.stat-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 0;border-bottom:1px solid #f0f4f8}
+.stat-row:last-of-type{border-bottom:none}
+.stat-key{color:var(--c-muted);font-weight:500}
+.stat-val{font-weight:700;color:var(--c-navy);font-family:'Barlow Condensed',sans-serif;font-size:13px}
+
+/* ── TABLE ── */
+.filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-bar select,.filter-bar input{border:1px solid var(--c-border);border-radius:var(--radius);padding:8px 10px;font-size:12px;font-family:'Barlow',sans-serif;background:var(--c-card);color:var(--c-text);outline:none;font-weight:500}
+.filter-bar select:focus,.filter-bar input:focus{border-color:var(--c-vivid);box-shadow:0 0 0 3px rgba(44,125,222,.15)}
+.filter-bar input{min-width:200px}
+.doc-count{font-size:11px;color:var(--c-subtle);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--c-border);border-radius:var(--radius-lg);background:var(--c-card)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:#f5f8fb;padding:10px 14px;font-weight:700;color:var(--c-muted);text-align:left;border-bottom:1px solid var(--c-border);white-space:nowrap;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+tbody td{padding:10px 14px;border-bottom:1px solid #f5f8fb;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:#fafcff}
+td.doc-name{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:var(--c-navy)}
+td.muted{color:var(--c-muted);font-weight:500}
+.paginator{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:12px;color:var(--c-muted)}
+.paginator button{border:1px solid var(--c-border);background:var(--c-card);border-radius:var(--radius);padding:6px 14px;cursor:pointer;font-family:'Barlow',sans-serif;font-size:12px;font-weight:600;color:var(--c-blue);transition:border-color .12s}
+.paginator button:disabled{opacity:.35;cursor:not-allowed}
+.paginator button:hover:not(:disabled){border-color:var(--c-vivid);color:var(--c-vivid)}
+
+/* ── CHART ── */
+.chart-wrap{position:relative;width:100%}
+.legend-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+.leg-dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:middle}
+.leg-item{font-size:11px;color:var(--c-muted);display:flex;align-items:center;font-weight:500}
+
+/* ── VENCIMIENTO BOXES ── */
+.venc-box{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:var(--radius);border:1px solid;margin-bottom:10px}
+.venc-box:last-child{margin-bottom:0}
+.venc-label{font-size:12px;font-weight:600;color:var(--c-text)}
+.venc-num{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.3px}
+
+/* ── CRITERIN ── */
+.src-bar-wrap{margin-bottom:14px}
+.src-label-row{display:flex;justify-content:space-between;margin-bottom:5px}
+.src-label{font-size:12px;font-weight:600;color:var(--c-text)}
+.src-count{font-size:11px;color:var(--c-muted)}
+.src-bar{height:9px;background:#e8edf3;border-radius:5px;overflow:hidden}
+.src-fill{height:100%;border-radius:5px}
+
+/* ── DIVIDER ── */
+.divider{border:none;border-top:1px solid var(--c-border);margin:16px 0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:820px){
+  .sidebar{display:none}.main{margin-left:0}
+  .kpi-strip,.biz-cards,.grid-3{grid-template-columns:1fr 1fr}
+  .grid-2{grid-template-columns:1fr}
+  .heat-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .kpi-strip,.biz-cards,.grid-3,.grid-2{grid-template-columns:1fr}
+}
+
+/* ── GLOBAL FILTER STRIP ── */
+.filter-strip{background:#fff;border-bottom:1px solid var(--c-border);padding:0 28px;height:46px;display:flex;align-items:center;gap:8px;position:sticky;top:58px;z-index:49}
+.filter-strip-label{font-size:10px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.07em;margin-right:4px;white-space:nowrap}
+.fs-select{border:1px solid var(--c-border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:'Barlow',sans-serif;font-weight:600;background:var(--c-bg);color:var(--c-navy);outline:none;cursor:pointer;transition:border-color .12s,background .12s}
+.fs-select:focus{border-color:var(--c-vivid);box-shadow:0 0 0 2px rgba(44,125,222,.15)}
+.fs-tag{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid;transition:all .12s;white-space:nowrap;font-family:'Barlow',sans-serif;background:none}
+.fs-tag.active-neg-onshore{background:#dbeafe;color:#1e3a8a;border-color:#93c5fd}
+.fs-tag.active-neg-offshore{background:#e0e7ff;color:#312e81;border-color:#a5b4fc}
+.fs-tag.active-neg-mercado{background:#dde4ed;color:var(--c-navy);border-color:#b0bfd0}
+.fs-tag.inactive{background:var(--c-bg);color:var(--c-muted);border-color:var(--c-border)}
+.fs-tag.inactive:hover{border-color:var(--c-vivid);color:var(--c-navy)}
+.fs-divider{width:1px;height:22px;background:var(--c-border);flex-shrink:0;margin:0 4px}
+.fs-tipo-tag{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:all .12s;white-space:nowrap;font-family:'Barlow',sans-serif}
+.fs-tipo-tag.on{background:var(--c-info-bg);color:var(--c-info-txt);border-color:var(--c-info-bdr)}
+.fs-tipo-tag.off{background:var(--c-bg);color:var(--c-muted);border-color:var(--c-border);text-decoration:line-through;opacity:.6}
+.fs-tipo-tag:hover{opacity:1}
+.fs-reset{margin-left:auto;font-size:11px;font-weight:600;color:var(--c-vivid);background:none;border:none;cursor:pointer;font-family:'Barlow',sans-serif;padding:4px 8px;border-radius:var(--radius);transition:background .12s}
+.fs-reset:hover{background:var(--c-info-bg)}
+.filter-strip-active-hint{font-size:10px;color:var(--c-vivid);font-weight:700;background:var(--c-info-bg);border:1px solid var(--c-info-bdr);border-radius:20px;padding:2px 8px;margin-left:4px}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <svg class="logo-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Criteria logo">
+        <g transform="translate(60,60)">
+          <path d="M0-46 C8-44,20-34,24-20 L14-18 C11-28,5-36,0-38Z" fill="#9ad4ec" opacity=".9"/>
+          <path d="M0-46 C-8-44,-10-38,0-38 L0-46Z" fill="#214584"/>
+          <path d="M24-20 C32-6,28,12,16,24 L10,16 C18,8,20-4,14-18Z" fill="#2c7dde" opacity=".9"/>
+          <path d="M16,24 C2,36,-16,34,-26,20 L-18,14 C-10,24,4,26,10,16Z" fill="#9ad4ec" opacity=".85"/>
+          <path d="M-26,20 C-36,6,-32,-12,-20,-24 L-14,-16 C-22,-8,-24,4,-18,14Z" fill="#2c7dde" opacity=".8"/>
+          <path d="M-20,-24 C-8,-34,8,-36,20,-28 L16,-20 C6,-26,-6,-24,-14,-16Z" fill="#214584" opacity=".9"/>
+          <path d="M2-36 C10-34,18-26,20-16 L12-14 C10-22,4-28,2-30Z" fill="#ffffff" opacity=".25"/>
+          <path d="M20-16 C26-4,22,10,12,20 L8,14 C16,6,18-6,12-14Z" fill="#ffffff" opacity=".2"/>
+        </g>
+      </svg>
+      <div>
+        <div class="logo-text">CRITERIA</div>
+        <div class="logo-sub">Gobierno Documental</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Vistas</div>
+      <button class="nav-item active" onclick="showTab('overview')">
+        <i class="ti ti-layout-dashboard"></i> Resumen general
+      </button>
+      <button class="nav-item" onclick="showTab('negocios')">
+        <i class="ti ti-building"></i> Por negocio
+      </button>
+      <button class="nav-item" onclick="showTab('alertas')">
+        <i class="ti ti-bell"></i> Alertas
+        <span class="nav-badge nb-red" id="badge-alertas">0</span>
+      </button>
+      <button class="nav-item" onclick="showTab('criticos')">
+        <i class="ti ti-shield"></i> Críticos
+        <span class="nav-badge nb-yellow" id="badge-criticos">0</span>
+      </button>
+      <button class="nav-item" onclick="showTab('docs')">
+        <i class="ti ti-table"></i> Explorador
+      </button>
+      <div class="nav-section" style="margin-top:8px">Agente IA</div>
+      <button class="nav-item" onclick="showTab('criterin')">
+        <i class="ti ti-robot"></i> Estado CriterIN
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar">MA</div>
+        <div>
+          <div class="user-name">Made</div>
+          <div class="user-role">Analista de Procesos</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─── -->
+  <div class="main">
+    <header class="topbar" id="topbar">
+      <div>
+        <div class="page-title" id="page-title">Resumen general</div>
+        <div class="page-sub" id="page-sub">503 documentos · actualizado junio 2026</div>
+      </div>
+      <div class="topbar-right">
+        <div class="status-pill sp-red" id="pill-vencidos"><i class="ti ti-calendar-x" style="font-size:13px"></i><span id="pill-vencidos-txt">186 vencidos</span></div>
+        <div class="status-pill sp-yellow" id="pill-incompletos"><i class="ti ti-alert-circle" style="font-size:13px"></i><span id="pill-incompletos-txt">57 incompletos</span></div>
+        <div class="status-pill sp-blue" id="pill-salud"><i class="ti ti-activity" style="font-size:13px"></i><span id="pill-salud-txt">88.7% salud</span></div>
+        <button class="btn-outline"><i class="ti ti-download" style="font-size:14px"></i>Exportar</button>
+      </div>
+    </header>
+
+    <!-- ─── GLOBAL FILTER STRIP ─── -->
+    <div class="filter-strip" id="filterStrip">
+      <span class="filter-strip-label">Filtrar:</span>
+
+      <button class="fs-tag active-neg-onshore" id="tag-onshore" onclick="toggleNeg('ONSHORE')">
+        <i class="ti ti-building-bank" style="font-size:12px"></i> ONSHORE
+      </button>
+      <button class="fs-tag active-neg-offshore" id="tag-offshore" onclick="toggleNeg('OFFSHORE')">
+        <i class="ti ti-world" style="font-size:12px"></i> OFFSHORE
+      </button>
+      <button class="fs-tag active-neg-mercado" id="tag-mercado" onclick="toggleNeg('MERCADO')">
+        <i class="ti ti-chart-line" style="font-size:12px"></i> MERCADO
+      </button>
+
+      <div class="fs-divider"></div>
+
+      <span class="filter-strip-label">Tipo:</span>
+      <button class="fs-tipo-tag on" id="tipo-informativo" onclick="toggleTipo('DOCUMENTO INFORMATIVO')">Doc. Informativo</button>
+      <button class="fs-tipo-tag on" id="tipo-formulario"  onclick="toggleTipo('FORMULARIO')">Formulario</button>
+      <button class="fs-tipo-tag on" id="tipo-instructivo" onclick="toggleTipo('INSTRUCTIVO')">Instructivo</button>
+      <button class="fs-tipo-tag on" id="tipo-manual"      onclick="toggleTipo('MANUAL')">Manual</button>
+      <button class="fs-tipo-tag on" id="tipo-proceso"     onclick="toggleTipo('PROCESO')">Proceso</button>
+      <button class="fs-tipo-tag on" id="tipo-sintipo"     onclick="toggleTipo('SIN TIPO')">Sin tipo</button>
+
+      <span id="active-hint" class="filter-strip-active-hint" style="display:none">Filtros activos</span>
+      <button class="fs-reset" onclick="resetFilters()" title="Quitar todos los filtros">✕ Resetear</button>
+    </div>
+
+    <div class="content">
+
+      <!-- ════ OVERVIEW ════ -->
+      <div id="sec-overview" class="section active">
+        <div class="kpi-strip">
+          <div class="kpi brand">
+            <div class="kpi-label"><i class="ti ti-files"></i>Total docs</div>
+            <div class="kpi-value" id="kpi-total">503</div>
+            <div class="kpi-foot">3 líneas de negocio</div>
+          </div>
+          <div class="kpi ok">
+            <div class="kpi-label"><i class="ti ti-circle-check"></i>Completos</div>
+            <div class="kpi-value" id="kpi-completos">446</div>
+            <div class="kpi-foot ok" id="kpi-completos-foot">88.7% del total</div>
+          </div>
+          <div class="kpi crit">
+            <div class="kpi-label"><i class="ti ti-alert-circle"></i>Incompletos</div>
+            <div class="kpi-value" id="kpi-incompletos">57</div>
+            <div class="kpi-foot bad" id="kpi-incompletos-foot">11.3% — requieren acción</div>
+          </div>
+          <div class="kpi crit">
+            <div class="kpi-label"><i class="ti ti-calendar-x"></i>Vencidos</div>
+            <div class="kpi-value" id="kpi-vencidos">186</div>
+            <div class="kpi-foot bad" id="kpi-vencidos-foot">Renovación inmediata</div>
+          </div>
+          <div class="kpi warn">
+            <div class="kpi-label"><i class="ti ti-activity"></i>Salud global</div>
+            <div class="kpi-value" id="kpi-salud">88.7%</div>
+            <div class="kpi-foot warn" id="kpi-salud-foot">Meta ≥ 90%</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-activity"></i>Índice de salud por negocio</div></div>
+            <div id="healthRowsBody">
+              <div class="health-row" id="health-row-mercado">
+                <div class="health-label">Mercado</div>
+                <div class="health-bar"><div class="health-fill" id="hbar-mercado"></div></div>
+                <div class="health-pct" id="hpct-mercado"></div>
+                <span class="health-badge" id="hbadge-mercado"></span>
+              </div>
+              <div class="health-row" id="health-row-offshore">
+                <div class="health-label">Offshore</div>
+                <div class="health-bar"><div class="health-fill" id="hbar-offshore"></div></div>
+                <div class="health-pct" id="hpct-offshore"></div>
+                <span class="health-badge" id="hbadge-offshore"></span>
+              </div>
+              <div class="health-row" id="health-row-onshore">
+                <div class="health-label">Onshore</div>
+                <div class="health-bar"><div class="health-fill" id="hbar-onshore"></div></div>
+                <div class="health-pct" id="hpct-onshore"></div>
+                <span class="health-badge" id="hbadge-onshore"></span>
+              </div>
+            </div>
+            <div class="empty-state" id="health-empty-msg" style="display:none">Ningún negocio seleccionado</div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div class="card-title"><i class="ti ti-clock"></i>Vencimientos</div>
+            </div>
+            <div class="venc-box" style="background:var(--c-crit-bg);border-color:var(--c-crit-bdr)">
+              <div class="venc-label">Ya vencidos</div>
+              <div class="venc-num" style="color:var(--c-crit-txt)" id="venc-vencidos">186</div>
+            </div>
+            <div class="venc-box" style="background:var(--c-warn-bg);border-color:var(--c-warn-bdr)">
+              <div class="venc-label">Vencen en 30 días</div>
+              <div class="venc-num" style="color:var(--c-warn-txt)" id="venc-30">0</div>
+            </div>
+            <div class="venc-box" style="background:var(--c-info-bg);border-color:var(--c-info-bdr)">
+              <div class="venc-label">Vencen en 90 días</div>
+              <div class="venc-num" style="color:var(--c-info-txt)" id="venc-90">0</div>
+            </div>
+            <div style="font-size:10px;color:var(--c-subtle);margin-top:2px">Calculado sobre documentos vigentes con fecha de vencimiento cargada, según la fecha de hoy</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Distribución por tipo</div></div>
+            <div id="tipoDistBody"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-pie"></i>Estado de vigencia</div></div>
+            <div class="chart-wrap" style="height:195px">
+              <canvas id="vigenciaChart" role="img" aria-label="Estado de vigencia por negocio"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ NEGOCIOS ════ -->
+      <div id="sec-negocios" class="section">
+        <div class="biz-cards" id="bizCardsBody"></div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Comparativo por negocio</div></div>
+          <div class="chart-wrap" style="height:250px"><canvas id="bizChart" role="img" aria-label="Comparativo documentos por negocio"></canvas></div>
+          <div class="legend-row">
+            <div class="leg-item"><span class="leg-dot" style="background:#0d6639"></span>Completos</div>
+            <div class="leg-item"><span class="leg-dot" style="background:#a0160c"></span>Incompletos</div>
+            <div class="leg-item"><span class="leg-dot" style="background:var(--c-vivid)"></span>Críticos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ ALERTAS ════ -->
+      <div id="sec-alertas" class="section">
+        <div class="grid-2">
+          <div>
+            <div class="card" style="margin-bottom:16px">
+              <div class="card-head"><div class="card-title" style="color:var(--c-crit-txt)"><i class="ti ti-alert-triangle" style="color:var(--c-crit-txt)"></i>Alertas críticas</div></div>
+              <div id="alertCritBody"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><div class="card-title" style="color:var(--c-warn-txt)"><i class="ti ti-alert-circle" style="color:var(--c-warn-txt)"></i>Alertas de atención</div></div>
+              <div id="alertWarnBody"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-list-check"></i>Plan de acción</div></div>
+            <div id="planBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ CRÍTICOS ════ -->
+      <div id="sec-criticos" class="section">
+        <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
+          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-shield"></i>Total críticos</div><div class="kpi-value" id="kpi-crit-total">216</div><div class="kpi-foot" id="kpi-crit-total-foot">43% del repositorio</div></div>
+          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-shield-check"></i>Críticos completos</div><div class="kpi-value" id="kpi-crit-completos">215</div><div class="kpi-foot ok" id="kpi-crit-completos-foot">99.5% — meta ≥ 95% ✓</div></div>
+          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-shield-off"></i>Críticos caducados</div><div class="kpi-value" id="kpi-crit-caducados">48</div><div class="kpi-foot bad" id="kpi-crit-caducados-foot">Meta: 0 — urgente</div></div>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head"><div class="card-title"><i class="ti ti-layout-grid"></i>Estado de críticos por negocio</div></div>
+          <div class="heat-grid" id="heatGridBody"></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Críticos por tipo</div></div>
+            <div id="critTipoBody"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>% vigencia — críticos</div></div>
+            <div class="chart-wrap" style="height:180px"><canvas id="critVigChart" role="img" aria-label="Porcentaje de vigencia en críticos por negocio"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════ EXPLORADOR ════ -->
+      <div id="sec-docs" class="section">
+        <div style="font-size:11px;color:var(--c-subtle);margin-bottom:12px">Datos extraídos del Maestro de Documentación (SharePoint, sitio W-M/Estructura Documental) — snapshot al 04/08/2026. No se sincroniza en vivo.</div>
+        <div class="filter-bar">
+          <select id="f-negocio" onchange="filterDocs()">
+            <option value="">Todos los negocios</option>
+            <option value="MERCADO">Mercado</option>
+            <option value="OFFSHORE">Offshore</option>
+            <option value="ONSHORE">Onshore</option>
+          </select>
+          <select id="f-estado" onchange="filterDocs()">
+            <option value="">Todos los estados</option>
+            <option value="Vigente">Vigente</option>
+            <option value="Caducado">Caducado</option>
+            <option value="Sin estado">Sin estado</option>
+          </select>
+          <select id="f-riesgo" onchange="filterDocs()">
+            <option value="">Todos los riesgos</option>
+            <option value="CRITICO">Crítico</option>
+            <option value="NO CRITICO">No crítico</option>
+            <option value="SIN CLASIFICAR">Sin clasificar</option>
+          </select>
+          <select id="f-condicion" onchange="filterDocs()">
+            <option value="">Toda condición</option>
+            <option value="Completo">Completo</option>
+            <option value="Incompleto">Incompleto</option>
+          </select>
+          <input type="text" id="f-search" placeholder="Buscar por nombre..." oninput="filterDocs()">
+        </div>
+        <div id="doc-count" class="doc-count"></div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Negocio</th><th>Nombre del documento</th><th>Tipo</th><th>Etapa</th><th>Owner</th><th>Vence</th><th>Estado</th><th>Riesgo</th><th>Condición</th></tr></thead>
+            <tbody id="docBody"></tbody>
+          </table>
+        </div>
+        <div class="paginator" id="doc-paginator"></div>
+      </div>
+
+      <!-- ════ CRITERIN ════ -->
+      <div id="sec-criterin" class="section">
+        <div class="kpi-strip" style="grid-template-columns:repeat(4,1fr)">
+          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-robot"></i>Docs en CriterIN</div><div class="kpi-value" id="kpi-cin-total">503</div><div class="kpi-foot">Total indexados</div></div>
+          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-circle-check"></i>Fuentes activas</div><div class="kpi-value" id="kpi-cin-activas">334</div><div class="kpi-foot ok">Vigentes y completos</div></div>
+          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-alert-triangle"></i>Fuentes en riesgo</div><div class="kpi-value" id="kpi-cin-riesgo">169</div><div class="kpi-foot bad">Vencidos o incompletos</div></div>
+          <div class="kpi warn"><div class="kpi-label"><i class="ti ti-activity"></i>Calidad del agente</div><div class="kpi-value" id="kpi-cin-calidad">66.4%</div><div class="kpi-foot warn">% fuentes confiables</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-database"></i>Vigencia de fuentes por negocio</div></div>
+            <div id="srcBarsBody"></div>
+            <div id="cinRiskBox" style="margin-top:16px;padding:14px 16px;background:var(--c-crit-bg);border:1px solid var(--c-crit-bdr);border-radius:var(--radius)">
+              <div style="font-size:12px;font-weight:700;color:var(--c-crit-txt);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em"><i class="ti ti-alert-triangle" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Riesgo para CriterIN</div>
+              <div class="risk-text" style="font-size:12px;color:var(--c-muted);line-height:1.55">MERCADO tiene 153 documentos caducados activos. El agente puede estar respondiendo consultas con datos desactualizados de Research &amp; Strategy.</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-list-check"></i>Acciones para mejorar la calidad</div></div>
+            <div id="cinPlanBody"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+
+/* ════ MASTER AGGREGATE ════
+   allDocs (al final de este archivo) es el Maestro de Documentación real,
+   fila por fila (567 documentos, hojas MERCADO/OFFSHORE/ONSHORE). Todas las
+   secciones se recalculan desde acá — no hay tablas de cifras "oficiales"
+   separadas, así que header, badges, tarjetas, alertas y explorador siempre
+   están en sync entre sí. */
+const NEGS=['ONSHORE','OFFSHORE','MERCADO'];
+const TIPOS=['DOCUMENTO INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO','SIN TIPO'];
+const TIPO_LABELS={'DOCUMENTO INFORMATIVO':'Documento informativo','FORMULARIO':'Formulario','INSTRUCTIVO':'Instructivo','MANUAL':'Manual','PROCESO':'Proceso','SIN TIPO':'Sin tipo'};
+const BRAND={navy:'#002e61',blue:'#214584',vivid:'#2c7dde',sky:'#0095d6',light:'#9ad4ec'};
+const TIPO_COLORS={'DOCUMENTO INFORMATIVO':BRAND.vivid,'FORMULARIO':BRAND.sky,'INSTRUCTIVO':BRAND.light,'MANUAL':BRAND.blue,'PROCESO':'#8fa0b4','SIN TIPO':'#c5cfe0'};
+const gridColor='#e8edf3';
+
+const GF = {
+  negocios: new Set(['ONSHORE','OFFSHORE','MERCADO']),
+  tipos: new Set(TIPOS)
+};
+
+function toggleNeg(neg){
+  if(GF.negocios.has(neg)) GF.negocios.delete(neg);
+  else GF.negocios.add(neg);
+  updateFilterUI();
+  refreshAllViews();
+}
+
+function toggleTipo(tipo){
+  if(GF.tipos.has(tipo)) GF.tipos.delete(tipo);
+  else GF.tipos.add(tipo);
+  updateFilterUI();
+  refreshAllViews();
+}
+
+function resetFilters(){
+  GF.negocios=new Set(['ONSHORE','OFFSHORE','MERCADO']);
+  GF.tipos=new Set(TIPOS);
+  updateFilterUI();
+  refreshAllViews();
+}
+
+function updateFilterUI(){
+  ['onshore','offshore','mercado'].forEach(n=>{
+    const el=document.getElementById('tag-'+n);
+    const neg=n.toUpperCase();
+    if(GF.negocios.has(neg)){el.className='fs-tag active-neg-'+n;}
+    else{el.className='fs-tag inactive';}
+  });
+  const tipoMap={'DOCUMENTO INFORMATIVO':'informativo','FORMULARIO':'formulario','INSTRUCTIVO':'instructivo','MANUAL':'manual','PROCESO':'proceso','SIN TIPO':'sintipo'};
+  for(const[tipo,id] of Object.entries(tipoMap)){
+    const el=document.getElementById('tipo-'+id);
+    if(el) el.className='fs-tipo-tag '+(GF.tipos.has(tipo)?'on':'off');
+  }
+  const isFiltered = GF.negocios.size<3 || GF.tipos.size<TIPOS.length;
+  document.getElementById('active-hint').style.display = isFiltered ? '' : 'none';
+}
+
+function applyGF(docs){
+  return docs.filter(d=>GF.negocios.has(d[0])&&GF.tipos.has(d[2]));
+}
+
+/* ════ DATE HELPERS (fecha_de_vencimiento viene como DD/MM/AAAA) ════ */
+function parseDDMMYYYY(s){
+  if(!s) return null;
+  const m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(!m) return null;
+  const d=new Date(+m[3],+m[2]-1,+m[1]);
+  return isNaN(d.getTime())?null:d;
+}
+
+function computeVencimientos(docs){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const in30=new Date(today.getTime()+30*86400000);
+  const in90=new Date(today.getTime()+90*86400000);
+  let en30=0,en90=0;
+  docs.forEach(d=>{
+    if(d[4]!=='Vigente') return;
+    const venc=parseDDMMYYYY(d[7]);
+    if(!venc) return;
+    if(venc>today && venc<=in30) en30++;
+    else if(venc>in30 && venc<=in90) en90++;
+  });
+  return{en30,en90};
+}
+
+/* ════ AGGREGATIONS ════ */
+function recomputeKPIs(docs){
+  const total=docs.length;
+  const completos=docs.filter(d=>d[6]==='Completo').length;
+  const incompletos=total-completos;
+  const vencidos=docs.filter(d=>d[4]==='Caducado').length;
+  const criticos=docs.filter(d=>d[5]==='CRITICO').length;
+  const salud=total>0?(completos/total*100).toFixed(1):'0.0';
+  return{total,completos,incompletos,vencidos,criticos,salud};
+}
+
+function computeNegStats(docs,neg){
+  const nd=docs.filter(d=>d[0]===neg);
+  const total=nd.length;
+  const comp=nd.filter(d=>d[6]==='Completo').length;
+  const incomp=total-comp;
+  const crit=nd.filter(d=>d[5]==='CRITICO').length;
+  const vig=nd.filter(d=>d[4]==='Vigente').length;
+  const cad=nd.filter(d=>d[4]==='Caducado').length;
+  const sinEstado=total-vig-cad;
+  const pct=total>0?Math.round(comp/total*100):0;
+  const counts={};
+  nd.forEach(d=>{counts[d[2]]=(counts[d[2]]||0)+1;});
+  let tipoPrincipal='—',max=0;
+  for(const[t,c] of Object.entries(counts)){if(c>max){max=c;tipoPrincipal=TIPO_LABELS[t]||t;}}
+  return{neg,total,comp,incomp,crit,vig,cad,sinEstado,pct,tipoPrincipal};
+}
+
+/* ════ ALERTS + PLAN (shared logic) ════ */
+function buildAlerts(docs){
+  const crit=[], warn=[], ok=[];
+  const vencidos=docs.filter(d=>d[4]==='Caducado');
+  const incompletos=docs.filter(d=>d[6]!=='Completo');
+  const criticosCaducados=docs.filter(d=>d[5]==='CRITICO'&&d[4]==='Caducado');
+  const sinClasificar=docs.filter(d=>d[2]==='SIN TIPO'||d[4]==='Sin estado'||d[5]==='SIN CLASIFICAR');
+
+  if(vencidos.length>0){
+    const byNeg=NEGS.map(n=>({n,c:vencidos.filter(d=>d[0]===n).length})).filter(x=>x.c>0).sort((a,b)=>b.c-a.c);
+    const top=byNeg[0];
+    crit.push({icon:'ti-calendar-x',title:`${vencidos.length} documentos vencidos`,
+      desc:`Principalmente en ${top.n} (${top.c}). Vigencia vencida en el repositorio — CriterIN puede estar respondiendo con información desactualizada.`,
+      meta:'Impacto directo en CriterIN · Acción inmediata'});
+  }
+  if(incompletos.length>0){
+    const byNeg=NEGS.map(n=>{const nd=docs.filter(d=>d[0]===n);const c=nd.filter(d=>d[6]!=='Completo').length;return{n,c,pct:nd.length?Math.round(c/nd.length*100):0};}).filter(x=>x.c>0).sort((a,b)=>b.c-a.c);
+    const descParts=byNeg.map(x=>`${x.n}: ${x.c} (${x.pct}%)`).join('. ');
+    crit.push({icon:'ti-file-x',title:`${incompletos.length} documentos incompletos`,
+      desc:`${descParts}. Metadata incompleta impide clasificación y búsqueda correcta por el agente.`,
+      meta:byNeg.map(x=>x.n).join(' · ')+' · 30 días para resolver'});
+  }
+  if(criticosCaducados.length>0){
+    const byNeg=NEGS.map(n=>({n,c:criticosCaducados.filter(d=>d[0]===n).length})).filter(x=>x.c>0);
+    const descParts=byNeg.map(x=>`${x.n}: ${x.c}`).join(', ');
+    crit.push({icon:'ti-shield-x',title:`${criticosCaducados.length} documentos críticos caducados`,
+      desc:`${descParts}. Documentos esenciales para operaciones o cumplimiento regulatorio con vigencia expirada.`,
+      meta:'Riesgo regulatorio directo · Urgente'});
+  }
+  if(sinClasificar.length>0){
+    warn.push({icon:'ti-help-circle',title:`${sinClasificar.length} documentos con metadata incompleta`,
+      desc:'Falta clasificar tipo, riesgo o estado de vigencia en el Maestro de Documentación. Mientras no se complete, CriterIN no puede evaluar correctamente su confiabilidad.',
+      meta:'Completar carga en el Maestro (SharePoint)'});
+  }
+  NEGS.filter(n=>GF.negocios.has(n)).forEach(n=>{
+    const nd=docs.filter(d=>d[0]===n);
+    if(!nd.length) return;
+    const pct=Math.round(nd.filter(d=>d[6]==='Completo').length/nd.length*100);
+    const incompN=nd.filter(d=>d[6]!=='Completo').length;
+    if(pct<90){
+      warn.push({icon:'ti-trending-down',title:`${n} con salud ${pct<75?'crítica':'baja'}: ${pct}%`,
+        desc:`Gap de ${90-pct} puntos respecto a la meta del 90%.${incompN>0?` Completar los ${incompN} documentos incompletos resolvería este indicador.`:''}`,
+        meta:`Meta: 90% · Gap actual: −${90-pct}%`});
+    } else {
+      ok.push({icon:'ti-circle-check',title:`${n} saludable: ${pct}%`,
+        desc:`Salud igual o por encima de la meta del 90%.`,
+        meta:`Vigencia y metadata en buen estado`});
+    }
+  });
+  return{crit,warn,ok};
+}
+
+function buildPlanItems(docs){
+  const {crit,warn}=buildAlerts(docs);
+  return [...crit.map(a=>({title:a.title,desc:a.desc,sev:'crit'})),...warn.map(a=>({title:a.title,desc:a.desc,sev:'warn'}))].slice(0,5);
+}
+
+function alertHTML(a,sevCls){
+  return `<div class="alert-item ${sevCls}"><div class="alert-icon"><i class="ti ${a.icon}"></i></div><div><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div><div class="alert-meta">${a.meta}</div></div></div>`;
+}
+
+function renderNumberedPlan(containerId,docs){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const items=buildPlanItems(docs);
+  if(!items.length){el.innerHTML='<div class="empty-state">Sin acciones pendientes — todos los indicadores están en meta.</div>';return;}
+  el.innerHTML=items.map((it,i)=>{
+    const isCrit=it.sev==='crit';
+    const numBg=isCrit?'var(--c-crit-bg)':'var(--c-warn-bg)';
+    const numTxt=isCrit?'var(--c-crit-txt)':'var(--c-warn-txt)';
+    const badgeCls=isCrit?'b-red':'b-yellow';
+    const days=isCrit?'7 días':'30 días';
+    return `<div class="plan-item">
+      <div class="plan-num" style="background:${numBg};color:${numTxt}">${i+1}</div>
+      <div class="plan-body"><div class="plan-title">${it.title}</div><div class="plan-desc">${it.desc}</div></div>
+      <span class="badge ${badgeCls}" style="margin-top:2px;flex-shrink:0">${days}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderEmojiPlan(containerId,docs){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const items=buildPlanItems(docs);
+  const emojis=['⚡','📋','🔒','🤖'];
+  const badgeLabels=['Urgente','Alta','Media','Planificar'];
+  const badgeCls=['b-red','b-yellow','b-blue','b-gray'];
+  if(!items.length){el.innerHTML='<div class="empty-state">Sin acciones pendientes para los filtros seleccionados.</div>';return;}
+  el.innerHTML=items.slice(0,4).map((it,i)=>`<div class="plan-item">
+    <div class="plan-num" style="background:#f0f4f8;color:var(--c-muted);font-size:16px">${emojis[i%emojis.length]}</div>
+    <div class="plan-body"><div class="plan-title">${it.title}</div><div class="plan-desc">${it.desc}</div></div>
+    <span class="badge ${badgeCls[i%badgeCls.length]}" style="flex-shrink:0">${badgeLabels[i%badgeLabels.length]}</span>
+  </div>`).join('');
+}
+
+/* ════ GLOBAL HEADER (topbar pills + sidebar badges) ════ */
+function setKPI(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+
+function updateGlobalHeader(docs){
+  const k=recomputeKPIs(docs);
+  setKPI('pill-vencidos-txt', k.vencidos+' vencidos');
+  setKPI('pill-incompletos-txt', k.incompletos+' incompletos');
+  setKPI('pill-salud-txt', k.salud+'% salud');
+  const pv=document.getElementById('pill-vencidos'); if(pv) pv.className='status-pill '+(k.vencidos>0?'sp-red':'sp-green');
+  const pi=document.getElementById('pill-incompletos'); if(pi) pi.className='status-pill '+(k.incompletos>0?'sp-yellow':'sp-green');
+  const ps=document.getElementById('pill-salud'); if(ps) ps.className='status-pill '+(parseFloat(k.salud)>=90?'sp-green':parseFloat(k.salud)>=80?'sp-blue':'sp-yellow');
+
+  const {crit,warn}=buildAlerts(docs);
+  const badgeAlertas=document.getElementById('badge-alertas');
+  if(badgeAlertas){const n=crit.length+warn.length;badgeAlertas.textContent=n;badgeAlertas.style.display=n>0?'':'none';}
+  const critCad=docs.filter(d=>d[5]==='CRITICO'&&d[4]==='Caducado').length;
+  const badgeCrit=document.getElementById('badge-criticos');
+  if(badgeCrit){badgeCrit.textContent=critCad;badgeCrit.style.display=critCad>0?'':'none';}
+}
+
+const PAGE_TITLES={
+  overview: 'Resumen general',
+  negocios: 'Por negocio',
+  alertas:  'Alertas activas',
+  criticos: 'Documentos críticos',
+  docs:     'Explorador de documentos',
+  criterin: 'Estado CriterIN',
+};
+
+function updatePageSub(tab,docs){
+  const el=document.getElementById('page-sub');
+  if(!el) return;
+  if(tab==='overview'){
+    el.textContent=`${docs.length} documentos · Maestro de Documentación (SharePoint)`;
+  } else if(tab==='negocios'){
+    const active=NEGS.filter(n=>GF.negocios.has(n));
+    el.textContent= active.length? active.join(' · ') : 'Ningún negocio seleccionado';
+  } else if(tab==='alertas'){
+    const {crit,warn,ok}=buildAlerts(docs);
+    el.textContent=`${crit.length+warn.length+ok.length} alertas — ${crit.length} críticas, ${warn.length} de atención, ${ok.length} positiva${ok.length===1?'':'s'}`;
+  } else if(tab==='criticos'){
+    const criticos=docs.filter(d=>d[5]==='CRITICO');
+    const cad=criticos.filter(d=>d[4]==='Caducado').length;
+    el.textContent=`${criticos.length} críticos · ${cad} caducados`;
+  } else if(tab==='docs'){
+    el.textContent='Filtrar y buscar en el repositorio';
+  } else if(tab==='criterin'){
+    el.textContent='Calidad de fuentes del agente IA';
+  }
+}
+
+if(typeof Chart!=='undefined'){
+  Chart.defaults.font.family="'Barlow', sans-serif";
+  Chart.defaults.font.size=11;
+  Chart.defaults.color="#5a6e8a";
+}
+
+let bizChartInst=null,vigChartInst=null,critVigChartInst=null;
+
+function showTab(id){
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes("'"+id+"'")));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.getElementById('page-title').textContent=PAGE_TITLES[id]||'';
+  refreshAllViews();
+}
+
+function refreshAllViews(){
+  const docs=applyGF(allDocs);
+  updateGlobalHeader(docs);
+  const activeTab=document.querySelector('.section.active')?.id?.replace('sec-','');
+  if(activeTab==='overview') renderOverview(docs);
+  if(activeTab==='negocios') renderNegociosView(docs);
+  if(activeTab==='criticos') renderCriticos(docs);
+  if(activeTab==='docs'){filterDocs();renderDocsPage();}
+  if(activeTab==='criterin') renderCriterIN(docs);
+  if(activeTab==='alertas') renderAlertas(docs);
+  updatePageSub(activeTab,docs);
+}
+
+/* ════ TIPO DISTRIBUTION (reusable) ════ */
+function renderTipoDistInto(containerId,docs){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const total=docs.length;
+  if(!total){el.innerHTML='<div class="empty-state">Sin documentos para los filtros seleccionados</div>';return;}
+  const rows=TIPOS.map(t=>({t,c:docs.filter(d=>d[2]===t).length})).filter(r=>r.c>0).sort((a,b)=>b.c-a.c);
+  el.innerHTML=rows.map(r=>{
+    const pct=Math.round(r.c/total*100);
+    return `<div class="tipo-row"><div class="tipo-name">${TIPO_LABELS[r.t]}</div><div class="tipo-bar"><div class="tipo-fill" style="width:${pct}%;background:${TIPO_COLORS[r.t]}"></div></div><div class="tipo-n">${r.c}</div></div>`;
+  }).join('');
+}
+
+/* ════ OVERVIEW ════ */
+function renderOverview(docs){
+  const k=recomputeKPIs(docs);
+  setKPI('kpi-total',k.total);
+  setKPI('kpi-completos',k.completos);
+  setKPI('kpi-incompletos',k.incompletos);
+  setKPI('kpi-vencidos',k.vencidos);
+  setKPI('kpi-salud',k.salud+'%');
+  setKPI('venc-vencidos',k.vencidos);
+
+  const pctCompletos=k.total? (k.completos/k.total*100).toFixed(1):'0.0';
+  setKPI('kpi-completos-foot',pctCompletos+'% del total');
+  const pctIncompletos=k.total? (k.incompletos/k.total*100).toFixed(1):'0.0';
+  setKPI('kpi-incompletos-foot', k.incompletos>0? (pctIncompletos+'% — requieren acción') : 'Todo completo ✓');
+  setKPI('kpi-vencidos-foot', k.vencidos>0? 'Renovación inmediata' : 'Sin vencidos ✓');
+  const saludFoot=document.getElementById('kpi-salud-foot');
+  if(saludFoot){const s=parseFloat(k.salud);saludFoot.textContent = s>=90? 'Meta ≥ 90% ✓' : 'Meta ≥ 90%'; saludFoot.className='kpi-foot '+(s>=90?'ok':'warn');}
+
+  const venc=computeVencimientos(docs);
+  setKPI('venc-30',venc.en30);
+  setKPI('venc-90',venc.en90);
+
+  const vig=NEGS.map(n=>docs.filter(d=>d[0]===n&&d[4]==='Vigente').length);
+  const cad=NEGS.map(n=>docs.filter(d=>d[0]===n&&d[4]==='Caducado').length);
+  const sin=NEGS.map(n=>docs.filter(d=>d[0]===n&&d[4]!=='Vigente'&&d[4]!=='Caducado').length);
+  renderVigenciaChart(vig,cad,sin);
+
+  const healthEmpty=document.getElementById('health-empty-msg');
+  const healthBody=document.getElementById('healthRowsBody');
+  if(GF.negocios.size===0){
+    if(healthEmpty) healthEmpty.style.display='';
+    if(healthBody) healthBody.style.display='none';
+  } else {
+    if(healthEmpty) healthEmpty.style.display='none';
+    if(healthBody) healthBody.style.display='';
+    NEGS.forEach(n=>{
+      const key=n.toLowerCase();
+      const row=document.getElementById('health-row-'+key);
+      if(!row) return;
+      if(!GF.negocios.has(n)){row.style.display='none';return;}
+      row.style.display='';
+      const nd=docs.filter(d=>d[0]===n);
+      const pct=nd.length>0?Math.round(nd.filter(d=>d[6]==='Completo').length/nd.length*100):0;
+      const color=pct>=90?'#0d6639':pct>=75?'#e6a000':'#a0160c';
+      const badgeCls=pct>=90?'hb-ok':pct>=75?'hb-warn':'hb-bad';
+      const badgeTxt=pct>=90?'Saludable':pct>=75?'Atención':'Crítico';
+      const bar=document.getElementById('hbar-'+key); if(bar){bar.style.width=pct+'%';bar.style.background=color;}
+      const pctEl=document.getElementById('hpct-'+key); if(pctEl){pctEl.textContent=pct+'%';pctEl.style.color=color;}
+      const badge=document.getElementById('hbadge-'+key); if(badge){badge.className='health-badge '+badgeCls;badge.textContent=badgeTxt;}
+    });
+  }
+
+  renderTipoDistInto('tipoDistBody',docs);
+}
+
+/* ════ NEGOCIOS ════ */
+function renderNegociosView(docs){
+  const el=document.getElementById('bizCardsBody');
+  if(el){
+    const active=NEGS.filter(n=>GF.negocios.has(n));
+    if(!active.length){
+      el.innerHTML='<div class="empty-state" style="grid-column:1/-1">Ningún negocio seleccionado</div>';
+    } else {
+      const icons={ONSHORE:'ti-building-bank',OFFSHORE:'ti-world',MERCADO:'ti-chart-line'};
+      const labels={ONSHORE:'Onshore',OFFSHORE:'Offshore',MERCADO:'Mercado'};
+      el.innerHTML=active.map(n=>{
+        const s=computeNegStats(docs,n);
+        const cardCls=s.pct>=90?'bc-green':s.pct>=75?'bc-yellow':'bc-red';
+        const badgeCls=s.pct>=90?'b-green':s.pct>=75?'b-yellow':'b-red';
+        const barColor=s.pct>=90?'#0d6639':s.pct>=75?'#e6a000':'#a0160c';
+        return `<div class="biz-card ${cardCls}">
+          <div class="biz-header"><div class="biz-name"><i class="ti ${icons[n]}"></i>${labels[n]}</div><span class="badge ${badgeCls}">${s.pct}% salud</span></div>
+          <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">${s.total}</div></div>
+          <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-ok-txt)">${s.comp}</div></div>
+          <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-crit-txt)">${s.incomp}</div></div>
+          <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">${s.crit}</div></div>
+          <div class="stat-row"><div class="stat-key">Vigentes</div><div class="stat-val">${s.vig}</div></div>
+          <div class="stat-row"><div class="stat-key">Caducados</div><div class="stat-val" style="color:var(--c-crit-txt)">${s.cad}</div></div>
+          <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val" style="color:var(--c-warn-txt)">${s.sinEstado}</div></div>
+          <div class="stat-row"><div class="stat-key">Tipo principal</div><div class="stat-val">${s.tipoPrincipal}</div></div>
+          <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:${s.pct}%;height:100%;background:${barColor};border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: ${s.pct}% · Meta: 90%${s.pct>=90?' ✓':''}</div></div>
+        </div>`;
+      }).join('');
+    }
+  }
+  renderBizChart(docs);
+}
+
+/* ════ CRÍTICOS ════ */
+function renderCriticos(docs){
+  const criticos=docs.filter(d=>d[5]==='CRITICO');
+  const critComp=criticos.filter(d=>d[6]==='Completo').length;
+  const critCad=criticos.filter(d=>d[4]==='Caducado').length;
+
+  setKPI('kpi-crit-total',criticos.length);
+  setKPI('kpi-crit-completos',critComp);
+  setKPI('kpi-crit-caducados',critCad);
+  setKPI('kpi-crit-total-foot', (docs.length? Math.round(criticos.length/docs.length*100):0)+'% del repositorio');
+  const compPct=criticos.length? Math.round(critComp/criticos.length*100):0;
+  const compFoot=document.getElementById('kpi-crit-completos-foot');
+  if(compFoot){compFoot.textContent=compPct+'% — meta ≥ 95%'+(compPct>=95?' ✓':'');compFoot.className='kpi-foot '+(compPct>=95?'ok':'bad');}
+  setKPI('kpi-crit-caducados-foot', critCad>0? 'Meta: 0 — urgente' : 'Meta cumplida ✓');
+
+  const heatBody=document.getElementById('heatGridBody');
+  if(heatBody){
+    if(!criticos.length){
+      heatBody.innerHTML='<div class="empty-state" style="grid-column:1/-1">Sin documentos críticos para los filtros seleccionados</div>';
+    } else {
+      heatBody.innerHTML=NEGS.filter(n=>GF.negocios.has(n)).map(n=>{
+        const nd=criticos.filter(d=>d[0]===n);
+        const vig=nd.filter(d=>d[4]==='Vigente').length;
+        const cad=nd.filter(d=>d[4]==='Caducado').length;
+        return `<div class="heat-cell" style="background:var(--c-info-bg)"><div class="heat-val" style="color:var(--c-info-txt)">${vig}</div><div class="heat-lbl" style="color:var(--c-blue)">${n} · vigentes</div></div>
+        <div class="heat-cell" style="background:${cad>0?'var(--c-crit-bg)':'var(--c-ok-bg)'}"><div class="heat-val" style="color:${cad>0?'var(--c-crit-txt)':'var(--c-ok-txt)'}">${cad}</div><div class="heat-lbl" style="color:${cad>0?'var(--c-crit-txt)':'var(--c-ok-txt)'}">${n} · caducados</div></div>`;
+      }).join('');
+    }
+  }
+
+  renderTipoDistInto('critTipoBody',criticos);
+  renderCritVigChart(criticos);
+}
+
+/* ════ ALERTAS ════ */
+function renderAlertas(docs){
+  const {crit,warn,ok}=buildAlerts(docs);
+  const critBody=document.getElementById('alertCritBody');
+  if(critBody){
+    critBody.innerHTML= crit.length? crit.map(a=>alertHTML(a,'sev-crit')).join('') : '<div class="empty-state">Sin alertas críticas para los filtros seleccionados</div>';
+  }
+  const warnBody=document.getElementById('alertWarnBody');
+  if(warnBody){
+    const items=[...warn.map(a=>({...a,sevCls:'sev-warn'})),...ok.map(a=>({...a,sevCls:'sev-ok'}))];
+    warnBody.innerHTML= items.length? items.map(a=>alertHTML(a,a.sevCls)).join('') : '<div class="empty-state">Sin novedades</div>';
+  }
+  renderNumberedPlan('planBody',docs);
+}
+
+/* ════ CRITERIN ════ */
+function renderCriterIN(docs){
+  const total=docs.length;
+  const activas=docs.filter(d=>d[4]==='Vigente'&&d[6]==='Completo').length;
+  const riesgo=total-activas;
+  const calidad=total? Math.round(activas/total*100):0;
+  setKPI('kpi-cin-total',total);
+  setKPI('kpi-cin-activas',activas);
+  setKPI('kpi-cin-riesgo',riesgo);
+  setKPI('kpi-cin-calidad',calidad+'%');
+
+  const srcBody=document.getElementById('srcBarsBody');
+  if(srcBody){
+    const active=NEGS.filter(n=>GF.negocios.has(n));
+    if(!active.length){
+      srcBody.innerHTML='<div class="empty-state">Ningún negocio seleccionado</div>';
+    } else {
+      srcBody.innerHTML=active.map(n=>{
+        const nd=docs.filter(d=>d[0]===n);
+        const vig=nd.filter(d=>d[4]==='Vigente').length;
+        const pct=nd.length?Math.round(vig/nd.length*100):0;
+        const color=pct>=90?'#0d6639':pct>=60?'#e6a000':'#a0160c';
+        return `<div class="src-bar-wrap"><div class="src-label-row"><span class="src-label">${n}</span><span class="src-count">${vig} vigentes / ${nd.length} total</span></div><div class="src-bar"><div class="src-fill" style="width:${pct}%;background:${color}"></div></div></div>`;
+      }).join('');
+    }
+  }
+
+  const riskBox=document.getElementById('cinRiskBox');
+  if(riskBox){
+    const worst=NEGS.filter(n=>GF.negocios.has(n)).map(n=>{
+      const nd=docs.filter(d=>d[0]===n);
+      const cad=nd.filter(d=>d[4]==='Caducado').length;
+      return{n,cad,total:nd.length};
+    }).filter(x=>x.cad>0).sort((a,b)=>b.cad-a.cad)[0];
+    if(worst){
+      riskBox.style.display='';
+      const txt=riskBox.querySelector('.risk-text');
+      if(txt) txt.textContent=`${worst.n} tiene ${worst.cad} documentos caducados activos. El agente puede estar respondiendo consultas con datos desactualizados.`;
+    } else {
+      riskBox.style.display='none';
+    }
+  }
+
+  renderEmojiPlan('cinPlanBody',docs);
+}
+
+/* ════ CHARTS ════ */
+function renderVigenciaChart(vig,cad,sin){
+  const ctx=document.getElementById('vigenciaChart');
+  if(!ctx||typeof Chart==='undefined') return;
+  if(vigChartInst){vigChartInst.destroy();vigChartInst=null;}
+  vigChartInst=new Chart(ctx,{type:'bar',data:{
+    labels:['ONSHORE','OFFSHORE','MERCADO'],
+    datasets:[
+      {label:'Vigente',data:vig,backgroundColor:BRAND.vivid,borderRadius:4},
+      {label:'Caducado',data:cad,backgroundColor:'#f0a09b',borderRadius:4},
+      {label:'Sin estado',data:sin,backgroundColor:'#c5cfe0',borderRadius:4}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:gridColor}}}}});
+}
+
+function renderBizChart(docs){
+  const ctx=document.getElementById('bizChart');
+  if(!ctx||typeof Chart==='undefined') return;
+  if(bizChartInst){bizChartInst.destroy();bizChartInst=null;}
+  bizChartInst=new Chart(ctx,{type:'bar',data:{
+    labels:['ONSHORE','OFFSHORE','MERCADO'],
+    datasets:[
+      {label:'Completos',data:NEGS.map(n=>docs.filter(d=>d[0]===n&&d[6]==='Completo').length),backgroundColor:BRAND.vivid,borderRadius:4},
+      {label:'Incompletos',data:NEGS.map(n=>docs.filter(d=>d[0]===n&&d[6]!=='Completo').length),backgroundColor:'#f0a09b',borderRadius:4},
+      {label:'Críticos',data:NEGS.map(n=>docs.filter(d=>d[0]===n&&d[5]==='CRITICO').length),backgroundColor:BRAND.light,borderRadius:4}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:gridColor}}}}});
+}
+
+function renderCritVigChart(criticos){
+  const ctx=document.getElementById('critVigChart');
+  if(!ctx||typeof Chart==='undefined') return;
+  if(critVigChartInst){critVigChartInst.destroy();critVigChartInst=null;}
+  const data=NEGS.map(n=>{
+    const nd=criticos.filter(d=>d[0]===n);
+    return nd.length? Math.round(nd.filter(d=>d[4]==='Vigente').length/nd.length*100):0;
+  });
+  critVigChartInst=new Chart(ctx,{type:'bar',data:{
+    labels:NEGS,
+    datasets:[{label:'% vigentes',data,backgroundColor:[BRAND.vivid,'#0d6639','#f0a09b'],borderRadius:4}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,max:100,grid:{color:gridColor},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}});
+}
+
+/* ════ MASTER DATA — extraído del Maestro de Documentación (SharePoint, sitio W-M/Estructura Documental) ════
+   Snapshot al 04/08/2026. Cada fila: [negocio, nombre, tipo, etapa, estado, riesgo, condicion, vence, owner].
+   No se sincroniza en vivo — para actualizar, hay que re-exportar el maestro y regenerar este arreglo. */
+const allDocs=[
+  ["MERCADO","Carteras Regularizacin de Activos_SEP2024 (1)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","30/09/2024","RESEARCH"],
+  ["MERCADO","ElAñoenGráficos_2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","VISTICR_001_20250612","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","12/09/2025","RESEARCH"],
+  ["MERCADO","VIST2T25_002_20250716","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","16/10/2025","RESEARCH"],
+  ["MERCADO","DVV_Local_003_20250822","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","22/11/2025","RESEARCH"],
+  ["MERCADO","En_Foco_001_20250408","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","VIST3T25_003_20251028","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/01/2026","RESEARCH"],
+  ["MERCADO","TGSICR_001_20251113","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","13/02/2026","RESEARCH"],
+  ["MERCADO","YPF3T25_002_20251117","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","17/02/2026","RESEARCH"],
+  ["MERCADO","Criteria_FAD_ReforzaTuPoderDeCompra - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Criteria_FAD_GestionActiva - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Intermedias - Renta -Diciembre 2025 (3)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Intermedias - Crecimiento - Diciembre 2025 (2)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Intermedias -Capitalización Plus- Diciembre 2025 (3)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Intermedias - Capitalización - Diciembre 2025 (2)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Acciones Argentina - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Ganale A La Devaluacion - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Prudente USD - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Renta Sin Fronteras - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Prudente Pesos - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","Ganale A La Inflacion - Diciembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","31/12/2025","RESEARCH"],
+  ["MERCADO","DVV  ene2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","01/04/2026","RESEARCH"],
+  ["MERCADO","En_Foco_002_20260129","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Intermedias - Renta - Febrero2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/02/2026","RESEARCH"],
+  ["MERCADO","Intermedias - Crecimiento - Febrero 2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/02/2026","RESEARCH"],
+  ["MERCADO","Intermedias - Capitalización Plus - Febrero 2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/02/2026","RESEARCH"],
+  ["MERCADO","Intermedias - Capitalización - Febrero 2026","PROCESO","Transferencia","Caducado","CRITICO","Completo","28/02/2026","BACK OFFICE"],
+  ["MERCADO","RDML_012026_20260225","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","19/03/2026","RESEARCH"],
+  ["MERCADO","En_Foco_003_20260318","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","YPF4T25_003_20260410","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","10/07/2026","RESEARCH"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_1T2025_001_20250325","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","14/07/2026","RESEARCH"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_2T2025_002_20250630","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","14/07/2026","RESEARCH"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_3T2025_003_20251105","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","14/07/2026","RESEARCH"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_4T2025_004_20251219","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","14/07/2026","RESEARCH"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_1T2026_005_20260414","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","14/07/2026","RESEARCH"],
+  ["MERCADO","VIST4T25_004_20260418","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","18/07/2026","RESEARCH"],
+  ["MERCADO","En_Foco_004_20260424","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Coyuntura_020_20260427","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","EquityFN_003_VLO_20260422","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","29/04/2027","RESEARCH"],
+  ["MERCADO","EquityFN_001_V-MA_20260305","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","29/04/2027","RESEARCH"],
+  ["MERCADO","EquityFN_002_ASML_20260331","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","29/04/2027","RESEARCH"],
+  ["MERCADO","EquityFN_004_BKNG_20260429","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","29/04/2027","RESEARCH"],
+  ["MERCADO","VIST1T26_005_20260507","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","05/08/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_013_20260506","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","05/06/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_014_20260511","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","11/06/2026","RESEARCH"],
+  ["MERCADO","TGS1T26_002_20260514","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","14/08/2026","RESEARCH"],
+  ["MERCADO","Comite_039_20260519","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_007_20251013","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","30/05/2026","RESEARCH"],
+  ["MERCADO","DVV_Local_001_20250522","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV_Local_002_20250703","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","YPFICR_001_20250826","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV_Local_004_20251016","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV  Noviembre 2025 OK_","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV  OCT2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV  DIC2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Junio2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV  Julio 2025 ok","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV  Noviembre 2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV  SEP2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Julio2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Julio2025_BORRADOR","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Mayo2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Abril 2025_OK","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Abril 2025_V1","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Marzo2025","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Enero OK","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV 09MAY25","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV ENE25","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV Dec24_ ok","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","DVV- Noviembre 2024 ok","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Descripción_Calculadora","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","26/05/2027","RESEARCH"],
+  ["MERCADO","Comite_001_20250721","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","27/05/2026","RESEARCH"],
+  ["MERCADO","Comite_003_20250806","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_002_20250728","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","27/05/2026","RESEARCH"],
+  ["MERCADO","Comite_004_20250813","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_005_20250821","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_006_20250827","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comité_007_20250903","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_008_20250909","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_009_20250916","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_010_20250930","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_011_20251006","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_012_20251015","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_016_20251112","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_017_20251119","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_018_20251203","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_019_20251210","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_020_20251216","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_021_20251223","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_022_20260106","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_025_20260127","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_023_20260113","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_024_20260120","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_028_20260224","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_026_20260203","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_027_20260209","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_029_20260303","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_030_20260310","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_031_20260317","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_032_20260331","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_033_20260407","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_034_20260414","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_015_20251104","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_014_20251028","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_013_20251022","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_035_20260421","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_036_20260428","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_037_20260505","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Comite_038_20260512","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/05/2026","RESEARCH"],
+  ["MERCADO","Calculadora_Soberanos_Research_08052026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","26/05/2027","RESEARCH"],
+  ["MERCADO","Manual_20250703","MANUAL","Seguimiento y Fidelización","Vigente","CRITICO","Incompleto","28/05/2027","RESEARCH"],
+  ["MERCADO","Coyuntura_001_20250213","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_002_20250225","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_004_20250411","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_005_20250512","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_003_20250403","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_006_20250618","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_007_20250702","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_008_20250721","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_009_20250813","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_011_20250903","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_010_20250820","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_012_20250908","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_014_20251009","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_013_20250912","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_015_20260105","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_016_20260108","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_001_20250409","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_003_20250610","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_002_20250512","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","21/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_004_20250708","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_005_20250814","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_006_20250909","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_010_20260112","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_008_20251112","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_009_20251209","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_001_20250508","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_002_20250603","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_003_20250707","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_004_20250804","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_005_20250903","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_006_20251002","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_007_20251105","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_008_20251203","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_009_20260107","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Criteria_Perfiles de Inversion","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Seleccion de Fondos Locales -1817efe4-a249-4162-b9a7-69688916a62a (8) (4)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","28/08/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_010_20260204","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_011_20260211","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_018_20260303","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_017_20260302","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Monetario_012_20260312","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_011_20260304","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_019_20260326","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_012_20260407","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Calendario_Economico_013_20260401","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_011_20251201","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_012_20260102","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_010_20251103","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_009_20251001","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_008_20250901","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_007_20250801","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_006_20250701","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_005_20250602","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_004_20250505","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_003_20250401","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_002_20250305","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Calendario_Economico_001_20250203","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","Informe_Monetario_013_20260413","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Calendario_Economico_014_20260504","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","CRITICO","Completo","28/05/2027","RESEARCH"],
+  ["MERCADO","SISF-Securitised-Credit-A1-Acc-FMR-UNEN-2026-04-18. LU1725195397","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","PIMCO GIS Mortg Opps IE00BYZNBB98","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","AB American Growth - LU0079474960","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Aberdeen Frontier Marke - LU1725895616","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Allianz Best Styles Global - LU2710823126","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Blackrock Emerging Mark - LU0200680600","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","AXAIMFIS US Corp Int Bl - LU0546067371","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Barings EM Local Debt - E00BK71LG81","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","BNY Mellon Global Credit - E00BYZW4P13","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Franklin High Yield USD - LU0131126228","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","JPM Flexible Credit USD - LU0469576283","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Jupiter Global Equity Abso - E00BNH71F69","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","JPM Latin America Equity - LU0210535034","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","M&G (Lux) Eurp Strat Val - LU1670707956","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Lazard Emerging Markets - E00BYQ4FT75","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Morgan Stanley Emerging - LU0603480039","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","MFS Meridian Global Cred - LU0458495628","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Blackrock GF US Dollar HI - LU0046676465","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Neuberger Berman Short - E00BDZRXR46","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Neuberger Berman Emerg - E00B986J944","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Neuberger Berman ShortDu - E00B7FN4D31","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","New Capital US Growth - E00BJYJF221","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","PIMCO GIS Low Dur - E00BDT57T44","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Schroder Emerging Marke - LU0795632180","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Schroder ISF Frntr Mkts Eq - LU0562313402","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Schroder ISF Glb Crdt Inc - LU1737068558","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Schroder ISF Global Eq Al - LU0225283273","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Vontobel Credit Opps EUR - LU2917874955","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Vontobel Emerging Marke - LU1683477829","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Wellington Strategic Eurp - E00B839Y076","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Seleccion ETF 2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","28/08/2026","RESEARCH"],
+  ["MERCADO","Seleccion_de_Fondos_Mutuos_2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","28/08/2026","RESEARCH"],
+  ["MERCADO","Man Hi Yld Opps - E00BL6VJ735","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Aegon High Yield Global B - E00B296WY05","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","AXAWF US High Yield Bond - LU0276014999","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","BNY Mellon Glb Short Dur - E00BD5CTS25","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Ninety One GSF EM Lcl Cur - LU0345767262","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","PIMCO GIS Emerging Local - E00B3DD5N41","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Aberdeen Emerging Marke - LU0566480116","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","PIMCO GIS Income USD - E00B7KFL990","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","PIMCO GIS Balanced Inc - E00B4YYXB79","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","AB Select US Equity - LU0683600562","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Schroder ISF US Large Ca - LU0106261372","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Allianz GEM Equity High D - LU0293314216","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","JPM Europe Equity USD - LU0119078227","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","JPM Europe Equity Plus USD - LU0336375786","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","JPM Global Select Equity - LU0070217475","PROCESO","Transferencia","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","PIMCO Inflation Multi-Asset - E00B8ZPJ559","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Jupiter Strategic Absolute - E00BV54L339","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","BNY Mellon US Equity Inc - E00BD5M6819","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Janus Henderson Balanced - E0004445015","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/05/2026","RESEARCH"],
+  ["MERCADO","Semaforo_IPC_001_20260427","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/06/2026","RESEARCH"],
+  ["MERCADO","Semaforo_EMAE_001_20260429","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/06/2026","RESEARCH"],
+  ["MERCADO","Semaforo_Saldo_Comercial_001_20260427","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/06/2026","RESEARCH"],
+  ["MERCADO","VIST2T26_006_20260722","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","30/10/2026","RESEARCH"],
+  ["MERCADO","RDM - 25 de Febrero 2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","RDMG - 3 de Diciembre 2025","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Bubbles","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Encuentro con Inversores - Diciembre 2025","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","RDMG - 5 de Noviembre 2025","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","RDMG - 19 de Noviembre 2025","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","RDMG - 19 de Noviembre 2025 complemento","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","DCA vs Lump Sum","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","RDMG - 5 de Noviembre 2025 - repaso Comité Global","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","RDMG - 17 de Septiembre 2025","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Criteria_05NOV25","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Link Reuniones de Mercado","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Calendario_Economico_015_20260604","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","18/07/2026","RESEARCH"],
+  ["MERCADO","Informe_Recaudacion_014_20260602","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","18/07/2026","RESEARCH"],
+  ["MERCADO","Valuentum_mayo2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","30/06/2026","RESEARCH"],
+  ["MERCADO","Valuentum_BestIdeasNewsletter_5_15_2026_FINAL","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","30/06/2026","RESEARCH"],
+  ["MERCADO","2026 Year-Ahead Investment Outlook_JPM AM","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","bii-global-outlook-2026_BLACKROCK","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","2026-investment-outlook-report","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","Fidelity-International-Outlook-2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","Global Economic Outlook 2026_ U.S. Resilience to Lead Growth _ Morgan Stanley","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","Investment+Outlook+2026_EN_BNP","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","Investment-Outlook-2026 GS","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","Outlook_2026_The_Interpretation_Game_Barclays","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","io-en_INVESCO","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","outlook-2026 _ Allianz Global Investors","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","outlook-6-for-2026-essential-questions-for-investors_BNY","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","The world outlook 2026 – never a dull moment – Deutsche Bank","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","Prospects for 2026_ “Goldilocks” Performance, but Risks Linger_CITI","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/07/2026",""],
+  ["MERCADO","Consenso variables Macro- Bloomberg - Agente IA","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","11/07/2026","RESEARCH"],
+  ["MERCADO","Comite_040_20260609","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","17/06/2026","RESEARCH"],
+  ["MERCADO","Criteria_FAL2026LookCRI","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/12/2026",""],
+  ["MERCADO","FAL_Criteria_TMF_Presentacion (1)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","28/12/2026",""],
+  ["MERCADO","Semaforo_IPC_002_20260518","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Semafo_EMAE_002_20260522","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Semaforo_saldo_Comercial_002_20260521","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Semaforo_Construccion e Industria_001_20260512","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Informe_Monetario_015_20260609","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","17/07/2026","RESEARCH"],
+  ["MERCADO","Semaforo_Construccion e Industria_002_20260611","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Coyuntura_021_20260612","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","31/07/2026","RESEARCH"],
+  ["MERCADO","Semaforo_IPC_003_20260612","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","CoverageList_Screen_update_6_13_2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","31/07/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_022_20260617","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","17/07/2026","RESEARCH"],
+  ["MERCADO","Semaforo_Saldo_Comercial_003_20260619","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Suggested_List_Bonds_220626","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Bonds_List_220626","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Comite_041_20260623","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","02/07/2026","RESEARCH"],
+  ["MERCADO","Comite_042_20260630","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","08/07/2026","RESEARCH"],
+  ["MERCADO","Retorno_Total_20260630","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Intermedias - Renta - Marzo 2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Intermedias - Crecimiento - Marzo 2026","PROCESO","Apertura de Cuenta","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Intermedias - CapitalizacionPlus - Marzo 2026 (1)","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Intermedias -Capitalizacion - Marzo 2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Retorno_Total_20260623","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Calendario_Economico_016_20260701","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","05/08/2026","RESEARCH"],
+  ["MERCADO","EquityFN_006_VST_20260622","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","31/07/2026","RESEARCH"],
+  ["MERCADO","EquityFN_005_NBIS_20260528","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","26/06/2026","RESEARCH"],
+  ["MERCADO","Semaforo_EMAE_003_20260703","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Informe_Recaudacion_015_20260703","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Comite_043_20260707","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","15/07/2026","RESEARCH"],
+  ["MERCADO","Retorno_Total_003_20260707","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Modelar_Portafolio_08072026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Soja_Informe_Sectorial_Jun2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Petroleo_Informe_Sectorial_Jun2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Oro_Informe_Sectorial_Jun2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Reporte_Obligaciones_Negociables_2T2026_006_20260703","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","12/10/2026","RESEARCH"],
+  ["MERCADO","Comite_044_20260714","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","22/07/2026","RESEARCH"],
+  ["MERCADO","Retorno_Total_004_20260714","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Informe_Monetario_016_20260713","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","15/08/2026","RESEARCH"],
+  ["MERCADO","Semaforo_Construccion e Industria_003_20260716","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Semaforo_IPC_004_20260717","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Calculadora_Soberanos_Research_20072026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Retorno_Total_005_20260721","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Calculadora_Corporativos_Research_23072026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Comite_046_20260728","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","04/08/2026","RESEARCH"],
+  ["MERCADO","Comite_045_20260721","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Caducado","NO CRITICO","Completo","28/07/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_023_20260618","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","31/08/2026","RESEARCH"],
+  ["MERCADO","Coyuntura_&_Mercado_001_072026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","10/08/2026","RESEARCH"],
+  ["MERCADO","EquityFN_007_MP_20260728","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["MERCADO","Calculadora_Soberanos_Research_31072026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["OFFSHORE","Instructivo Préstamos en XP - NPL","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PJ con actividad comercial que hace CCL v09.2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PJ con actividad comercial v09.2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PF v09.2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PJ sin actividad comercial v09.2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ACAT Stonex, XP, EFG Procapital, Deutsche Bank","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Modelo de Carta para transfer OUT Cash Stonex","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Modelo de Carta para transfer OUT Cash Domestic XP EFG Procapital Deutsche Bank","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Modelo de Carta para transfer OUT Cash International XP EFG Procapital Deutsche Bank","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Transfer OUT Cash Asana XP EFG Procapital Deutsche Bank y Agente CUY","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instrucciones-Coordenadas para transferencias de Activos Agente CUY Stonex XP Procapital EFG y Deutsche Bank","DOCUMENTO INFORMATIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Transfer ACH Stonex","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Option Agreement XP, Procapital, EFG, Deutsche bank","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo eDelivery Stonex","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","InstructivoW8-Asana StoneX, XP, Agente, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP - Actualizar informacion dirección, mail, email, teléfono","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Transfer On Death TOD - XP, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Cambio de dirección email y teléfono StoneX Actualización de información","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Modificación de datos Asana StoneX, XP, Agente CUY, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","W8 BEN","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","W9","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","W8 BEN-E (Entity)","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Formulario actualización de datos CRITERIA StoneX, XP, Agente CUY, Procapital, EFG, Deutsche Bank","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Descarga de Boletos Operaciones Brokerware","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Resumen de tarjeta de credito Karta - Uso Interno para FA -","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Informacion General y Costos Tarjeta de credito Karta","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Aviso de viaje StoneX, XP, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Aviso de compra StoneX, XP, Procapital, EFG, Deutsche Bank,","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo Activación Tarjeta StoneX","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","StoneX-EnvioDocs","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","XP - XP6 - Apertura-Ctas_ NPL","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Reseteo Contraseña Clientes StoneX, XP, Agente CUY, Procapital, EFG, Deutsche Bank Blanqueo","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Joint_Account_Agreement_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Margin_Agreement_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Trading Authorization para mas de dos firmantes","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Trading_Authorization_International_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_Brokerage_Agreement_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_New_Account_Co-App_Form_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_New_Account_Form_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_Self Certification Tax Compliant_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Ach_Authorization_Agreement_For_Retail_And_Retirement_Accounts_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Direct_Deposit_Authorization_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","F 9 - XPS transfer on Death - Individual","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","F 15 Transfer on Death - Joint - 2013-04","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Foreign_Bank_Beneficial_Ownership_Form_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Managed_360_Terms_And_Conditions_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ACAT_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Online_Access_and_Electronic_Delivery_Form_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Option_Agreement_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Select_Link_Form_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Trusted_Contact_Form_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Managed360_BNYMA_-_Brochure_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_ACAT Mismatch","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_Change_of_Ownership_Individual_Joint_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_NON US - XP Money Market Sweep Letter_New Clients_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Trading_Authorization_International_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Margin_Agreement_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Corporate_Resolution_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_FINCEN_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_Brokerage Agreement_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_New_Account_Co-App_Form_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","W-8BEN-E_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_New_Account_Corp_with_directors_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_Self Certification Tax Compliant_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Option_Agreement_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Partnership Account F (Para ctas limited Partnership) MOST RECENT VERSION NOT FOUND IN NEXT","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_ACAT Mismatch","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Trustee Certiciation (APLICA PARA CTS TRUSTEE) MOST RECENT VERSION NOT FOUND IN NEXT","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_NON US - XP Money Market Sweep Letter_New Clients_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP_US_Supplemental_(Solo para cuentas de PJ relacionadas al rubro marítimo)_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ACAT_2025","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","XP Home Broker Pershing (guía)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Form 312 Form 202102X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Margin Agreement 202010X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Introduced Customer Account Agreement 20240703","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","W8 BEN","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_New Account Application IBD 20230727X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Discretionary Account Authorization 20210723X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Associated Person Form 202008X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Change of Address Form 202008X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Election of Electronic Delivery 202010X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Introduced Options Application and Agreement 20221012X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Transfer on Death Application 20210217X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","SECR_Worthless Security 20230107X (1)","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Foreign Account Section 312 Form 202102X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Certification Regarding Beneficial Ownership 20210323X (1)","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Introduced Customer Account Agreement 20210519X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Associated Person Form 202008X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Margin Agreement 202010X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_NEWA New account Agremment.1X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","W8BEN E  Persona Juridica (Octubre 2021)","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Corporate Resolution 202008X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Election of Electronic Delivery 202010X (1)","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Change of Address Form 202008X (1)","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","SECR_Worthless Security 20230107X (1)","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","ONBD_Introduced Options Application and Agreement 20221012X","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Form EDelivery  Stonex","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Como solicitar devolución de Impuestos Retenidos StoneX, XP, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Interest Rate Form","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Lending Agreement Form","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","T4 Form","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Option Agreement Form XP","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instructivo para solicitud de Tarjeta Corestone XP Procapital Deutsche Bank EFG","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Form Corestone Wet Signature","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Form Corestone Electronic Signature","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","STONEX CRA Form","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Form Transfer ACH Stonex","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Form Transfer on Death (TOD) cuentas Individual","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Form Transfer on Death (TOD) cuentas Joint","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Form Transfer on Death (TOD) Stonex","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Criteria-StoneX (8)","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Criteria-Santander","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","PPT Institucional XP 26","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Criteria Propuesta a comerciales 2026","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","TARIFARIO-Transferencias salientesa terceros en XP Vigente V24","DOCUMENTO INFORMATIVO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Grilla de Acuedos de  Plataformas- Bancos y Tarifarios- Montos mínimos de inversión","DOCUMENTO INFORMATIVO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","W8 BEN","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Tarifario Criteria Vigente","DOCUMENTO INFORMATIVO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","GUIA RAPIDA DE USO CORESTONE","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","GUIA RAPIDA DE USO CORESTONE","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","LOA CASH AGENTE","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","W8 BEN - W8 BEN E - W9","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","W8 BEN - Personas Fisicas - Campos obligatorios","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","W8 BEN-E - Personas Jurídicas - Campos obligatorios","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Cr-Blotter-Trading-StoneX","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Cr-Blotter-Trading-EFG-XP","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Cr-Blotter-Trading-CUY","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Brochure Tarjeta de credito Karta...","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","XP - Agregar cotitular","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","StoneX - Agregar cotitular","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Agente Transfer IN Cash - Asana e instrucciones","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Instrucciones para transferencias de Cash entrantes Offshore (XP, StoneX, EFG y Agente)","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Tarifario Criteria Uy","DOCUMENTO INFORMATIVO","Inversión","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Affidavit of Residence","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["OFFSHORE","Aviso de viaje guía Pershing NetxInvestor Español","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Aviso de viaje guía Pershing NetxInvestor Ingles","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Documentos necesarios para abrir cuenta en Criteria Offshore","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","APERTURA DE CUENTAS"],
+  ["OFFSHORE","Manual_Operaciones_Integrado_2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["OFFSHORE","Criteria_Advisory2026 (1)","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["OFFSHORE","Criteria_Clientes2026 (2)","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["OFFSHORE","Proceso Apertura de Cuenta Brokerage","PROCESO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["OFFSHORE","Cr-Facebank-Apertura-Ctas V08-08-25--65ff3310-f6c8-4ff9-8802-07fdb85a8e3d (2) (1)","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["ONSHORE","Banco_de_Valores_CriteriaWM","DOCUMENTO INFORMATIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Coordenadas_Banco_industrial","DOCUMENTO INFORMATIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Instructivo alta Cuenta bancaria Home","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Instructivo Transferencias Bancarias Home","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Instructivo_BONY_Transferencia_USD","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Instructivo solicitud Cheques-Echeqs HOME","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","INSTRUCCION CABLES BONY","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 10-12-2025 al 9-4-2026","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","F-AR 12 PH Cierre Cta Cte","FORMULARIO","Baja","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 5 PJ ESTRUCTURA SOCIETARIA Y DDJJ BENEFICIARIOS FINALES","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 2 ACTUALIZACIÓN DDJJ PEP","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 10 PJ ACTUALIZACION BAJA DE CTAS. BCRIAS","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 1 PJ ACTUALIZACION REPRESENTANTE LEGAL - APODERADO","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","27/07/2027","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 3 PJ ACTUALIZACION DDJJ FATCA","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 4 PJ ACTUALIZACION DDJJ SO","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 3 PJ ACTUALIZACION DDJJ OCDE","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 6 PJ ACTUALIZACION INCORPORACION DE CTAS. BCRIAS","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 7 PJ ACTUALIZACIÓN DDJJ BBFF","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 10 PH ACTUALIZACION BAJA CTA. BCRIA","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 2 ACTUALIZACIÓN DDJJ PEP","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 3 PH ACTUALIZACIÓN DDJJ OCDE - FACTA","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 4 PH ACTUALIZACION DDJJ SO","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 6 PH ACTUALIZACION INCORPORACION CTA. BCRIA","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 13-04-25 al 14-04-25","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 29-05-25 al 11-06-25","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 08-10-24 al 11-04-25","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 12-06-25 al 18-09-25","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 20-09-24 al 3-10-24","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 24-07-24 al 19-09-24","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 26-09-25 al 1-12-25","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 1-12-25 al 10-12-25","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - DESDE 19-09-25 al 25-09-25","FORMULARIO","Apertura de Cuenta","Caducado","CRITICO","Completo","14/05/2027","COMPLIANCE"],
+  ["ONSHORE","Guia Migración de Cuenta a Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Guia Alta de cuenta PH - Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Guia Alta de cuenta PJ - Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Guia de Uso de Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Criteria Propuesta a comerciales 2026","DOCUMENTO INFORMATIVO","Captación","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","F-AR. A. 8 PH ACTUALIZACIÓN PERFIL RIESGO DEL INVERSOR","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 8 PH ACTUALIZACIÓN PERFIL RIESGO DEL INVERSOR","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 11 PH CUENTAS ADMINISTRADAS","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 11 PJ CUENTAS ADMINISTRADAS","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 12 PJ Cierre Cta Cte","FORMULARIO","Baja","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Proceso Alta MAV","PROCESO","Apertura de Cuenta","Vigente","CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR13  PJ PERFIL RIESGO DEL INVERSOR","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","08/01/2027","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 5 PH ACTUALIZACION DDJJ INVERSOR CALIFICADO","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 5 PJ ACTUALIZACION DDJJ INVERSOR CALIFICADO","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 1 PH APERTURA DE CUENTA","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","06/07/2027","COMPLIANCE"],
+  ["ONSHORE","F-AR 1 PJ APERTURA DE CUENTA","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","11/06/2027","COMPLIANCE"],
+  ["ONSHORE","DDJJ ALYC - VIGENTE","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Definiciones Apertura de Cuenta Onshore","DOCUMENTO INFORMATIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Instructivo Apertura de Cuenta Criteria Digital (v.comercial)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","E FAR OP4 PJ TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","E FAR OP4 PH TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR OP 5 PH TRANSFERENCIA DE TITULOS EXTERIOR IN - OUT","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","E FAR OP5 PJ TRANSFERENCIAS DE TITULOS EXTERIOR IN -OUT","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","E FAR OP4 PJ TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","E FAR OP4 PH TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","E FAR OP5 PJ TRANSFERENCIAS DE TITULOS EXTERIOR IN -OUT","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","F-AR OP 5 PH TRANSFERENCIA DE TITULOS EXTERIOR IN - OUT","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","INDICE DE NUEVOS FORMULARIOS PARA ACTUALIZACIÓN DE CUENTAS","DOCUMENTO INFORMATIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Horarios de Cortes para solicitudes","DOCUMENTO INFORMATIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Modelo Certificación Contable","DOCUMENTO INFORMATIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Inocencia Fiscal_Criteria env","DOCUMENTO INFORMATIVO","Transferencia","Vigente","NO CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Especies aceptadas que son en Garantia MAV","DOCUMENTO INFORMATIVO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Especies aceptadas en Garantía Ener-Febr 2026 MAE","DOCUMENTO INFORMATIVO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Recuperacion usuario y contraseña home (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Tarifas MÁXIMAS - Aranceles onshore","DOCUMENTO INFORMATIVO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Cómo utilizar Plataforma FCE - MiPyMEs (3)","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Instructivo Plataforma FCE Criteria WM S","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","202408 instructivo blotter nuevos prods","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Guia Rapida de Uso (1)","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Instructivo Acceso directo a mercado Home","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Manual de Procedimientos para el Control del Riesgo en la Operatoria de Cauciones Bursátiles","MANUAL","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","PLANTILLA WHATSAPP BONOS","DOCUMENTO INFORMATIVO","Inversión","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","ACTUALIZACIONES GAFI V1","INSTRUCTIVO","Seguimiento y Fidelización","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Clasificación OCDE","DOCUMENTO INFORMATIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Manual Asana para comerciales","MANUAL","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Cr_Manual-para-Comerciales-ARG Ene-2026","PROCESO","Transferencia","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","F.AR.A 9 PH - ACTUALIZACIÓN CORREO ELECTRONICO","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 9 PJ Cambio de Mail","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR. A 8  PJ ACTUALIZACIÓN PERFIL RIESGO DEL INVERSOR","FORMULARIO","Seguimiento y Fidelización","Vigente","CRITICO","Completo","06/07/2026","COMPLIANCE"],
+  ["ONSHORE","Guia Alta de cuenta PH - Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","APERTURA DE CUENTAS"],
+  ["ONSHORE","Guia Alta de cuenta PH - Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","14/05/2027","APERTURA DE CUENTAS"],
+  ["ONSHORE","Guia de Uso de Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","APERTURA DE CUENTAS"],
+  ["ONSHORE","Instructivo Apertura de Cuenta Criteria Digital (v.comercial)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","APERTURA DE CUENTAS"],
+  ["ONSHORE","Guia Alta de cuenta PJ - Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","APERTURA DE CUENTAS"],
+  ["ONSHORE","Recuperacion usuario y contraseña home (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","APERTURA DE CUENTAS"],
+  ["ONSHORE","Guia Migración de Cuenta a Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","APERTURA DE CUENTAS"],
+  ["ONSHORE","Instructivo Acceso directo a mercado Home","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","202408 instructivo blotter nuevos prods","INSTRUCTIVO","Inversión","Vigente","NO CRITICO","Incompleto","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","DDJJ ALYC - VIGENTE","FORMULARIO","Inversión","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","DDJJ VNEI Garantizados 1","FORMULARIO","Inversión","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Modelo Depósito USD en garantía - Notificación de indemnidad","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","2026-02-04_Circular-MAV-Nro-005-2026","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 10 KYC PH","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","F-AR 10 KYC PJ","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Instructivo uso DocuSign en Aperturas Onshore ( v.comercial)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Incompleto","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Proceso Apertura de Cuenta Onshore","PROCESO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Manual Onboarding del Cliente Onshore","MANUAL","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Procedimiento para cuentas adheridas al Régimen Simplificado de Ganancias","MANUAL","Seguimiento y Fidelización","Vigente","NO CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Tarifas MÁXIMAS - Aranceles onshore","DOCUMENTO INFORMATIVO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","Instructivo DocuSign - Clientes","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Instructivo DocuSign (v.Clientes)","INSTRUCTIVO","Apertura de Cuenta","Vigente","NO CRITICO","Completo","07/12/2026","COMPLIANCE"],
+  ["ONSHORE","Procedimiento videollamada - validación de identidad cuenta PH","PROCESO","Apertura de Cuenta","Vigente","SIN CLASIFICAR","Incompleto","10/06/2027","COMPLIANCE"],
+  ["ONSHORE","Procedimiento videollamada - validación de identidad cuenta PJ","PROCESO","Apertura de Cuenta","Vigente","SIN CLASIFICAR","Incompleto","10/06/2027","COMPLIANCE"],
+  ["ONSHORE","PPT ALYC 2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["ONSHORE","KYC_HUMANA_v062026","FORMULARIO","Apertura de Cuenta","Vigente","SIN CLASIFICAR","Incompleto","30/06/2027","COMPLIANCE"],
+  ["ONSHORE","KYC_JURIDICA_v062026","FORMULARIO","Apertura de Cuenta","Vigente","SIN CLASIFICAR","Incompleto","30/06/2027","COMPLIANCE"],
+  ["ONSHORE","F-AR. A. 8 PH ACTUALIZACION PERFIL RIESGO DEL INVERSOR","FORMULARIO","Seguimiento y Fidelización","Vigente","SIN CLASIFICAR","Incompleto","06/07/2027","COMPLIANCE"],
+  ["ONSHORE","F-AR 7 PH PERFIL DE RIESGO DEL INVERSOR","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","08/01/2027","COMPLIANCE"],
+  ["ONSHORE","NUEVA Modelo Depósito USD en garantía - Notificación de indemnidad","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","08/01/2027","COMPLIANCE"],
+  ["ONSHORE","PROCEDIMIENTO SOLICITUD ALTA EN MAV","INSTRUCTIVO","Apertura de Cuenta","Vigente","CRITICO","Completo","08/01/2027","COMPLIANCE"],
+  ["ONSHORE","Aranceles locales- onshore 2026","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["ONSHORE","DDJJ APERTURA MAV","SIN TIPO","Sin etapa","Sin estado","SIN CLASIFICAR","Incompleto","",""],
+  ["ONSHORE","Vinculacion_Epyme_Criteria","MANUAL","Seguimiento y Fidelización","Vigente","SIN CLASIFICAR","Incompleto","23/07/2027","COMPLIANCE"],
+  ["ONSHORE","Admision_Echeqs_Criteria","MANUAL","Seguimiento y Fidelización","Vigente","SIN CLASIFICAR","Incompleto","23/07/2027","COMPLIANCE"],
+  ["ONSHORE","PROCEDIMIENTO OPERATORIA VNEI NO GARANTIZADO","MANUAL","Seguimiento y Fidelización","Vigente","SIN CLASIFICAR","Incompleto","23/07/2027","COMPLIANCE"],
+  ["ONSHORE","F-AR13  PJ PERFIL RIESGO DEL INVERSOR","FORMULARIO","Apertura de Cuenta","Vigente","SIN CLASIFICAR","Incompleto","06/07/2027","COMPLIANCE"],
+  ["ONSHORE","E FAR OP5 PJ TRANSFERENCIAS DE TITULOS EXTERIOR IN -OUT","FORMULARIO","Apertura de Cuenta","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+  ["ONSHORE","E FAR OP5 PJ TRANSFERENCIAS DE TITULOS EXTERIOR IN -OUT","FORMULARIO","Transferencia","Vigente","CRITICO","Completo","07/12/2026","BACK OFFICE"],
+];
+
+let currentPage=1;
+const pageSize=15;
+let filteredDocs=[...allDocs];
+
+function filterDocs(){
+  const neg=document.getElementById('f-negocio').value;
+  const est=document.getElementById('f-estado').value;
+  const rie=document.getElementById('f-riesgo').value;
+  const con=document.getElementById('f-condicion').value;
+  const srch=document.getElementById('f-search').value.toLowerCase();
+  filteredDocs=allDocs.filter(d=>{
+    if(!GF.negocios.has(d[0]))return false;
+    if(!GF.tipos.has(d[2]))return false;
+    if(neg&&d[0]!==neg)return false;
+    if(est&&!d[4].toLowerCase().includes(est.toLowerCase()))return false;
+    if(rie&&d[5]!==rie)return false;
+    if(con&&!d[6].toLowerCase().includes(con.toLowerCase()))return false;
+    if(srch&&!d[1].toLowerCase().includes(srch))return false;
+    return true;
+  });
+  currentPage=1;
+  renderDocsPage();
+}
+
+function renderDocsPage(){
+  const total=filteredDocs.length;
+  document.getElementById('doc-count').textContent=total+' documentos encontrados';
+  const start=(currentPage-1)*pageSize;
+  const page=filteredDocs.slice(start,start+pageSize);
+  const tbody=document.getElementById('docBody');
+  if(!page.length){
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:36px;color:#8fa0b4;font-size:13px">Sin resultados para los filtros seleccionados</td></tr>';
+  } else {
+    tbody.innerHTML=page.map(d=>{
+      const negC=d[0]==='ONSHORE'?'b-blue':d[0]==='OFFSHORE'?'b-navy':'b-gray';
+      const estC=d[4]==='Vigente'?'b-green':d[4]==='Caducado'?'b-red':'b-gray';
+      const rieC=d[5]==='CRITICO'?'b-red':d[5]==='SIN CLASIFICAR'?'b-yellow':'b-gray';
+      const conC=d[6]==='Incompleto'?'b-yellow':'b-green';
+      return`<tr><td><span class="badge ${negC}">${d[0]}</span></td><td class="doc-name" title="${d[1]}">${d[1]}</td><td class="muted">${d[2]}</td><td class="muted">${d[3]}</td><td class="muted">${d[8]||'—'}</td><td class="muted">${d[7]||'—'}</td><td><span class="badge ${estC}">${d[4]}</span></td><td><span class="badge ${rieC}">${d[5]}</span></td><td><span class="badge ${conC}">${d[6]}</span></td></tr>`;
+    }).join('');
+  }
+  const totalPages=Math.ceil(total/pageSize);
+  document.getElementById('doc-paginator').innerHTML=totalPages>1
+    ?`<button onclick="gotoPage(${currentPage-1})"${currentPage<=1?' disabled':''}>← Anterior</button><span>Página ${currentPage} de ${totalPages}</span><button onclick="gotoPage(${currentPage+1})"${currentPage>=totalPages?' disabled':''}>Siguiente →</button>`:'';
+}
+
+function gotoPage(p){currentPage=Math.max(1,Math.min(p,Math.ceil(filteredDocs.length/pageSize)));renderDocsPage();}
+
+window.addEventListener('DOMContentLoaded',()=>{updateFilterUI();refreshAllViews();filterDocs();renderDocsPage();});
+</script>
+</body>
+</html>
