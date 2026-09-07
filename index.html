@@ -217,15 +217,27 @@ td.muted{color:var(--c-muted);font-weight:500}
 /* ── DIVIDER ── */
 .divider{border:none;border-top:1px solid var(--c-border);margin:16px 0}
 
+/* ── KPI CATEGORY TILES (Resumen general / CriterIN) ── */
+.kpi-cat-header{display:flex;gap:24px;margin-bottom:10px;margin-top:20px}
+.kpi-cat-header:first-of-type{margin-top:0}
+.kpi-cat-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.08em;flex:1}
+.kpi-cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-tile{background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--radius);padding:14px 16px}
+.stat-tile-value{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--c-navy);letter-spacing:-.3px}
+.stat-tile-label{font-size:11px;color:var(--c-muted);margin-top:6px;line-height:1.45}
+.stat-tile-live{background:var(--c-info-bg);border-color:var(--c-info-bdr)}
+.stat-tile-live .stat-tile-value{color:var(--c-info-txt)}
+.live-tag{display:inline-block;font-size:9px;font-weight:700;color:var(--c-info-txt);background:var(--c-white);border:1px solid var(--c-info-bdr);border-radius:20px;padding:1px 7px;margin-left:8px;text-transform:uppercase;letter-spacing:.03em;vertical-align:3px}
+
 /* ── RESPONSIVE ── */
 @media(max-width:820px){
   .sidebar{display:none}.main{margin-left:0}
-  .kpi-strip,.biz-cards,.grid-3{grid-template-columns:1fr 1fr}
+  .kpi-strip,.biz-cards,.grid-3,.kpi-cat-grid{grid-template-columns:1fr 1fr}
   .grid-2{grid-template-columns:1fr}
   .heat-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:480px){
-  .kpi-strip,.biz-cards,.grid-3,.grid-2{grid-template-columns:1fr}
+  .kpi-strip,.biz-cards,.grid-3,.grid-2,.kpi-cat-grid{grid-template-columns:1fr}
 }
 
 /* ── GLOBAL FILTER STRIP ── */
@@ -315,7 +327,7 @@ td.muted{color:var(--c-muted);font-weight:500}
     <header class="topbar" id="topbar">
       <div>
         <div class="page-title" id="page-title">Resumen general</div>
-        <div class="page-sub" id="page-sub">568 documentos · actualizado septiembre 2026</div>
+        <div class="page-sub" id="page-sub">CriterIN — Indicadores de adopción, uso y calidad</div>
       </div>
       <div class="topbar-right">
         <div class="status-pill sp-red"><i class="ti ti-calendar-x" style="font-size:13px"></i>262 vencidos</div>
@@ -360,89 +372,50 @@ td.muted{color:var(--c-muted);font-weight:500}
 
       <!-- ════ OVERVIEW ════ -->
       <div id="sec-overview" class="section active">
-        <div class="kpi-strip">
-          <div class="kpi brand">
-            <div class="kpi-label"><i class="ti ti-files"></i>Total docs</div>
-            <div class="kpi-value" id="kpi-total">568</div>
-            <div class="kpi-foot">3 líneas de negocio</div>
-          </div>
-          <div class="kpi ok">
-            <div class="kpi-label"><i class="ti ti-circle-check"></i>Completos</div>
-            <div class="kpi-value" id="kpi-completos">446</div>
-            <div class="kpi-foot ok">78.5% del total</div>
-          </div>
-          <div class="kpi crit">
-            <div class="kpi-label"><i class="ti ti-alert-circle"></i>Incompletos</div>
-            <div class="kpi-value" id="kpi-incompletos">122</div>
-            <div class="kpi-foot bad">21.5% — requieren acción</div>
-          </div>
-          <div class="kpi crit">
-            <div class="kpi-label"><i class="ti ti-calendar-x"></i>Vencidos</div>
-            <div class="kpi-value" id="kpi-vencidos">262</div>
-            <div class="kpi-foot bad">Renovación inmediata</div>
-          </div>
-          <div class="kpi warn">
-            <div class="kpi-label"><i class="ti ti-activity"></i>Salud global</div>
-            <div class="kpi-value" id="kpi-salud">79%</div>
-            <div class="kpi-foot warn">Meta ≥ 90%</div>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="card">
-            <div class="card-head"><div class="card-title"><i class="ti ti-activity"></i>Índice de salud por negocio</div></div>
-            <div class="health-row">
-              <div class="health-label">Mercado</div>
-              <div class="health-bar"><div class="health-fill" style="width:87%;background:#e6a000" id="hbar-mercado"></div></div>
-              <div class="health-pct" style="color:#7a4f00" id="hpct-mercado">87%</div>
-              <span class="health-badge hb-warn">Atención</span>
-            </div>
-            <div class="health-row">
-              <div class="health-label">Offshore</div>
-              <div class="health-bar"><div class="health-fill" style="width:78%;background:#e6a000" id="hbar-offshore"></div></div>
-              <div class="health-pct" style="color:#7a4f00" id="hpct-offshore">78%</div>
-              <span class="health-badge hb-warn">Atención</span>
-            </div>
-            <div class="health-row">
-              <div class="health-label">Onshore</div>
-              <div class="health-bar"><div class="health-fill" style="width:59%;background:#a0160c" id="hbar-onshore"></div></div>
-              <div class="health-pct" style="color:#a0160c" id="hpct-onshore">59%</div>
-              <span class="health-badge hb-bad">Crítico</span>
-            </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title"><i class="ti ti-robot"></i>CriterIN — Indicadores de adopción</div>
+            <span class="badge b-navy">Corte: 25 ago 2026</span>
           </div>
 
-          <div class="card">
-            <div class="card-head"><div class="card-title"><i class="ti ti-clock"></i>Vencimientos</div></div>
-            <div class="venc-box" style="background:var(--c-crit-bg);border-color:var(--c-crit-bdr)">
-              <div class="venc-label">Ya vencidos</div>
-              <div class="venc-num" style="color:var(--c-crit-txt)">262</div>
-            </div>
-            <div class="venc-box" style="background:var(--c-warn-bg);border-color:var(--c-warn-bdr)">
-              <div class="venc-label">Vencen en 30 días</div>
-              <div class="venc-num" style="color:var(--c-warn-txt)">0</div>
-            </div>
-            <div class="venc-box" style="background:var(--c-info-bg);border-color:var(--c-info-bdr)">
-              <div class="venc-label">Vencen en 90 días</div>
-              <div class="venc-num" style="color:var(--c-info-txt)">2</div>
-            </div>
+          <div class="kpi-cat-header">
+            <div class="kpi-cat-title">Adopción</div>
+            <div class="kpi-cat-title">Volumen / uso</div>
           </div>
-        </div>
+          <div class="kpi-cat-grid">
+            <div class="stat-tile"><div class="stat-tile-value">135 · 69</div><div class="stat-tile-label">Usuarios activos únicos — Total compañía. Sin headcount total de compañía, no se puede expresar en %.</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">55,9%</div><div class="stat-tile-label">Equipos comerciales — % activos s/ base (102), acumulado feb–ago (57).</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">2.669</div><div class="stat-tile-label">Consultas totales (feb–ago 2026).</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">61% / 39%</div><div class="stat-tile-label">Uso por agente — Interno / Mercado.</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">11,4 → 18,2 → 17,6</div><div class="stat-tile-label">Consultas/día promedio — Testing/MVP → Lanz.+Camp. → Post-camp.</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">+54%</div><div class="stat-tile-label">Crecimiento en consultas/día: Testing/MVP → Post-campaña.</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">Research &amp; Strategy</div><div class="stat-tile-label">Lo más consultado en Agente Mercado — ej. "Reporte de Coyuntura" (31 consultas). Impulsa decisiones de trading/inversión.</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">KYC y Compliance</div><div class="stat-tile-label">Lo más consultado en Agente Interno — ej. "Requisitos KYC personas/empresas". Corresponde a Ops.</div></div>
+          </div>
 
-        <div class="grid-2">
-          <div class="card">
-            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Distribución por tipo</div></div>
-            <div class="tipo-row"><div class="tipo-name">Documento informativo</div><div class="tipo-bar"><div class="tipo-fill" style="width:51%;background:var(--c-vivid)"></div></div><div class="tipo-n">292</div></div>
-            <div class="tipo-row"><div class="tipo-name">Formulario</div><div class="tipo-bar"><div class="tipo-fill" style="width:25%;background:var(--c-sky)"></div></div><div class="tipo-n">143</div></div>
-            <div class="tipo-row"><div class="tipo-name">Instructivo</div><div class="tipo-bar"><div class="tipo-fill" style="width:11%;background:var(--c-light)"></div></div><div class="tipo-n">63</div></div>
-            <div class="tipo-row"><div class="tipo-name">Sin clasificar</div><div class="tipo-bar"><div class="tipo-fill" style="width:9%;background:#c5cfe0"></div></div><div class="tipo-n">53</div></div>
-            <div class="tipo-row"><div class="tipo-name">Proceso</div><div class="tipo-bar"><div class="tipo-fill" style="width:2%;background:#8fa0b4"></div></div><div class="tipo-n">11</div></div>
-            <div class="tipo-row"><div class="tipo-name">Manual</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:var(--c-blue)"></div></div><div class="tipo-n">6</div></div>
+          <div class="kpi-cat-header">
+            <div class="kpi-cat-title">Calidad — post-MVP</div>
+            <div class="kpi-cat-title">Ingesta</div>
           </div>
-          <div class="card">
-            <div class="card-head"><div class="card-title"><i class="ti ti-chart-pie"></i>Estado de vigencia</div></div>
-            <div class="chart-wrap" style="height:195px">
-              <canvas id="vigenciaChart" role="img" aria-label="Estado de vigencia por negocio"></canvas>
-            </div>
+          <div class="kpi-cat-grid">
+            <div class="stat-tile"><div class="stat-tile-value">1,3%</div><div class="stat-tile-label">Conversaciones con feedback explícito, post-MVP (17 de 1.268).</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">17,6% / 82,4%</div><div class="stat-tile-label">Feedback positivo / negativo, post-MVP — base muy chica (n=17), leer con cautela.</div></div>
+            <div class="stat-tile stat-tile-live"><div class="stat-tile-value">46 / 53<span class="live-tag">En vivo</span></div><div class="stat-tile-label">Documentos críticos vencidos, Agente Mercado — desde el Maestro de Documentación (sept 2026).</div></div>
+            <div class="stat-tile stat-tile-live"><div class="stat-tile-value">6%<span class="live-tag">En vivo</span></div><div class="stat-tile-label">% de documentos vigentes en Mercado — desde el Maestro de Documentación (sept 2026). Era 78% el snapshot del 1-jul-26.</div></div>
+          </div>
+
+          <div class="kpi-cat-header">
+            <div class="kpi-cat-title" style="flex:none;width:100%">Costo — mensual (no acumulado)</div>
+          </div>
+          <div class="kpi-cat-grid">
+            <div class="stat-tile"><div class="stat-tile-value">USD 2.000</div><div class="stat-tile-label">Fee mensual efectivo (año 1, bonif. USD 1.000).</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">USD 3.000</div><div class="stat-tile-label">Fee mensual lista (post año 1).</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">69</div><div class="stat-tile-label">Usuarios activos únicos — agosto 2026 (mismo criterio que Adopción, mes).</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">USD 28,99</div><div class="stat-tile-label">Fee efectivo / usuario activo del mes (USD 43,48 a precio lista).</div></div>
+          </div>
+
+          <div style="margin-top:16px;font-size:11px;color:var(--c-subtle);line-height:1.5">
+            Fuente: KPIs de Adopción CriterIN, corte 25-ago-2026. Los indicadores marcados <span class="live-tag">En vivo</span> se recalculan automáticamente con cada actualización del Maestro de Documentación (ver pestaña Explorador). El resto son estáticos hasta integrar sus fuentes correspondientes.
           </div>
         </div>
       </div>
@@ -753,19 +726,6 @@ function applyGF(docs){
   return docs.filter(d=>GF.negocios.has(d[0])&&GF.tipos.has(d[2]));
 }
 
-/* ════ RECOMPUTE KPIs BASED ON FILTER ════ */
-function recomputeKPIs(docs){
-  const total=docs.length;
-  const completos=docs.filter(d=>d[6]==='Completo').length;
-  const incompletos=total-completos;
-  const vencidos=docs.filter(d=>d[4]==='Caducado').length;
-  const criticos=docs.filter(d=>d[5]==='CRITICO').length;
-  const salud=total>0?Math.round(completos/total*100):0;
-  return{total,completos,incompletos,vencidos,criticos,salud};
-}
-
-function setKPI(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
-
 function refreshAllViews(){
   const activeTab=document.querySelector('.section.active')?.id?.replace('sec-','');
   if(activeTab==='overview') renderOverview();
@@ -777,7 +737,7 @@ function refreshAllViews(){
 }
 
 const PAGE_META={
-  overview: ['Resumen general','568 documentos · actualizado septiembre 2026'],
+  overview: ['Resumen general','CriterIN — Indicadores de adopción, uso y calidad'],
   negocios: ['Por negocio','ONSHORE · OFFSHORE · MERCADO'],
   alertas:  ['Alertas activas','6 alertas — 3 críticas, 2 de atención, 1 positiva'],
   criticos: ['Documentos críticos','209 críticos · 56 caducados'],
@@ -789,7 +749,7 @@ Chart.defaults.font.family="'Barlow', sans-serif";
 Chart.defaults.font.size=11;
 Chart.defaults.color="#5a6e8a";
 
-let bizChartInst=null,vigChartInst=null,critVigChartInst=null;
+let bizChartInst=null,critVigChartInst=null;
 
 function showTab(id){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes("'"+id+"'")));
@@ -805,42 +765,7 @@ const BRAND={navy:'#002e61',blue:'#214584',vivid:'#2c7dde',sky:'#0095d6',light:'
 const gridColor='#e8edf3';
 
 
-function renderOverview(){
-  const docs=applyGF(allDocs);
-  const k=recomputeKPIs(docs);
-  // update KPI cards
-  setKPI('kpi-total',k.total);
-  setKPI('kpi-completos',k.completos);
-  setKPI('kpi-incompletos',k.incompletos);
-  setKPI('kpi-vencidos',k.vencidos);
-  setKPI('kpi-salud',k.salud+'%');
-  // rebuild vigencia chart
-  const negs=['ONSHORE','OFFSHORE','MERCADO'];
-  const vig=negs.map(n=>docs.filter(d=>d[0]===n&&d[4]==='Vigente').length);
-  const cad=negs.map(n=>docs.filter(d=>d[0]===n&&d[4]==='Caducado').length);
-  const sin=negs.map(n=>docs.filter(d=>d[0]===n&&d[4]!=='Vigente'&&d[4]!=='Caducado').length);
-  renderVigenciaChart(vig,cad,sin);
-  // health bars
-  const negsAll=['ONSHORE','OFFSHORE','MERCADO'];
-  negsAll.forEach(n=>{
-    const nd=docs.filter(d=>d[0]===n);
-    const pct=nd.length>0?Math.round(nd.filter(d=>d[6]==='Completo').length/nd.length*100):0;
-    const el=document.getElementById('hbar-'+n.toLowerCase());
-    if(el){el.style.width=pct+'%';}
-    const pel=document.getElementById('hpct-'+n.toLowerCase());
-    if(pel){pel.textContent=pct+'%';}
-  });
-  // tipo bars
-  const tipos=['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO','SIN CLASIFICAR'];
-  tipos.forEach(t=>{
-    const cnt=docs.filter(d=>d[2]===t).length;
-    const maxCnt=docs.length||1;
-    const el=document.getElementById('tipobar-'+t.replace(/[^A-Z]/g,'').toLowerCase().slice(0,4));
-    if(el){el.style.width=Math.round(cnt/maxCnt*100)+'%';}
-    const cel=document.getElementById('tipocnt-'+t.replace(/[^A-Z]/g,'').toLowerCase().slice(0,4));
-    if(cel){cel.textContent=cnt;}
-  });
-}
+function renderOverview(){}
 
 function renderNegociosView(){
   const docs=applyGF(allDocs);
@@ -868,20 +793,6 @@ function renderNegociosView(){
 function renderAlertas(){}
 function renderCriterIN(){}
 
-function renderVigenciaChart(vig,cad,sin){
-  const ctx=document.getElementById('vigenciaChart');
-  if(vigChartInst){vigChartInst.destroy();vigChartInst=null;}
-  const vd=vig||[101,137,18],cd=cad||[10,0,252],sd=sin||[8,6,36];
-  vigChartInst=new Chart(ctx,{type:'bar',data:{
-    labels:['ONSHORE','OFFSHORE','MERCADO'],
-    datasets:[
-      {label:'Vigente',data:vd,backgroundColor:BRAND.vivid,borderRadius:4},
-      {label:'Caducado',data:cd,backgroundColor:'#f0a09b',borderRadius:4},
-      {label:'Sin estado',data:sd,backgroundColor:'#c5cfe0',borderRadius:4}
-    ]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:gridColor}}}}});
-}
 
 function renderBizChart(docs){
   const ctx=document.getElementById('bizChart');
