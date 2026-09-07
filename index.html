@@ -289,7 +289,7 @@ td.muted{color:var(--c-muted);font-weight:500}
       </button>
       <button class="nav-item" onclick="showTab('criticos')">
         <i class="ti ti-shield"></i> Críticos
-        <span class="nav-badge nb-yellow">48</span>
+        <span class="nav-badge nb-yellow">56</span>
       </button>
       <button class="nav-item" onclick="showTab('docs')">
         <i class="ti ti-table"></i> Explorador
@@ -315,12 +315,12 @@ td.muted{color:var(--c-muted);font-weight:500}
     <header class="topbar" id="topbar">
       <div>
         <div class="page-title" id="page-title">Resumen general</div>
-        <div class="page-sub" id="page-sub">503 documentos · actualizado junio 2026</div>
+        <div class="page-sub" id="page-sub">568 documentos · actualizado septiembre 2026</div>
       </div>
       <div class="topbar-right">
-        <div class="status-pill sp-red"><i class="ti ti-calendar-x" style="font-size:13px"></i>186 vencidos</div>
-        <div class="status-pill sp-yellow"><i class="ti ti-alert-circle" style="font-size:13px"></i>57 incompletos</div>
-        <div class="status-pill sp-blue"><i class="ti ti-activity" style="font-size:13px"></i>88.7% salud</div>
+        <div class="status-pill sp-red"><i class="ti ti-calendar-x" style="font-size:13px"></i>262 vencidos</div>
+        <div class="status-pill sp-yellow"><i class="ti ti-alert-circle" style="font-size:13px"></i>122 incompletos</div>
+        <div class="status-pill sp-blue"><i class="ti ti-activity" style="font-size:13px"></i>79% salud</div>
         <button class="btn-outline"><i class="ti ti-download" style="font-size:14px"></i>Exportar</button>
       </div>
     </header>
@@ -350,6 +350,7 @@ td.muted{color:var(--c-muted);font-weight:500}
       <button class="fs-tipo-tag on" id="tipo-instructivo" onclick="toggleTipo('INSTRUCTIVO')">Instructivo</button>
       <button class="fs-tipo-tag on" id="tipo-manual"      onclick="toggleTipo('MANUAL')">Manual</button>
       <button class="fs-tipo-tag on" id="tipo-proceso"     onclick="toggleTipo('PROCESO')">Proceso</button>
+      <button class="fs-tipo-tag on" id="tipo-sinclasificar" onclick="toggleTipo('SIN CLASIFICAR')">Sin clasificar</button>
 
       <span id="active-hint" class="filter-strip-active-hint" style="display:none">Filtros activos</span>
       <button class="fs-reset" onclick="resetFilters()" title="Quitar todos los filtros">✕ Resetear</button>
@@ -362,27 +363,27 @@ td.muted{color:var(--c-muted);font-weight:500}
         <div class="kpi-strip">
           <div class="kpi brand">
             <div class="kpi-label"><i class="ti ti-files"></i>Total docs</div>
-            <div class="kpi-value" id="kpi-total">503</div>
+            <div class="kpi-value" id="kpi-total">568</div>
             <div class="kpi-foot">3 líneas de negocio</div>
           </div>
           <div class="kpi ok">
             <div class="kpi-label"><i class="ti ti-circle-check"></i>Completos</div>
             <div class="kpi-value" id="kpi-completos">446</div>
-            <div class="kpi-foot ok">88.7% del total</div>
+            <div class="kpi-foot ok">78.5% del total</div>
           </div>
           <div class="kpi crit">
             <div class="kpi-label"><i class="ti ti-alert-circle"></i>Incompletos</div>
-            <div class="kpi-value" id="kpi-incompletos">57</div>
-            <div class="kpi-foot bad">11.3% — requieren acción</div>
+            <div class="kpi-value" id="kpi-incompletos">122</div>
+            <div class="kpi-foot bad">21.5% — requieren acción</div>
           </div>
           <div class="kpi crit">
             <div class="kpi-label"><i class="ti ti-calendar-x"></i>Vencidos</div>
-            <div class="kpi-value" id="kpi-vencidos">186</div>
+            <div class="kpi-value" id="kpi-vencidos">262</div>
             <div class="kpi-foot bad">Renovación inmediata</div>
           </div>
           <div class="kpi warn">
             <div class="kpi-label"><i class="ti ti-activity"></i>Salud global</div>
-            <div class="kpi-value" id="kpi-salud">88.7%</div>
+            <div class="kpi-value" id="kpi-salud">79%</div>
             <div class="kpi-foot warn">Meta ≥ 90%</div>
           </div>
         </div>
@@ -392,20 +393,20 @@ td.muted{color:var(--c-muted);font-weight:500}
             <div class="card-head"><div class="card-title"><i class="ti ti-activity"></i>Índice de salud por negocio</div></div>
             <div class="health-row">
               <div class="health-label">Mercado</div>
-              <div class="health-bar"><div class="health-fill" style="width:100%;background:#0d6639" id="hbar-mercado"></div></div>
-              <div class="health-pct" style="color:#0d6639" id="hpct-mercado">100%</div>
-              <span class="health-badge hb-ok">Saludable</span>
+              <div class="health-bar"><div class="health-fill" style="width:87%;background:#e6a000" id="hbar-mercado"></div></div>
+              <div class="health-pct" style="color:#7a4f00" id="hpct-mercado">87%</div>
+              <span class="health-badge hb-warn">Atención</span>
             </div>
             <div class="health-row">
               <div class="health-label">Offshore</div>
-              <div class="health-bar"><div class="health-fill" style="width:82%;background:#e6a000" id="hbar-offshore"></div></div>
-              <div class="health-pct" style="color:#7a4f00" id="hpct-offshore">82%</div>
+              <div class="health-bar"><div class="health-fill" style="width:78%;background:#e6a000" id="hbar-offshore"></div></div>
+              <div class="health-pct" style="color:#7a4f00" id="hpct-offshore">78%</div>
               <span class="health-badge hb-warn">Atención</span>
             </div>
             <div class="health-row">
               <div class="health-label">Onshore</div>
-              <div class="health-bar"><div class="health-fill" style="width:70%;background:#a0160c" id="hbar-onshore"></div></div>
-              <div class="health-pct" style="color:#a0160c" id="hpct-onshore">70%</div>
+              <div class="health-bar"><div class="health-fill" style="width:59%;background:#a0160c" id="hbar-onshore"></div></div>
+              <div class="health-pct" style="color:#a0160c" id="hpct-onshore">59%</div>
               <span class="health-badge hb-bad">Crítico</span>
             </div>
           </div>
@@ -414,15 +415,15 @@ td.muted{color:var(--c-muted);font-weight:500}
             <div class="card-head"><div class="card-title"><i class="ti ti-clock"></i>Vencimientos</div></div>
             <div class="venc-box" style="background:var(--c-crit-bg);border-color:var(--c-crit-bdr)">
               <div class="venc-label">Ya vencidos</div>
-              <div class="venc-num" style="color:var(--c-crit-txt)">186</div>
+              <div class="venc-num" style="color:var(--c-crit-txt)">262</div>
             </div>
             <div class="venc-box" style="background:var(--c-warn-bg);border-color:var(--c-warn-bdr)">
               <div class="venc-label">Vencen en 30 días</div>
-              <div class="venc-num" style="color:var(--c-warn-txt)">37</div>
+              <div class="venc-num" style="color:var(--c-warn-txt)">0</div>
             </div>
             <div class="venc-box" style="background:var(--c-info-bg);border-color:var(--c-info-bdr)">
               <div class="venc-label">Vencen en 90 días</div>
-              <div class="venc-num" style="color:var(--c-info-txt)">6</div>
+              <div class="venc-num" style="color:var(--c-info-txt)">2</div>
             </div>
           </div>
         </div>
@@ -430,11 +431,12 @@ td.muted{color:var(--c-muted);font-weight:500}
         <div class="grid-2">
           <div class="card">
             <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Distribución por tipo</div></div>
-            <div class="tipo-row"><div class="tipo-name">Documento informativo</div><div class="tipo-bar"><div class="tipo-fill" style="width:57%;background:var(--c-vivid)"></div></div><div class="tipo-n">287</div></div>
-            <div class="tipo-row"><div class="tipo-name">Formulario</div><div class="tipo-bar"><div class="tipo-fill" style="width:29%;background:var(--c-sky)"></div></div><div class="tipo-n">145</div></div>
-            <div class="tipo-row"><div class="tipo-name">Instructivo</div><div class="tipo-bar"><div class="tipo-fill" style="width:12%;background:var(--c-light)"></div></div><div class="tipo-n">60</div></div>
-            <div class="tipo-row"><div class="tipo-name">Manual</div><div class="tipo-bar"><div class="tipo-fill" style="width:2%;background:var(--c-blue)"></div></div><div class="tipo-n">6</div></div>
-            <div class="tipo-row"><div class="tipo-name">Proceso</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#8fa0b4"></div></div><div class="tipo-n">5</div></div>
+            <div class="tipo-row"><div class="tipo-name">Documento informativo</div><div class="tipo-bar"><div class="tipo-fill" style="width:51%;background:var(--c-vivid)"></div></div><div class="tipo-n">292</div></div>
+            <div class="tipo-row"><div class="tipo-name">Formulario</div><div class="tipo-bar"><div class="tipo-fill" style="width:25%;background:var(--c-sky)"></div></div><div class="tipo-n">143</div></div>
+            <div class="tipo-row"><div class="tipo-name">Instructivo</div><div class="tipo-bar"><div class="tipo-fill" style="width:11%;background:var(--c-light)"></div></div><div class="tipo-n">63</div></div>
+            <div class="tipo-row"><div class="tipo-name">Sin clasificar</div><div class="tipo-bar"><div class="tipo-fill" style="width:9%;background:#c5cfe0"></div></div><div class="tipo-n">53</div></div>
+            <div class="tipo-row"><div class="tipo-name">Proceso</div><div class="tipo-bar"><div class="tipo-fill" style="width:2%;background:#8fa0b4"></div></div><div class="tipo-n">11</div></div>
+            <div class="tipo-row"><div class="tipo-name">Manual</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:var(--c-blue)"></div></div><div class="tipo-n">6</div></div>
           </div>
           <div class="card">
             <div class="card-head"><div class="card-title"><i class="ti ti-chart-pie"></i>Estado de vigencia</div></div>
@@ -451,47 +453,47 @@ td.muted{color:var(--c-muted);font-weight:500}
           <div class="biz-card bc-red">
             <div class="biz-header">
               <div class="biz-name"><i class="ti ti-building-bank"></i>Onshore</div>
-              <span class="badge b-red">70% salud</span>
+              <span class="badge b-red">59% salud</span>
             </div>
-            <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">107</div></div>
-            <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-ok-txt)">75</div></div>
-            <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-crit-txt)">32</div></div>
-            <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">64</div></div>
-            <div class="stat-row"><div class="stat-key">Vigentes</div><div class="stat-val">93</div></div>
+            <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">119</div></div>
+            <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-ok-txt)">70</div></div>
+            <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-crit-txt)">49</div></div>
+            <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">59</div></div>
+            <div class="stat-row"><div class="stat-key">Vigentes</div><div class="stat-val">101</div></div>
             <div class="stat-row"><div class="stat-key">Caducados</div><div class="stat-val" style="color:var(--c-crit-txt)">10</div></div>
-            <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val" style="color:var(--c-warn-txt)">4</div></div>
+            <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val" style="color:var(--c-warn-txt)">8</div></div>
             <div class="stat-row"><div class="stat-key">Tipo principal</div><div class="stat-val">Formulario</div></div>
-            <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:70%;height:100%;background:#a0160c;border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: 70% · Meta: 90%</div></div>
+            <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:59%;height:100%;background:#a0160c;border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: 59% · Meta: 90%</div></div>
           </div>
           <div class="biz-card bc-yellow">
             <div class="biz-header">
               <div class="biz-name"><i class="ti ti-world"></i>Offshore</div>
-              <span class="badge b-yellow">82% salud</span>
+              <span class="badge b-yellow">78% salud</span>
             </div>
-            <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">137</div></div>
-            <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-warn-txt)">112</div></div>
-            <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-crit-txt)">25</div></div>
-            <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">98</div></div>
+            <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">143</div></div>
+            <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-ok-txt)">111</div></div>
+            <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-crit-txt)">32</div></div>
+            <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">97</div></div>
             <div class="stat-row"><div class="stat-key">Vigentes</div><div class="stat-val">137</div></div>
             <div class="stat-row"><div class="stat-key">Caducados</div><div class="stat-val" style="color:var(--c-ok-txt)">0</div></div>
-            <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val">0</div></div>
+            <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val" style="color:var(--c-warn-txt)">6</div></div>
             <div class="stat-row"><div class="stat-key">Tipo principal</div><div class="stat-val">Formulario</div></div>
-            <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:82%;height:100%;background:#e6a000;border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: 82% · Meta: 90%</div></div>
+            <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:#e6a000;border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: 78% · Meta: 90%</div></div>
           </div>
-          <div class="biz-card bc-green">
+          <div class="biz-card bc-yellow">
             <div class="biz-header">
               <div class="biz-name"><i class="ti ti-chart-line"></i>Mercado</div>
-              <span class="badge b-green">100% salud</span>
+              <span class="badge b-yellow">87% salud</span>
             </div>
-            <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">259</div></div>
-            <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-ok-txt)">259</div></div>
-            <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-ok-txt)">0</div></div>
-            <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">54</div></div>
-            <div class="stat-row"><div class="stat-key">Vigentes</div><div class="stat-val">104</div></div>
-            <div class="stat-row"><div class="stat-key">Caducados</div><div class="stat-val" style="color:var(--c-crit-txt)">153</div></div>
-            <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val">0</div></div>
+            <div class="stat-row"><div class="stat-key">Total docs</div><div class="stat-val">306</div></div>
+            <div class="stat-row"><div class="stat-key">Completos</div><div class="stat-val" style="color:var(--c-ok-txt)">265</div></div>
+            <div class="stat-row"><div class="stat-key">Incompletos</div><div class="stat-val" style="color:var(--c-crit-txt)">41</div></div>
+            <div class="stat-row"><div class="stat-key">Críticos</div><div class="stat-val">53</div></div>
+            <div class="stat-row"><div class="stat-key">Vigentes</div><div class="stat-val">18</div></div>
+            <div class="stat-row"><div class="stat-key">Caducados</div><div class="stat-val" style="color:var(--c-crit-txt)">252</div></div>
+            <div class="stat-row"><div class="stat-key">Sin estado</div><div class="stat-val" style="color:var(--c-warn-txt)">36</div></div>
             <div class="stat-row"><div class="stat-key">Tipo principal</div><div class="stat-val">Doc. informativo</div></div>
-            <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:#0d6639;border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: 100% · Meta: 90% ✓</div></div>
+            <div style="margin-top:14px"><div style="height:5px;background:#e8edf3;border-radius:3px;overflow:hidden"><div style="width:87%;height:100%;background:#e6a000;border-radius:3px"></div></div><div style="font-size:10px;color:var(--c-subtle);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em">Salud: 87% · Meta: 90%</div></div>
           </div>
         </div>
         <div class="card">
@@ -513,30 +515,30 @@ td.muted{color:var(--c-muted);font-weight:500}
               <div class="card-head"><div class="card-title" style="color:var(--c-crit-txt)"><i class="ti ti-alert-triangle" style="color:var(--c-crit-txt)"></i>Alertas críticas</div></div>
               <div class="alert-item sev-crit">
                 <div class="alert-icon"><i class="ti ti-calendar-x"></i></div>
-                <div><div class="alert-title">186 documentos vencidos</div><div class="alert-desc">Principalmente en MERCADO. Vigencia vencida en el repositorio — CriterIN puede estar respondiendo con información desactualizada.</div><div class="alert-meta">Impacto directo en CriterIN · Acción inmediata</div></div>
+                <div><div class="alert-title">262 documentos vencidos</div><div class="alert-desc">Concentrados en MERCADO: 252 (82% de ese negocio). Vigencia vencida en el repositorio — CriterIN puede estar respondiendo con información desactualizada.</div><div class="alert-meta">Impacto directo en CriterIN · Acción inmediata</div></div>
               </div>
               <div class="alert-item sev-crit">
                 <div class="alert-icon"><i class="ti ti-file-x"></i></div>
-                <div><div class="alert-title">57 documentos incompletos</div><div class="alert-desc">ONSHORE: 32 (30% del negocio). OFFSHORE: 25 (18%). Metadata incompleta impide clasificación y búsqueda correcta por el agente.</div><div class="alert-meta">ONSHORE · OFFSHORE · 30 días para resolver</div></div>
+                <div><div class="alert-title">122 documentos incompletos</div><div class="alert-desc">ONSHORE: 49 (41% del negocio). MERCADO: 41. OFFSHORE: 32. Metadata incompleta impide clasificación y búsqueda correcta por el agente.</div><div class="alert-meta">ONSHORE · MERCADO · OFFSHORE · 30 días para resolver</div></div>
               </div>
               <div class="alert-item sev-crit">
                 <div class="alert-icon"><i class="ti ti-shield-x"></i></div>
-                <div><div class="alert-title">48 documentos críticos caducados</div><div class="alert-desc">ONSHORE: 10, MERCADO: 38. Documentos esenciales para operaciones o cumplimiento regulatorio con vigencia expirada.</div><div class="alert-meta">Riesgo regulatorio directo · Urgente</div></div>
+                <div><div class="alert-title">56 documentos críticos caducados</div><div class="alert-desc">MERCADO: 46, ONSHORE: 10. Documentos esenciales para operaciones o cumplimiento regulatorio con vigencia expirada.</div><div class="alert-meta">Riesgo regulatorio directo · Urgente</div></div>
               </div>
             </div>
             <div class="card">
               <div class="card-head"><div class="card-title" style="color:var(--c-warn-txt)"><i class="ti ti-alert-circle" style="color:var(--c-warn-txt)"></i>Alertas de atención</div></div>
               <div class="alert-item sev-warn">
-                <div class="alert-icon"><i class="ti ti-clock"></i></div>
-                <div><div class="alert-title">37 documentos vencen en 30 días</div><div class="alert-desc">Principalmente en MERCADO. Planificar renovación para evitar que incrementen el stock de caducados.</div><div class="alert-meta">MERCADO · Próximos 30 días</div></div>
+                <div class="alert-icon"><i class="ti ti-alert-circle"></i></div>
+                <div><div class="alert-title">13 documentos "Vigentes" con vencimiento ya pasado</div><div class="alert-desc">Inconsistencia detectada en el Maestro: el estado dice Vigente pero la fecha de vencimiento ya pasó. Requiere corrección de carga.</div><div class="alert-meta">Calidad de datos · Revisar carga en Excel Maestro</div></div>
               </div>
               <div class="alert-item sev-warn">
                 <div class="alert-icon"><i class="ti ti-trending-down"></i></div>
-                <div><div class="alert-title">ONSHORE con salud crítica: 70%</div><div class="alert-desc">Gap de 20 puntos respecto a la meta del 90%. Completar los 32 documentos incompletos resolvería este indicador.</div><div class="alert-meta">Meta: 90% · Gap actual: −20%</div></div>
+                <div><div class="alert-title">Ningún negocio alcanza la meta de salud (90%)</div><div class="alert-desc">ONSHORE es el más crítico con 59%. OFFSHORE 78% y MERCADO 87% tampoco llegan a la meta.</div><div class="alert-meta">Meta: 90% · Gap ONSHORE: −31%</div></div>
               </div>
               <div class="alert-item sev-ok">
                 <div class="alert-icon"><i class="ti ti-circle-check"></i></div>
-                <div><div class="alert-title">OFFSHORE sin vencidos — vigencia 100%</div><div class="alert-desc">Todos los documentos offshore están vigentes. Solo resta completar los 25 incompletos para alcanzar salud total.</div><div class="alert-meta">Vigencia: 100% · Foco en completar metadata</div></div>
+                <div><div class="alert-title">OFFSHORE es el negocio con mejor desempeño</div><div class="alert-desc">96% de sus documentos vigentes y 0 caducados. Solo resta completar los 32 incompletos para alcanzar salud total.</div><div class="alert-meta">Vigencia: 96% · Foco en completar metadata</div></div>
               </div>
             </div>
           </div>
@@ -545,27 +547,27 @@ td.muted{color:var(--c-muted);font-weight:500}
             <div class="card-head"><div class="card-title"><i class="ti ti-list-check"></i>Plan de acción</div></div>
             <div class="plan-item">
               <div class="plan-num" style="background:var(--c-crit-bg);color:var(--c-crit-txt)">1</div>
-              <div class="plan-body"><div class="plan-title">Completar metadata ONSHORE</div><div class="plan-desc">32 documentos incompletos. Mayor impacto en índice de salud. Incluye instructivos y procesos de apertura de cuentas.</div></div>
+              <div class="plan-body"><div class="plan-title">Renovar los 252 documentos vencidos de MERCADO</div><div class="plan-desc">82% del negocio. Mayor impacto en el índice de salud y en la confiabilidad de CriterIN. Priorizar Research & Strategy.</div></div>
               <span class="badge b-red" style="margin-top:2px;flex-shrink:0">7 días</span>
             </div>
             <div class="plan-item">
               <div class="plan-num" style="background:var(--c-crit-bg);color:var(--c-crit-txt)">2</div>
-              <div class="plan-body"><div class="plan-title">Renovar 48 críticos caducados</div><div class="plan-desc">Riesgo regulatorio. ONSHORE (10) y MERCADO (38). Priorizar los que alimentan a CriterIN con contexto de mercado.</div></div>
+              <div class="plan-body"><div class="plan-title">Resolver 56 críticos caducados</div><div class="plan-desc">Riesgo regulatorio directo. MERCADO (46) y ONSHORE (10). Priorizar los que alimentan a CriterIN con contexto de mercado.</div></div>
               <span class="badge b-red" style="margin-top:2px;flex-shrink:0">7 días</span>
             </div>
             <div class="plan-item">
               <div class="plan-num" style="background:var(--c-warn-bg);color:var(--c-warn-txt)">3</div>
-              <div class="plan-body"><div class="plan-title">Completar 25 incompletos OFFSHORE</div><div class="plan-desc">Formularios KYC y compliance. Impacto en cumplimiento regulatorio offshore y calidad del agente.</div></div>
+              <div class="plan-body"><div class="plan-title">Completar metadata ONSHORE</div><div class="plan-desc">49 documentos incompletos (41% del negocio). Es el negocio con menor salud documental — completar esto lo acerca directo a la meta.</div></div>
               <span class="badge b-yellow" style="margin-top:2px;flex-shrink:0">15 días</span>
             </div>
             <div class="plan-item">
               <div class="plan-num" style="background:var(--c-warn-bg);color:var(--c-warn-txt)">4</div>
-              <div class="plan-body"><div class="plan-title">Renovar 37 que vencen en 30 días</div><div class="plan-desc">Evitar incremento de caducados en MERCADO. Documentos informativos de Research & Strategy.</div></div>
-              <span class="badge b-yellow" style="margin-top:2px;flex-shrink:0">30 días</span>
+              <div class="plan-body"><div class="plan-title">Corregir inconsistencias de estado en el Maestro</div><div class="plan-desc">13 documentos marcados "Vigente" con fecha de vencimiento ya pasada. Revisar el proceso de carga/actualización del Excel Maestro.</div></div>
+              <span class="badge b-yellow" style="margin-top:2px;flex-shrink:0">15 días</span>
             </div>
             <div class="plan-item">
               <div class="plan-num" style="background:var(--c-info-bg);color:var(--c-info-txt)">5</div>
-              <div class="plan-body"><div class="plan-title">Auditar metadata MERCADO para CriterIN</div><div class="plan-desc">153 caducados activos. Definir política de renovación automática para documentos ad-hoc y periódicos de Research.</div></div>
+              <div class="plan-body"><div class="plan-title">Definir política de renovación automática para MERCADO</div><div class="plan-desc">306 documentos, 82% vencidos. Alertas proactivas antes del vencimiento para documentos periódicos de Research & Strategy.</div></div>
               <span class="badge b-blue" style="margin-top:2px;flex-shrink:0">45 días</span>
             </div>
           </div>
@@ -575,28 +577,28 @@ td.muted{color:var(--c-muted);font-weight:500}
       <!-- ════ CRÍTICOS ════ -->
       <div id="sec-criticos" class="section">
         <div class="kpi-strip" style="grid-template-columns:repeat(3,1fr)">
-          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-shield"></i>Total críticos</div><div class="kpi-value">216</div><div class="kpi-foot">43% del repositorio</div></div>
-          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-shield-check"></i>Críticos completos</div><div class="kpi-value">215</div><div class="kpi-foot ok">99.5% — meta ≥ 95% ✓</div></div>
-          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-shield-off"></i>Críticos caducados</div><div class="kpi-value">48</div><div class="kpi-foot bad">Meta: 0 — urgente</div></div>
+          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-shield"></i>Total críticos</div><div class="kpi-value">209</div><div class="kpi-foot">37% del repositorio</div></div>
+          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-shield-check"></i>Críticos completos</div><div class="kpi-value">208</div><div class="kpi-foot ok">99.5% — meta ≥ 95% ✓</div></div>
+          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-shield-off"></i>Críticos caducados</div><div class="kpi-value">56</div><div class="kpi-foot bad">Meta: 0 — urgente</div></div>
         </div>
         <div class="card" style="margin-bottom:16px">
           <div class="card-head"><div class="card-title"><i class="ti ti-layout-grid"></i>Estado de críticos por negocio</div></div>
           <div class="heat-grid">
-            <div class="heat-cell" style="background:var(--c-info-bg)"><div class="heat-val" style="color:var(--c-info-txt)">52</div><div class="heat-lbl" style="color:var(--c-blue)">ONSHORE · vigentes</div></div>
+            <div class="heat-cell" style="background:var(--c-ok-bg)"><div class="heat-val" style="color:var(--c-ok-txt)">49</div><div class="heat-lbl" style="color:var(--c-ok-txt)">ONSHORE · vigentes</div></div>
             <div class="heat-cell" style="background:var(--c-crit-bg)"><div class="heat-val" style="color:var(--c-crit-txt)">10</div><div class="heat-lbl" style="color:var(--c-crit-txt)">ONSHORE · caducados</div></div>
-            <div class="heat-cell" style="background:var(--c-ok-bg)"><div class="heat-val" style="color:var(--c-ok-txt)">98</div><div class="heat-lbl" style="color:var(--c-ok-txt)">OFFSHORE · vigentes</div></div>
+            <div class="heat-cell" style="background:var(--c-ok-bg)"><div class="heat-val" style="color:var(--c-ok-txt)">97</div><div class="heat-lbl" style="color:var(--c-ok-txt)">OFFSHORE · vigentes</div></div>
             <div class="heat-cell" style="background:var(--c-ok-bg)"><div class="heat-val" style="color:var(--c-ok-txt)">0</div><div class="heat-lbl" style="color:var(--c-ok-txt)">OFFSHORE · caducados</div></div>
-            <div class="heat-cell" style="background:var(--c-warn-bg)"><div class="heat-val" style="color:var(--c-warn-txt)">14</div><div class="heat-lbl" style="color:var(--c-warn-txt)">MERCADO · vigentes</div></div>
-            <div class="heat-cell" style="background:var(--c-crit-bg)"><div class="heat-val" style="color:var(--c-crit-txt)">38</div><div class="heat-lbl" style="color:var(--c-crit-txt)">MERCADO · caducados</div></div>
+            <div class="heat-cell" style="background:var(--c-warn-bg)"><div class="heat-val" style="color:var(--c-warn-txt)">7</div><div class="heat-lbl" style="color:var(--c-warn-txt)">MERCADO · vigentes</div></div>
+            <div class="heat-cell" style="background:var(--c-crit-bg)"><div class="heat-val" style="color:var(--c-crit-txt)">46</div><div class="heat-lbl" style="color:var(--c-crit-txt)">MERCADO · caducados</div></div>
           </div>
         </div>
         <div class="grid-2">
           <div class="card">
             <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Críticos por tipo</div></div>
-            <div class="tipo-row"><div class="tipo-name">Formulario</div><div class="tipo-bar"><div class="tipo-fill" style="width:67%;background:var(--c-sky)"></div></div><div class="tipo-n">145</div></div>
-            <div class="tipo-row"><div class="tipo-name">Documento informativo</div><div class="tipo-bar"><div class="tipo-fill" style="width:31%;background:var(--c-vivid)"></div></div><div class="tipo-n">67</div></div>
-            <div class="tipo-row"><div class="tipo-name">Manual</div><div class="tipo-bar"><div class="tipo-fill" style="width:2%;background:var(--c-blue)"></div></div><div class="tipo-n">2</div></div>
-            <div class="tipo-row"><div class="tipo-name">Proceso</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#8fa0b4"></div></div><div class="tipo-n">2</div></div>
+            <div class="tipo-row"><div class="tipo-name">Formulario</div><div class="tipo-bar"><div class="tipo-fill" style="width:67%;background:var(--c-sky)"></div></div><div class="tipo-n">139</div></div>
+            <div class="tipo-row"><div class="tipo-name">Documento informativo</div><div class="tipo-bar"><div class="tipo-fill" style="width:31%;background:var(--c-vivid)"></div></div><div class="tipo-n">65</div></div>
+            <div class="tipo-row"><div class="tipo-name">Proceso</div><div class="tipo-bar"><div class="tipo-fill" style="width:2%;background:#8fa0b4"></div></div><div class="tipo-n">4</div></div>
+            <div class="tipo-row"><div class="tipo-name">Instructivo</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:var(--c-light)"></div></div><div class="tipo-n">1</div></div>
           </div>
           <div class="card">
             <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>% vigencia — críticos</div></div>
@@ -644,41 +646,41 @@ td.muted{color:var(--c-muted);font-weight:500}
       <!-- ════ CRITERIN ════ -->
       <div id="sec-criterin" class="section">
         <div class="kpi-strip" style="grid-template-columns:repeat(4,1fr)">
-          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-robot"></i>Docs en CriterIN</div><div class="kpi-value">503</div><div class="kpi-foot">Total indexados</div></div>
-          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-circle-check"></i>Fuentes activas</div><div class="kpi-value">334</div><div class="kpi-foot ok">Vigentes y completos</div></div>
-          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-alert-triangle"></i>Fuentes en riesgo</div><div class="kpi-value">169</div><div class="kpi-foot bad">Vencidos o incompletos</div></div>
-          <div class="kpi warn"><div class="kpi-label"><i class="ti ti-activity"></i>Calidad del agente</div><div class="kpi-value">66.4%</div><div class="kpi-foot warn">% fuentes confiables</div></div>
+          <div class="kpi brand"><div class="kpi-label"><i class="ti ti-robot"></i>Docs en CriterIN</div><div class="kpi-value">568</div><div class="kpi-foot">Total indexados</div></div>
+          <div class="kpi ok"><div class="kpi-label"><i class="ti ti-circle-check"></i>Fuentes activas</div><div class="kpi-value">188</div><div class="kpi-foot ok">Vigentes y completos</div></div>
+          <div class="kpi crit"><div class="kpi-label"><i class="ti ti-alert-triangle"></i>Fuentes en riesgo</div><div class="kpi-value">380</div><div class="kpi-foot bad">Vencidos o incompletos</div></div>
+          <div class="kpi warn"><div class="kpi-label"><i class="ti ti-activity"></i>Calidad del agente</div><div class="kpi-value">33.1%</div><div class="kpi-foot warn">% fuentes confiables</div></div>
         </div>
         <div class="grid-2">
           <div class="card">
             <div class="card-head"><div class="card-title"><i class="ti ti-database"></i>Vigencia de fuentes por negocio</div></div>
             <div class="src-bar-wrap">
-              <div class="src-label-row"><span class="src-label">ONSHORE</span><span class="src-count">93 vigentes / 107 total</span></div>
-              <div class="src-bar"><div class="src-fill" style="width:87%;background:#e6a000"></div></div>
+              <div class="src-label-row"><span class="src-label">ONSHORE</span><span class="src-count">101 vigentes / 119 total</span></div>
+              <div class="src-bar"><div class="src-fill" style="width:85%;background:#e6a000"></div></div>
             </div>
             <div class="src-bar-wrap">
-              <div class="src-label-row"><span class="src-label">OFFSHORE</span><span class="src-count">137 vigentes / 137 total</span></div>
-              <div class="src-bar"><div class="src-fill" style="width:100%;background:#0d6639"></div></div>
+              <div class="src-label-row"><span class="src-label">OFFSHORE</span><span class="src-count">137 vigentes / 143 total</span></div>
+              <div class="src-bar"><div class="src-fill" style="width:96%;background:#0d6639"></div></div>
             </div>
             <div class="src-bar-wrap">
-              <div class="src-label-row"><span class="src-label">MERCADO</span><span class="src-count">104 vigentes / 259 total</span></div>
-              <div class="src-bar"><div class="src-fill" style="width:40%;background:#a0160c"></div></div>
+              <div class="src-label-row"><span class="src-label">MERCADO</span><span class="src-count">18 vigentes / 306 total</span></div>
+              <div class="src-bar"><div class="src-fill" style="width:6%;background:#a0160c"></div></div>
             </div>
             <div style="margin-top:16px;padding:14px 16px;background:var(--c-crit-bg);border:1px solid var(--c-crit-bdr);border-radius:var(--radius)">
               <div style="font-size:12px;font-weight:700;color:var(--c-crit-txt);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em"><i class="ti ti-alert-triangle" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Riesgo para CriterIN</div>
-              <div style="font-size:12px;color:var(--c-muted);line-height:1.55">MERCADO tiene 153 documentos caducados activos. El agente puede estar respondiendo consultas con datos desactualizados de Research & Strategy.</div>
+              <div style="font-size:12px;color:var(--c-muted);line-height:1.55">MERCADO tiene 252 documentos caducados activos — solo el 6% de sus fuentes están vigentes. El agente probablemente esté respondiendo consultas con datos desactualizados de Research & Strategy.</div>
             </div>
           </div>
           <div class="card">
             <div class="card-head"><div class="card-title"><i class="ti ti-list-check"></i>Acciones para mejorar la calidad</div></div>
             <div class="plan-item">
               <div class="plan-num" style="background:var(--c-crit-bg);color:var(--c-crit-txt);font-size:16px">⚡</div>
-              <div class="plan-body"><div class="plan-title">Renovar informes periódicos de MERCADO</div><div class="plan-desc">Coyuntura, Informe Monetario, Recaudación y Comité Local. 153 documentos caducados.</div></div>
+              <div class="plan-body"><div class="plan-title">Renovar informes periódicos de MERCADO</div><div class="plan-desc">Coyuntura, Informe Monetario, Recaudación y análisis sectoriales de Research & Strategy. 252 documentos caducados.</div></div>
               <span class="badge b-red" style="flex-shrink:0">Urgente</span>
             </div>
             <div class="plan-item">
               <div class="plan-num" style="background:var(--c-warn-bg);color:var(--c-warn-txt);font-size:16px">📋</div>
-              <div class="plan-body"><div class="plan-title">Completar metadata incompleta en ONSHORE</div><div class="plan-desc">32 documentos sin metadata completa dificultan clasificación por CriterIN.</div></div>
+              <div class="plan-body"><div class="plan-title">Completar metadata incompleta en ONSHORE</div><div class="plan-desc">49 documentos sin metadata completa dificultan clasificación por CriterIN.</div></div>
               <span class="badge b-yellow" style="flex-shrink:0">Alta</span>
             </div>
             <div class="plan-item">
@@ -704,7 +706,7 @@ td.muted{color:var(--c-muted);font-weight:500}
 /* ════ GLOBAL FILTER STATE ════ */
 const GF = {
   negocios: new Set(['ONSHORE','OFFSHORE','MERCADO']),
-  tipos: new Set(['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO'])
+  tipos: new Set(['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO','SIN CLASIFICAR'])
 };
 
 function toggleNeg(neg){
@@ -723,7 +725,7 @@ function toggleTipo(tipo){
 
 function resetFilters(){
   GF.negocios=new Set(['ONSHORE','OFFSHORE','MERCADO']);
-  GF.tipos=new Set(['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO']);
+  GF.tipos=new Set(['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO','SIN CLASIFICAR']);
   updateFilterUI();
   refreshAllViews();
 }
@@ -737,13 +739,13 @@ function updateFilterUI(){
     else{el.className='fs-tag inactive';}
   });
   // Tipo tags
-  const tipoMap={'DOC. INFORMATIVO':'informativo','FORMULARIO':'formulario','INSTRUCTIVO':'instructivo','MANUAL':'manual','PROCESO':'proceso'};
+  const tipoMap={'DOC. INFORMATIVO':'informativo','FORMULARIO':'formulario','INSTRUCTIVO':'instructivo','MANUAL':'manual','PROCESO':'proceso','SIN CLASIFICAR':'sinclasificar'};
   for(const[tipo,id] of Object.entries(tipoMap)){
     const el=document.getElementById('tipo-'+id);
     el.className='fs-tipo-tag '+(GF.tipos.has(tipo)?'on':'off');
   }
   // Hint
-  const isFiltered = GF.negocios.size<3 || GF.tipos.size<5;
+  const isFiltered = GF.negocios.size<3 || GF.tipos.size<6;
   document.getElementById('active-hint').style.display = isFiltered ? '' : 'none';
 }
 
@@ -775,10 +777,10 @@ function refreshAllViews(){
 }
 
 const PAGE_META={
-  overview: ['Resumen general','503 documentos · actualizado junio 2026'],
+  overview: ['Resumen general','568 documentos · actualizado septiembre 2026'],
   negocios: ['Por negocio','ONSHORE · OFFSHORE · MERCADO'],
   alertas:  ['Alertas activas','6 alertas — 3 críticas, 2 de atención, 1 positiva'],
-  criticos: ['Documentos críticos','216 críticos · 48 caducados'],
+  criticos: ['Documentos críticos','209 críticos · 56 caducados'],
   docs:     ['Explorador de documentos','Filtrar y buscar en el repositorio'],
   criterin: ['Estado CriterIN','Calidad de fuentes del agente IA'],
 };
@@ -829,7 +831,7 @@ function renderOverview(){
     if(pel){pel.textContent=pct+'%';}
   });
   // tipo bars
-  const tipos=['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO'];
+  const tipos=['DOC. INFORMATIVO','FORMULARIO','INSTRUCTIVO','MANUAL','PROCESO','SIN CLASIFICAR'];
   tipos.forEach(t=>{
     const cnt=docs.filter(d=>d[2]===t).length;
     const maxCnt=docs.length||1;
@@ -869,7 +871,7 @@ function renderCriterIN(){}
 function renderVigenciaChart(vig,cad,sin){
   const ctx=document.getElementById('vigenciaChart');
   if(vigChartInst){vigChartInst.destroy();vigChartInst=null;}
-  const vd=vig||[93,137,104],cd=cad||[10,0,153],sd=sin||[4,0,0];
+  const vd=vig||[101,137,18],cd=cad||[10,0,252],sd=sin||[8,6,36];
   vigChartInst=new Chart(ctx,{type:'bar',data:{
     labels:['ONSHORE','OFFSHORE','MERCADO'],
     datasets:[
@@ -900,97 +902,581 @@ function renderCritVigChart(){
   if(critVigChartInst){critVigChartInst.destroy();critVigChartInst=null;}
   critVigChartInst=new Chart(ctx,{type:'bar',data:{
     labels:['ONSHORE','OFFSHORE','MERCADO'],
-    datasets:[{label:'% vigentes',data:[81,100,26],
+    datasets:[{label:'% vigentes',data:[83,100,13],
       backgroundColor:[BRAND.vivid,'#0d6639','#f0a09b'],borderRadius:4}]
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
     scales:{y:{beginAtZero:true,max:100,grid:{color:gridColor},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}});
 }
 
 const allDocs=[
-  ["MERCADO","Manual_20250703","MANUAL","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Coyuntura_001 al 021","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
-  ["MERCADO","DVV_Local_001 al 004","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
-  ["MERCADO","DVV_Comité_Global (múltiples)","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
-  ["MERCADO","Informe_Monetario_001 al 015","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
-  ["MERCADO","Informe_Recaudacion_001 al 014","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
-  ["MERCADO","Reporte_Obligaciones_Negociables (5)","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Calendario_Economico (14 docs)","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
-  ["MERCADO","Comite_Local (40 docs)","DOC. INFORMATIVO","Seguimiento","Caducado","NO CRITICO","Completo"],
-  ["MERCADO","Criteria_Perfiles de Inversion","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Seleccion de Fondos Locales","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Seleccion ETF 2026","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Seleccion_de_Fondos_Mutuos_2026","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Carteras_Recomendadas_FAD (múltiples)","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
-  ["MERCADO","Carteras_Recomendadas_Internacionales","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
-  ["MERCADO","Carteras_Recomendadas_Locales","DOC. INFORMATIVO","Seguimiento","Caducado","CRITICO","Completo"],
-  ["MERCADO","Factsheets Fondos Internacionales (30+)","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
-  ["MERCADO","Cobertura VIST / YPF / TGS (5 docs)","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Calculadora_Bonos_Soberanos","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
-  ["MERCADO","Calculadora_Obligaciones_Negociables","DOC. INFORMATIVO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["MERCADO","Semaforos IPC / EMAE / Saldo Comercial","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
-  ["MERCADO","View Grandes Gestoras (10 docs)","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
-  ["MERCADO","Consenso Variables Macro Bloomberg","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
-  ["MERCADO","FAL Criteria 2026","DOC. INFORMATIVO","Seguimiento","Vigente","NO CRITICO","Completo"],
-  ["OFFSHORE","Manual_Operaciones_Integrado_2026","MANUAL","Seguimiento","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","INFORME KYC PJ con actividad comercial","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","INFORME KYC PJ sin actividad comercial","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","INFORME KYC PF","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","XP_New_Account_Form_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","XP_Brokerage_Agreement_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","XP_Self_Certification_Tax_Compliant","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Joint_Account_Agreement_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Margin_Agreement_2025","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","W8 BEN / W9 / W8 BEN-E","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Formularios StoneX Individual (8 docs)","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Formularios StoneX Corporativa (8 docs)","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Formularios XP Corporativa (8 docs)","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Tarifario Criteria Vigente","DOC. INFORMATIVO","Transferencia","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Grilla Acuerdos Plataformas","DOC. INFORMATIVO","Transferencia","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","LOA CASH AGENTE","FORMULARIO","Transferencia","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","Form Corestone Wet / Electronic","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","NPL Préstamos XP (Interest/Lending/T4)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["OFFSHORE","StoneX-EnvioDocs","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","incompleto"],
-  ["OFFSHORE","Instructivo Transfer OUT Cash","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","incompleto"],
-  ["OFFSHORE","ACAT Stonex, XP, EFG, Procapital","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","incompleto"],
-  ["OFFSHORE","Instructivo Transfer ACH Stonex","INSTRUCTIVO","Transferencia","Vigente","NO CRITICO","incompleto"],
-  ["OFFSHORE","Instructivo W8 / W9 Asana","INSTRUCTIVO","Seguimiento","Vigente","NO CRITICO","incompleto"],
-  ["OFFSHORE","Instructivo Aviso de Viaje / Compra","INSTRUCTIVO","Seguimiento","Vigente","NO CRITICO","incompleto"],
-  ["OFFSHORE","Instructivo Tarjeta Corestone / StoneX","INSTRUCTIVO","Seguimiento","Vigente","NO CRITICO","incompleto"],
-  ["ONSHORE","F-AR 1 PH APERTURA DE CUENTA","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR 1 PJ APERTURA DE CUENTA","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR 10 KYC PH","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR 10 KYC PJ","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","DDJJ ALYC VIGENTE","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","DDJJ ALYC versiones históricas","FORMULARIO","Apertura","Caducado","CRITICO","Completo"],
-  ["ONSHORE","F-AR. A.2 DDJJ PEP (PH y PJ)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR. A.3 DDJJ FATCA / OCDE","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR. A.4 DDJJ SO (PH y PJ)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR. A.5 DDJJ Inversor Calificado","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR. A.8 Perfil Riesgo (PH y PJ)","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR 11 Cuentas Administradas PH/PJ","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR 12 Cierre Cuenta (PH y PJ)","FORMULARIO","Baja","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR 13 PJ Perfil Riesgo Inversor","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","F-AR 9 PH / PJ Cambio de Mail","FORMULARIO","Seguimiento","Vigente","CRITICO","Completo"],
-  ["ONSHORE","E FAR OP4/OP5 Transferencias Títulos","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","DDJJ VNEI Garantizados MAV","FORMULARIO","Inversión","Vigente","CRITICO","Completo"],
-  ["ONSHORE","Modelo Depósito USD garantía MAV","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","Circular MAV 005-2026","FORMULARIO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","INSTRUCCION CABLES BONY","FORMULARIO","Transferencia","Vigente","CRITICO","Completo"],
-  ["ONSHORE","Proceso Apertura de Cuenta Onshore","PROCESO","Apertura","Vigente","CRITICO","Completo"],
-  ["ONSHORE","Proceso Alta MAV","PROCESO","Apertura","Vigente","CRITICO","incompleto"],
-  ["ONSHORE","Manual Onboarding Cliente Onshore","MANUAL","Apertura","Vigente","NO CRITICO","Completo"],
-  ["ONSHORE","Criteria Propuesta a Comerciales 2026","DOC. INFORMATIVO","Captación","Vigente","CRITICO","Completo"],
-  ["ONSHORE","Tarifas MÁXIMAS Aranceles Onshore","DOC. INFORMATIVO","Transferencia","Vigente","CRITICO","Completo"],
-  ["ONSHORE","Definiciones Apertura de Cuenta","DOC. INFORMATIVO","Apertura","Vigente","NO CRITICO","incompleto"],
-  ["ONSHORE","Instructivo Apertura Criteria Digital","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","incompleto"],
-  ["ONSHORE","Guia Alta PH Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","Completo"],
-  ["ONSHORE","Guia Alta PJ Criteria Digital (v.cliente)","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","Completo"],
-  ["ONSHORE","Guia Migración a Criteria Digital","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","incompleto"],
-  ["ONSHORE","Instructivo DocuSign v.Clientes","INSTRUCTIVO","Apertura","Vigente","NO CRITICO","Completo"],
-  ["ONSHORE","Manual Asana para Comerciales","MANUAL","Transferencia","Vigente","NO CRITICO","incompleto"],
-  ["ONSHORE","Cr_Manual-para-Comerciales-ARG","PROCESO","Transferencia","Vigente","NO CRITICO","incompleto"],
-  ["ONSHORE","Procedimiento videollamada PH / PJ","PROCESO","Apertura","Vigente","NO CRITICO","incompleto"],
-  ["ONSHORE","Proceso Régimen Simplificado Ganancias","MANUAL","Seguimiento","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","2026 Year-Ahead Investment Outlook_JPM AM","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","2026-investment-outlook-report","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","AB American Growth - LU0079474960","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","AB Select US Equity - LU0683600562","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","AXAIMFIS US Corp Int Bl - LU0546067371","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","AXAWF US High Yield Bond - LU0276014999","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Aberdeen Emerging Marke - LU0566480116","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Aberdeen Frontier Marke - LU1725895616","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Acciones Argentina - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Aegon High Yield Global B - E00B296WY05","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Allianz Best Styles Global - LU2710823126","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Allianz GEM Equity High D - LU0293314216","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","BNY Mellon Glb Short Dur - E00BD5CTS25","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","BNY Mellon Global Credit - E00BYZW4P13","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","BNY Mellon US Equity Inc - E00BD5M6819","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Barings EM Local Debt - E00BK71LG81","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Blackrock Emerging Mark - LU0200680600","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Blackrock GF US Dollar HI - LU0046676465","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Bonds_List_220626","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Bubbles","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Calculadora_Corporativos_Research_23072026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Calendario_Economico_001_20250203","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_002_20250305","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_003_20250401","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_004_20250505","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_005_20250602","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_006_20250701","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_007_20250801","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_008_20250901","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_009_20251001","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_010_20251103","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_011_20251201","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_012_20260102","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_013_20260401","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_014_20260504","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_015_20260604","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_016_20260701","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Calendario_Economico_017_20260805","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Carteras Regularizacin de Activos_SEP2024 (1)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Comite_001_20250721","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_002_20250728","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_003_20250806","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_004_20250813","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_005_20250821","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_006_20250827","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_008_20250909","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_009_20250916","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_010_20250930","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_011_20251006","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_012_20251015","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_013_20251022","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_014_20251028","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_015_20251104","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_016_20251112","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_017_20251119","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_018_20251203","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_019_20251210","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_020_20251216","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_021_20251223","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_022_20260106","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_023_20260113","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_024_20260120","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_025_20260127","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_026_20260203","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_027_20260209","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_028_20260224","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_029_20260303","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_030_20260310","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_031_20260317","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_032_20260331","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_033_20260407","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_034_20260414","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_035_20260421","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_036_20260428","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_037_20260505","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_038_20260512","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_039_20260519","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_040_20260609","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_041_20260623","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_042_20260630","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_043_20260707","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_044_20260714","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_045_20260721","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_046_20260728","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comite_047_20260804","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Comité_007_20250903","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Consenso variables Macro- Bloomberg - Agente IA","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","CoverageList_Screen_update_6_13_2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_&_Mercado_001_072026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_001_20250213","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_002_20250225","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_003_20250403","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_004_20250411","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_005_20250512","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_006_20250618","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_007_20250702","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_008_20250721","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_009_20250813","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_010_20250820","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_011_20250903","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_012_20250908","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_013_20250912","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_014_20251009","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_015_20260105","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_016_20260108","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_017_20260302","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_018_20260303","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_019_20260326","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_020_20260427","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_021_20260612","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_022_20260617","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_023_20260618","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Coyuntura_024_20260803","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Criteria_05NOV25","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Criteria_FAD_GestionActiva - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Criteria_FAD_ReforzaTuPoderDeCompra - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Criteria_FAL2026LookCRI","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Criteria_Perfiles de Inversion","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["MERCADO","DCA vs Lump Sum","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","DVV  DIC2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV  Julio 2025 ok","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV  Noviembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV  Noviembre 2025 OK_","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV  OCT2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV  SEP2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV  ene2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV 09MAY25","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Abril 2025_OK","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Abril 2025_V1","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Dec24_ ok","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV ENE25","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Enero OK","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Julio2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Julio2025_BORRADOR","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Junio2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Marzo2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV Mayo2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV- Noviembre 2024 ok","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV_Local_001_20250522","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV_Local_002_20250703","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV_Local_003_20250822","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","DVV_Local_004_20251016","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Descripción_Calculadora","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","ElAñoenGráficos_2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","En_Foco_001_20250408","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","En_Foco_002_20260129","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","En_Foco_003_20260318","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","En_Foco_004_20260424","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","En_Foco_005_20260729","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Encuentro con Inversores - Diciembre 2025","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","EquityFN_001_V-MA_20260305","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","EquityFN_002_ASML_20260331","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","EquityFN_003_VLO_20260422","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","EquityFN_004_BKNG_20260429","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","EquityFN_005_NBIS_20260528","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","EquityFN_006_VST_20260622","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","EquityFN_007_MP_20260728","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","FAL_Criteria_TMF_Presentacion (1)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Fidelity-International-Outlook-2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Franklin High Yield USD - LU0131126228","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Ganale A La Devaluacion - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Ganale A La Inflacion - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Global Economic Outlook 2026_ U.S. Resilience to Lead Growth _ Morgan Stanley","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_001_20250409","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_002_20250512","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_003_20250610","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_004_20250708","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_005_20250814","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_006_20250909","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_007_20251013","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_008_20251112","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_009_20251209","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_010_20260112","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_011_20260211","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_012_20260312","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_013_20260413","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_014_20260511","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_015_20260609","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Monetario_016_20260713","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["MERCADO","Informe_Recaudacion_001_20250508","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_002_20250603","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_003_20250707","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_004_20250804","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_005_20250903","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_006_20251002","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_007_20251105","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_008_20251203","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_009_20260107","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_010_20260204","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_011_20260304","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_012_20260407","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_013_20260506","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_014_20260602","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Informe_Recaudacion_015_20260703","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Intermedias - CapitalizacionPlus - Marzo 2026 (1)","SIN CLASIFICAR","SIN ETAPA","Caducado","NO CRITICO","incompleto"],
+  ["MERCADO","Intermedias - Capitalización - Diciembre 2025 (2)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Intermedias - Capitalización - Febrero 2026","PROCESO","TRANSFERENCIA","Caducado","CRITICO","Completo"],
+  ["MERCADO","Intermedias - Capitalización Plus - Febrero 2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Intermedias - Crecimiento - Diciembre 2025 (2)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Intermedias - Crecimiento - Febrero 2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Intermedias - Crecimiento - Marzo 2026","PROCESO","APERTURA DE CUENTA","Caducado","NO CRITICO","incompleto"],
+  ["MERCADO","Intermedias - Renta - Febrero2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Intermedias - Renta - Marzo 2026","SIN CLASIFICAR","SIN ETAPA","Caducado","NO CRITICO","incompleto"],
+  ["MERCADO","Intermedias - Renta -Diciembre 2025 (3)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Intermedias -Capitalizacion - Marzo 2026","SIN CLASIFICAR","SIN ETAPA","Caducado","NO CRITICO","incompleto"],
+  ["MERCADO","Intermedias -Capitalización Plus- Diciembre 2025 (3)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Investment+Outlook+2026_EN_BNP","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Investment-Outlook-2026 GS","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","JPM Europe Equity Plus USD - LU0336375786","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","JPM Europe Equity USD - LU0119078227","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","JPM Flexible Credit USD - LU0469576283","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","JPM Global Select Equity - LU0070217475","PROCESO","TRANSFERENCIA","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","JPM Latin America Equity - LU0210535034","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Janus Henderson Balanced - E0004445015","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Jupiter Global Equity Abso - E00BNH71F69","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Jupiter Strategic Absolute - E00BV54L339","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Lazard Emerging Markets - E00BYQ4FT75","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Link Reuniones de Mercado","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","M&G (Lux) Eurp Strat Val - LU1670707956","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","MFS Meridian Global Cred - LU0458495628","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Man Hi Yld Opps - E00BL6VJ735","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Manual_20250703","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Modelar_Portafolio_08072026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Morgan Stanley Emerging - LU0603480039","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Neuberger Berman Emerg - E00B986J944","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Neuberger Berman Short - E00BDZRXR46","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Neuberger Berman ShortDu - E00B7FN4D31","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","New Capital US Growth - E00BJYJF221","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Ninety One GSF EM Lcl Cur - LU0345767262","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Oro_Informe_Sectorial_Jun2026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Outlook_2026_The_Interpretation_Game_Barclays","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","PIMCO GIS Balanced Inc - E00B4YYXB79","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","PIMCO GIS Emerging Local - E00B3DD5N41","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","PIMCO GIS Income USD - E00B7KFL990","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","PIMCO GIS Low Dur - E00BDT57T44","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","PIMCO GIS Mortg Opps IE00BYZNBB98","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","PIMCO Inflation Multi-Asset - E00B8ZPJ559","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Petroleo_Informe_Sectorial_Jun2026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Prospects for 2026_ “Goldilocks” Performance, but Risks Linger_CITI","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Prudente Pesos - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Prudente USD - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","RDM - 25 de Febrero 2026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","RDMG - 17 de Septiembre 2025","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","RDMG - 19 de Noviembre 2025","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","RDMG - 19 de Noviembre 2025 complemento","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","RDMG - 3 de Diciembre 2025","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","RDMG - 5 de Noviembre 2025","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","RDMG - 5 de Noviembre 2025 - repaso Comité Global","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","RDML_012026_20260225","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Renta Sin Fronteras - Diciembre 2025","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_1T2025_001_20250325","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_1T2026_005_20260414","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_2T2025_002_20250630","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_2T2026_006_20260703","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_3T2025_003_20251105","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Reporte_Obligaciones_Negociables_4T2025_004_20251219","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Retorno_Total_003_20260707","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Retorno_Total_004_20260714","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Retorno_Total_005_20260721","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Retorno_Total_20260623","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Retorno_Total_20260630","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","SISF-Securitised-Credit-A1-Acc-FMR-UNEN-2026-04-18. LU1725195397","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Schroder Emerging Marke - LU0795632180","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Schroder ISF Frntr Mkts Eq - LU0562313402","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Schroder ISF Glb Crdt Inc - LU1737068558","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Schroder ISF Global Eq Al - LU0225283273","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Schroder ISF US Large Ca - LU0106261372","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Seleccion ETF 2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["MERCADO","Seleccion de Fondos Locales -1817efe4-a249-4162-b9a7-69688916a62a (8) (4)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["MERCADO","Seleccion_de_Fondos_Mutuos_2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["MERCADO","Semafo_EMAE_002_20260522","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_Construccion e Industria_001_20260512","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_Construccion e Industria_002_20260611","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_Construccion e Industria_003_20260716","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_EMAE_001_20260429","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Semaforo_EMAE_003_20260703","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_IPC_001_20260427","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Semaforo_IPC_002_20260518","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_IPC_003_20260612","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_IPC_004_20260717","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_Saldo_Comercial_001_20260427","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["MERCADO","Semaforo_Saldo_Comercial_003_20260619","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Semaforo_saldo_Comercial_002_20260521","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Soja_Informe_Sectorial_Jun2026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","Suggested_List_Bonds_220626","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["MERCADO","TGS1T26_002_20260514","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","TGSICR_001_20251113","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","The world outlook 2026 – never a dull moment – Deutsche Bank","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","VIST1T26_005_20260507","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","VIST2T25_002_20250716","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","VIST2T26_006_20260722","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["MERCADO","VIST3T25_003_20251028","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","VIST4T25_004_20260418","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","VISTICR_001_20250612","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","Valuentum_BestIdeasNewsletter_5_15_2026_FINAL","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Valuentum_mayo2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Vontobel Credit Opps EUR - LU2917874955","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Vontobel Emerging Marke - LU1683477829","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","Wellington Strategic Eurp - E00B839Y076","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","YPF3T25_002_20251117","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","YPF4T25_003_20260410","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["MERCADO","YPFICR_001_20250826","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","CRITICO","Completo"],
+  ["MERCADO","bii-global-outlook-2026_BLACKROCK","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","io-en_INVESCO","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","outlook-2026 _ Allianz Global Investors","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["MERCADO","outlook-6-for-2026-essential-questions-for-investors_BNY","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Caducado","NO CRITICO","Completo"],
+  ["OFFSHORE","ACAT Stonex, XP, EFG Procapital, Deutsche Bank","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","ACAT_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ACAT_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Ach_Authorization_Agreement_For_Retail_And_Retirement_Accounts_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Affidavit of Residence","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Agente Transfer IN Cash - Asana e instrucciones","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Aviso de viaje guía Pershing NetxInvestor Español","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Aviso de viaje guía Pershing NetxInvestor Ingles","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Brochure Tarjeta de credito Karta...","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Cambio de dirección email y teléfono StoneX Actualización de información","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Certification Regarding Beneficial Ownership 20210323X (1)","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Como solicitar devolución de Impuestos Retenidos StoneX, XP, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Corporate_Resolution_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Cr-Blotter-Trading-CUY","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Cr-Blotter-Trading-EFG-XP","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Cr-Blotter-Trading-StoneX","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Cr-Facebank-Apertura-Ctas V08-08-25--65ff3310-f6c8-4ff9-8802-07fdb85a8e3d (2) (1)","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["OFFSHORE","Criteria Propuesta a comerciales 2026","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Criteria-Santander","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["OFFSHORE","Criteria-StoneX (8)","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Criteria_Advisory2026 (1)","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["OFFSHORE","Criteria_Clientes2026 (2)","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["OFFSHORE","Descarga de Boletos Operaciones Brokerware","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Direct_Deposit_Authorization_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Documentos necesarios para abrir cuenta en Criteria Offshore","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","F 15 Transfer on Death - Joint - 2013-04","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","F 9 - XPS transfer on Death - Individual","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Foreign Account Section 312 Form 202102X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Foreign_Bank_Beneficial_Ownership_Form_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form 312 Form 202102X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form Corestone Electronic Signature","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form Corestone Wet Signature","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form EDelivery  Stonex","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form Transfer ACH Stonex","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form Transfer on Death (TOD) Stonex","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form Transfer on Death (TOD) cuentas Individual","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Form Transfer on Death (TOD) cuentas Joint","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Formulario actualización de datos CRITERIA StoneX, XP, Agente CUY, Procapital, EFG, Deutsche Bank","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","GUIA RAPIDA DE USO CORESTONE","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","GUIA RAPIDA DE USO CORESTONE","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Grilla de Acuedos de  Plataformas- Bancos y Tarifarios- Montos mínimos de inversión","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PF v09.2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PJ con actividad comercial que hace CCL v09.2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PJ con actividad comercial v09.2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","INFORME CONOZCA A SU CLIENTE PJ sin actividad comercial v09.2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Informacion General y Costos Tarjeta de credito Karta","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Instrucciones para transferencias de Cash entrantes Offshore (XP, StoneX, EFG y Agente)","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instrucciones-Coordenadas para transferencias de Activos Agente CUY Stonex XP Procapital EFG y Deutsche Bank","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Activación Tarjeta StoneX","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Aviso de compra StoneX, XP, Procapital, EFG, Deutsche Bank,","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Instructivo Aviso de viaje StoneX, XP, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Modificación de datos Asana StoneX, XP, Agente CUY, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Instructivo Option Agreement XP, Procapital, EFG, Deutsche bank","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Préstamos en XP - NPL","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Transfer ACH Stonex","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Transfer OUT Cash Asana XP EFG Procapital Deutsche Bank y Agente CUY","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo Transfer On Death TOD - XP, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Instructivo eDelivery Stonex","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Instructivo para solicitud de Tarjeta Corestone XP Procapital Deutsche Bank EFG","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","InstructivoW8-Asana StoneX, XP, Agente, Procapital, EFG, Deutsche Bank","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","Interest Rate Form","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Introduced Customer Account Agreement 20210519X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Joint_Account_Agreement_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","LOA CASH AGENTE","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Lending Agreement Form","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Managed360_BNYMA_-_Brochure_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Managed_360_Terms_And_Conditions_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Manual_Operaciones_Integrado_2026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["OFFSHORE","Margin_Agreement_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Margin_Agreement_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Modelo de Carta para transfer OUT Cash Domestic XP EFG Procapital Deutsche Bank","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Modelo de Carta para transfer OUT Cash International XP EFG Procapital Deutsche Bank","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Modelo de Carta para transfer OUT Cash Stonex","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Associated Person Form 202008X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Associated Person Form 202008X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Change of Address Form 202008X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Change of Address Form 202008X (1)","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Corporate Resolution 202008X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Discretionary Account Authorization 20210723X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Election of Electronic Delivery 202010X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Election of Electronic Delivery 202010X (1)","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Introduced Customer Account Agreement 20240703","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Introduced Options Application and Agreement 20221012X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Introduced Options Application and Agreement 20221012X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Margin Agreement 202010X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Margin Agreement 202010X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_NEWA New account Agremment.1X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_New Account Application IBD 20230727X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","ONBD_Transfer on Death Application 20210217X","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Online_Access_and_Electronic_Delivery_Form_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Option Agreement Form XP","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Option_Agreement_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Option_Agreement_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","PPT Institucional XP 26","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","PRUEBA- DUPLICADO- PRUEBA","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["OFFSHORE","Partnership Account F (Para ctas limited Partnership) MOST RECENT VERSION NOT FOUND IN NEXT","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Proceso Apertura de Cuenta Brokerage","PROCESO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Reseteo Contraseña Clientes StoneX, XP, Agente CUY, Procapital, EFG, Deutsche Bank Blanqueo","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","Resumen de tarjeta de credito Karta - Uso Interno para FA -","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","SECR_Worthless Security 20230107X (1)","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","SECR_Worthless Security 20230107X (1)","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","STONEX CRA Form","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Select_Link_Form_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","StoneX - Agregar cotitular","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","StoneX-EnvioDocs","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","T4 Form","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","TARIFARIO-Transferencias salientesa terceros en XP Vigente V24","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Tarifario Criteria Uy","DOC. INFORMATIVO","INVERSIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Tarifario Criteria Vigente","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Trading Authorization para mas de dos firmantes","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Trading_Authorization_International_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Trading_Authorization_International_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Trusted_Contact_Form_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","Trustee Certiciation (APLICA PARA CTS TRUSTEE) MOST RECENT VERSION NOT FOUND IN NEXT","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W-8BEN-E_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W8 BEN","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W8 BEN","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W8 BEN","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W8 BEN - Personas Fisicas - Campos obligatorios","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","W8 BEN - W8 BEN E - W9","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","W8 BEN-E (Entity)","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W8 BEN-E - Personas Jurídicas - Campos obligatorios","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","W8BEN E  Persona Juridica (Octubre 2021)","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","W9","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP - Actualizar informacion dirección, mail, email, teléfono","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","XP - Agregar cotitular","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["OFFSHORE","XP - XP6 - Apertura-Ctas_ NPL","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","XP Home Broker Pershing (guía)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["OFFSHORE","XP_ACAT Mismatch","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_ACAT Mismatch","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_Brokerage Agreement_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_Brokerage_Agreement_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_Change_of_Ownership_Individual_Joint_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_FINCEN_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_NON US - XP Money Market Sweep Letter_New Clients_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_NON US - XP Money Market Sweep Letter_New Clients_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_New_Account_Co-App_Form_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_New_Account_Co-App_Form_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_New_Account_Corp_with_directors_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_New_Account_Form_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_Self Certification Tax Compliant_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_Self Certification Tax Compliant_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["OFFSHORE","XP_US_Supplemental_(Solo para cuentas de PJ relacionadas al rubro marítimo)_2025","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","202408 instructivo blotter nuevos prods","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","202408 instructivo blotter nuevos prods","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","2026-02-04_Circular-MAV-Nro-005-2026","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","ACTUALIZACIONES GAFI V1","INSTRUCTIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Admision_Echeqs_Criteria","MANUAL","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Aranceles locales- onshore 2026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","Banco_de_Valores_CriteriaWM","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Clasificación OCDE","DOC. INFORMATIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Coordenadas_Banco_industrial","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Cr_Manual-para-Comerciales-ARG Ene-2026","PROCESO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Criteria Propuesta a comerciales 2026","DOC. INFORMATIVO","CAPTACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Criteria_Inversiones_Financieras BDO","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","Cuentas con titulares fallecidos v.08.2026","PROCESO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Cómo utilizar Plataforma FCE - MiPyMEs (3)","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","DDJJ ALYC - DESDE 08-10-24 al 11-04-25","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 1-12-25 al 10-12-25","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 10-12-2025 al 9-4-2026","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 12-06-25 al 18-09-25","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 13-04-25 al 14-04-25","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 19-09-25 al 25-09-25","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 20-09-24 al 3-10-24","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 24-07-24 al 19-09-24","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 26-09-25 al 1-12-25","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - DESDE 29-05-25 al 11-06-25","FORMULARIO","APERTURA DE CUENTA","Caducado","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - VIGENTE","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","DDJJ ALYC - VIGENTE","FORMULARIO","INVERSIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","DDJJ APERTURA MAV","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","Definiciones Apertura de Cuenta Onshore","DOC. INFORMATIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","E FAR OP4 PH TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","E FAR OP4 PH TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","E FAR OP4 PJ TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","E FAR OP4 PJ TRANSFERENCIAS DE TITULOS LOCAL IN -OUT","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","E FAR OP5 PJ TRANSFERENCIAS DE TITULOS EXTERIOR IN -OUT","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","E FAR OP5 PJ TRANSFERENCIAS DE TITULOS EXTERIOR IN -OUT","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Especies aceptadas en Garantía Ener-Febr 2026 MAE","DOC. INFORMATIVO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Especies aceptadas que son en Garantia MAV","DOC. INFORMATIVO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 1 PH APERTURA DE CUENTA","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 1 PJ APERTURA DE CUENTA","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 11 PH CUENTAS ADMINISTRADAS","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 11 PJ CUENTAS ADMINISTRADAS","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 12 PH Cierre Cta Cte","FORMULARIO","BAJA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 12 PJ Cierre Cta Cte","FORMULARIO","BAJA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 5 PJ ESTRUCTURA SOCIETARIA Y DDJJ BENEFICIARIOS FINALES","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 7 PH PERFIL DE RIESGO DEL INVERSOR","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR 9 PJ Cambio de Mail","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR OP 5 PH TRANSFERENCIA DE TITULOS EXTERIOR IN - OUT","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR OP 5 PH TRANSFERENCIA DE TITULOS EXTERIOR IN - OUT","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A 8  PJ ACTUALIZACIÓN PERFIL RIESGO DEL INVERSOR","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 1 PJ ACTUALIZACION REPRESENTANTE LEGAL - APODERADO","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 10 PH ACTUALIZACION BAJA CTA. BCRIA","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 10 PJ ACTUALIZACION BAJA DE CTAS. BCRIAS","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 2 ACTUALIZACIÓN DDJJ PEP","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 2 ACTUALIZACIÓN DDJJ PEP","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 3 PH ACTUALIZACIÓN DDJJ OCDE - FACTA","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 3 PJ ACTUALIZACION DDJJ FATCA","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 3 PJ ACTUALIZACION DDJJ OCDE","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 4 PH ACTUALIZACION DDJJ SO","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 4 PJ ACTUALIZACION DDJJ SO","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 5 PH ACTUALIZACION DDJJ INVERSOR CALIFICADO","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 5 PJ ACTUALIZACION DDJJ INVERSOR CALIFICADO","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 6 PH ACTUALIZACION INCORPORACION CTA. BCRIA","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 6 PJ ACTUALIZACION INCORPORACION DE CTAS. BCRIAS","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 7 PJ ACTUALIZACIÓN DDJJ BBFF","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR. A. 8 PH ACTUALIZACION PERFIL RIESGO DEL INVERSOR","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","F-AR13  PJ PERFIL RIESGO DEL INVERSOR","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","F-AR13  PJ PERFIL RIESGO DEL INVERSOR","FORMULARIO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","F.AR.A 9 PH - ACTUALIZACIÓN CORREO ELECTRONICO","FORMULARIO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Guia Alta de cuenta PH - Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Guia Alta de cuenta PH - Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Guia Alta de cuenta PJ - Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Guia Alta de cuenta PJ - Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Guia Migración de Cuenta a Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Guia Migración de Cuenta a Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Guia Rapida de Uso (1)","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Guia de Uso de Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Guia de Uso de Criteria Digital (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Horarios de Cortes para solicitudes","DOC. INFORMATIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","INDICE DE NUEVOS FORMULARIOS PARA ACTUALIZACIÓN DE CUENTAS","DOC. INFORMATIVO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","INSTRUCCION CABLES BONY","FORMULARIO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Inocencia Fiscal_Criteria env","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Instructivo Acceso directo a mercado Home","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo Acceso directo a mercado Home","INSTRUCTIVO","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo Apertura de Cuenta Criteria Digital (v.comercial)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Instructivo Apertura de Cuenta Criteria Digital (v.comercial)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo Apertura de Cuenta DESKTOP","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Instructivo Apertura de Cuenta MOBILE","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Instructivo DocuSign (v.Clientes)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Instructivo DocuSign - Clientes","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Instructivo Plataforma FCE Criteria WM S","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo Transferencias Bancarias Home","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo alta Cuenta bancaria Home","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo solicitud Cheques-Echeqs HOME","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo uso DocuSign en Aperturas Onshore ( v.comercial)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Instructivo_BONY_Transferencia_USD","INSTRUCTIVO","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","KYC_HUMANA_v062026","FORMULARIO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","KYC_JURIDICA_v062026","FORMULARIO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Manual Asana para comerciales","MANUAL","TRANSFERENCIA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Manual de Procedimientos para el Control del Riesgo en la Operatoria de Cauciones Bursátiles","MANUAL","INVERSIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Manual del Asesor Onshore","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","Modelo Certificación Contable","DOC. INFORMATIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","NUEVA Modelo Depósito USD en garantía - Notificación de indemnidad","FORMULARIO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Novedades FAL - Resolución 2026-1276-APN-MEC 12762026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","PLANTILLA WHATSAPP BONOS","DOC. INFORMATIVO","INVERSIÓN","Vigente","CRITICO","Completo"],
+  ["ONSHORE","PPT ALYC 2026","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","PROCEDIMIENTO OPERATORIA VNEI NO GARANTIZADO","MANUAL","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","PROCEDIMIENTO SOLICITUD ALTA EN MAV","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Presentación Institucional- FAL","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","Procedimiento cuentas con titulares fallecidos v.08.2026","PROCESO","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Procedimiento para cuentas adheridas al Régimen Simplificado de Ganancias","MANUAL","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Procedimiento videollamada - validación de identidad cuenta PH","PROCESO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Procedimiento videollamada - validación de identidad cuenta PJ","PROCESO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Proceso Alta MAV","PROCESO","APERTURA DE CUENTA","Vigente","CRITICO","incompleto"],
+  ["ONSHORE","Proceso Apertura de Cuenta Onshore","PROCESO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Proceso Gestión de Ordenes ONSHORE","SIN CLASIFICAR","SIN ETAPA","Sin estado","NO CRITICO","incompleto"],
+  ["ONSHORE","Recuperacion usuario y contraseña home (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","Completo"],
+  ["ONSHORE","Recuperacion usuario y contraseña home (v.cliente)","INSTRUCTIVO","APERTURA DE CUENTA","Vigente","NO CRITICO","incompleto"],
+  ["ONSHORE","Tarifas MÁXIMAS - Aranceles onshore","DOC. INFORMATIVO","APERTURA DE CUENTA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Tarifas MÁXIMAS - Aranceles onshore","DOC. INFORMATIVO","TRANSFERENCIA","Vigente","CRITICO","Completo"],
+  ["ONSHORE","Vinculacion_Epyme_Criteria","MANUAL","SEGUIMIENTO Y FIDELIZACIÓN","Vigente","NO CRITICO","incompleto"],
 ];
 
 let currentPage=1;
