@@ -241,6 +241,19 @@ td.muted{color:var(--c-muted);font-weight:500}
 .rank-num{width:18px;height:18px;border-radius:50%;background:var(--c-bg);color:var(--c-muted);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .rank-name{flex:1;color:var(--c-text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rank-val{font-weight:700;color:var(--c-navy);font-family:'Barlow Condensed',sans-serif;flex-shrink:0}
+.split-bar{display:flex;height:28px;border-radius:6px;overflow:hidden;background:#e8edf3}
+.split-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;white-space:nowrap}
+.split-seg-cliente{background:var(--c-light);color:var(--c-navy)}
+.split-seg-cliente-approx{background:var(--c-light);color:var(--c-navy);background-image:repeating-linear-gradient(135deg,transparent,transparent 6px,rgba(0,46,97,.12) 6px,rgba(0,46,97,.12) 12px)}
+.split-seg-compliance{background:var(--c-navy);color:#fff}
+.split-row{margin-bottom:16px}
+.split-row:last-child{margin-bottom:0}
+.split-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.split-label .canal{font-weight:700;font-size:13px;color:var(--c-navy)}
+.split-label .total{font-size:11px;color:var(--c-muted)}
+.split-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:11px;color:var(--c-muted)}
+.split-legend .item{display:flex;align-items:center;gap:5px}
+.split-legend .sw{width:10px;height:10px;border-radius:3px;display:inline-block}
 
 /* ── RESPONSIVE ── */
 @media(max-width:820px){
@@ -829,10 +842,107 @@ td.muted{color:var(--c-muted);font-weight:500}
 
       <!-- ════ ONBOARDING ════ -->
       <div id="sec-onboarding" class="section">
-        <div class="card" style="text-align:center;padding:48px 24px">
-          <i class="ti ti-user-plus" style="font-size:36px;color:var(--c-subtle);margin-bottom:14px;display:block"></i>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--c-navy);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px">Onboarding</div>
-          <div style="font-size:12px;color:var(--c-muted);max-width:420px;margin:0 auto">Todavía no se cargaron los KPIs de este proyecto. En cuanto se compartan los datos, esta vista se completa igual que CriterIN.</div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head">
+            <div class="card-title"><i class="ti ti-user-plus"></i>Onboarding Clientes 2026 — KPIs de OnVerify</div>
+            <span class="badge b-navy">Corte: 25 ago 2026</span>
+          </div>
+          <div style="font-size:12px;color:var(--c-muted);line-height:1.55;margin-bottom:18px">Impacto en costos y velocidad de apertura de cuentas. Primer corte comparativo entre DocuSign, B-Trader y OnVerify — datos desde el 25/6/2026, salida de OnVerify en producción.</div>
+          <div class="kpi-cat-header"><div class="kpi-cat-title" style="flex:none;width:100%">Eje 1 · Tiempo de Compliance por apertura</div></div>
+          <div class="kpi-cat-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="stat-tile"><div class="stat-tile-value">59 min</div><div class="stat-tile-label">DocuSign — canal más costoso en tiempo Compliance.</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">12 min</div><div class="stat-tile-label">B-Trader — el más liviano del corte.</div></div>
+            <div class="stat-tile"><div class="stat-tile-value">18 min</div><div class="stat-tile-label">OnVerify — 3,3× más liviano que DocuSign. Próximamente: 18' → 11' con integración a Caja de Valores.</div></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-currency-dollar"></i>Licencias</div></div>
+            <div class="stat-row"><div class="stat-key">DocuSign</div><div class="stat-val">USD 19.364,29/año</div></div>
+            <div class="stat-row"><div class="stat-key">B-Trader</div><div class="stat-val">USD 2.800/mes</div></div>
+            <div class="stat-row"><div class="stat-key">OnVerify</div><div class="stat-val">USD 2.500/mes</div></div>
+            <div style="font-size:11px;color:var(--c-subtle);margin-top:10px;line-height:1.5">B-Trader es piso fijo de app + onboarding: no baja aunque se migre volumen a OnVerify, sigue siendo necesario para la app transaccional.</div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title" style="color:var(--c-ok-txt)"><i class="ti ti-circle-check" style="color:var(--c-ok-txt)"></i>Ahorro ya realizado (no proyectado)</div></div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--c-ok-txt);letter-spacing:-.5px">246 min <span style="font-size:15px;font-weight:500;color:var(--c-muted)">(~4,1 hs)</span></div>
+            <div style="font-size:12px;color:var(--c-muted);margin:8px 0 14px;line-height:1.55">de Compliance ya ahorrados. B-Trader no admite cotitulares — las 6 cuentas con cotitulares abiertas por OnVerify se habrían tenido que procesar por DocuSign de no existir OnVerify.</div>
+            <div class="stat-row"><div class="stat-key">6 × 18' (OnVerify)</div><div class="stat-val">108' Compliance</div></div>
+            <div class="stat-row"><div class="stat-key">6 × 59' (DocuSign)</div><div class="stat-val">354' Compliance</div></div>
+            <div style="font-size:11px;color:var(--c-subtle);margin-top:10px;line-height:1.5">Además, del lado comercial, el FA pasó de completar un PDF editable de ~11 páginas a solo enviar un link — ahorro adicional de tiempo comercial, aún sin cuantificar en minutos.</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head"><div class="card-title"><i class="ti ti-clock"></i>Recorrido de una apertura: tramo cliente vs. tramo Compliance</div></div>
+          <div style="font-size:12px;color:var(--c-muted);margin-bottom:18px;line-height:1.55">Minutos de punta a punta, separando qué parte del tiempo depende del cliente (autogestión) y qué parte depende del proceso interno de Compliance. El tramo cliente solo está medido en OnVerify.</div>
+
+          <div class="split-row">
+            <div class="split-label"><span class="canal">OnVerify</span><span class="total">~25' E2E medido</span></div>
+            <div class="split-bar">
+              <div class="split-seg split-seg-cliente" style="width:28%">7'</div>
+              <div class="split-seg split-seg-compliance" style="width:72%">18'</div>
+            </div>
+          </div>
+          <div class="split-row">
+            <div class="split-label"><span class="canal">B-Trader</span><span class="total">~26' E2E (tramo cliente estimado)</span></div>
+            <div class="split-bar">
+              <div class="split-seg split-seg-cliente-approx" style="width:54%">~14'*</div>
+              <div class="split-seg split-seg-compliance" style="width:46%">12'</div>
+            </div>
+          </div>
+          <div class="split-row">
+            <div class="split-label"><span class="canal">DocuSign</span><span class="total">59' Compliance + 2,8 días de cliente (no a escala)</span></div>
+            <div class="split-bar">
+              <div class="split-seg split-seg-compliance" style="width:100%">59' Compliance · +2,8 días de cliente†</div>
+            </div>
+          </div>
+
+          <div class="split-legend">
+            <div class="item"><span class="sw" style="background:var(--c-light)"></span>Tramo cliente medido</div>
+            <div class="item"><span class="sw" style="background:var(--c-navy)"></span>Tramo Compliance (interno)</div>
+            <div class="item"><span class="sw split-seg-cliente-approx" style="width:10px;height:10px;border-radius:3px"></span>Tramo cliente estimado</div>
+          </div>
+
+          <div style="margin-top:16px;padding:14px 16px;background:var(--c-info-bg);border:1px solid var(--c-info-bdr);border-radius:var(--radius);font-size:11.5px;color:var(--c-muted);line-height:1.55">
+            *B-Trader no tiene el tramo del cliente medido; se asume el doble que OnVerify (14' vs. 7') por no tener campos precompletados — es una aproximación, no un dato relevado.<br><br>
+            †El tramo de DocuSign no está a escala respecto a los demás: el dashboard reporta <strong>2,8 días</strong> como "tiempo de respuesta", que suma sesión activa + tiempo de espera/pausa entre envío y firma — no es directamente comparable con los minutos de sesión continua de OnVerify/B-Trader.
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Volumen y tasa de apertura por canal</div></div>
+            <div style="font-size:11px;color:var(--c-muted);margin-bottom:12px">Casos iniciados vs. cuentas efectivamente abiertas, mismo período (desde el 25/6/2026).</div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Canal</th><th>Iniciados</th><th>Abiertas</th><th>% conversión</th></tr></thead>
+                <tbody>
+                  <tr><td class="doc-name">DocuSign</td><td class="muted">46</td><td class="muted">~36</td><td><span class="badge b-navy">78,5%*</span></td></tr>
+                  <tr><td class="doc-name">B-Trader</td><td class="muted">99</td><td class="muted">50</td><td><span class="badge b-blue">50,5%</span></td></tr>
+                  <tr><td class="doc-name">OnVerify</td><td class="muted">40</td><td class="muted">16</td><td><span class="badge b-gray">40,0%</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="font-size:10.5px;color:var(--c-subtle);margin-top:8px">*Tasa general de finalización de sobres DocuSign, usada como proxy — no desagregada específicamente para PF.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-briefcase"></i>Valor de cartera — cuentas abiertas por OnVerify</div></div>
+            <div style="font-size:11px;color:var(--c-muted);margin-bottom:12px">Valor actual (no de fondeo inicial) de las 16 cuentas abiertas por OnVerify a la fecha de este corte.</div>
+            <div class="kpi-cat-grid" style="grid-template-columns:1fr 1fr">
+              <div class="stat-tile"><div class="stat-tile-value">USD 9.035</div><div class="stat-tile-label">Promedio, 15 cuentas — excluye una apertura atípica.</div></div>
+              <div class="stat-tile"><div class="stat-tile-value">USD 45.971</div><div class="stat-tile-label">Promedio, 16 cuentas — incluye una cuenta de USD 600.000.</div></div>
+            </div>
+            <div style="margin-top:14px;padding:14px 16px;background:var(--c-info-bg);border:1px solid var(--c-info-bdr);border-radius:var(--radius);font-size:11.5px;color:var(--c-muted);line-height:1.55">
+              Una sola cuenta (USD 600.000) explica el 82% del valor total relevado (USD 735.529). Se muestran ambos promedios para transparencia: <strong style="color:var(--c-navy)">USD 9.035</strong> es el número representativo del comportamiento típico del canal; <strong style="color:var(--c-navy)">USD 45.971</strong> refleja el total incluyendo la apertura grande.
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;font-size:11px;color:var(--c-subtle);line-height:1.5">
+          Fuente: relevamiento interno Producto / Compliance, Onboarding Clientes 2026. Datos desde el 25/6/2026 (salida de OnVerify en producción), corte al 25/8/2026. Informe preliminar de uso interno.
         </div>
       </div>
       <!-- ════ POSICIÓN CONSOLIDADA ════ -->
@@ -1068,7 +1178,7 @@ const PAGE_META={
   criticos: ['Documentos críticos','209 críticos · 56 caducados'],
   docs:     ['Explorador de documentos','Filtrar y buscar en el repositorio'],
   criterin: ['Estado CriterIN','Calidad de fuentes del agente IA'],
-  onboarding: ['Onboarding','Sin datos cargados aún'],
+  onboarding: ['Onboarding','OnVerify vs. DocuSign vs. B-Trader — costos y velocidad'],
   posicion:   ['Posición Consolidada','180 tableros en catálogo · 4,4% relevado'],
   indie:      ['Indie','Sin datos cargados aún'],
   omsfront:   ['OMS Front','Sin datos cargados aún'],
