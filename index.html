@@ -837,10 +837,128 @@ td.muted{color:var(--c-muted);font-weight:500}
       </div>
       <!-- ════ POSICIÓN CONSOLIDADA ════ -->
       <div id="sec-posicion" class="section">
-        <div class="card" style="text-align:center;padding:48px 24px">
-          <i class="ti ti-briefcase" style="font-size:36px;color:var(--c-subtle);margin-bottom:14px;display:block"></i>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--c-navy);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px">Posición consolidada</div>
-          <div style="font-size:12px;color:var(--c-muted);max-width:420px;margin:0 auto">Todavía no se cargaron los KPIs de este proyecto. En cuanto se compartan los datos, esta vista se completa igual que CriterIN.</div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head">
+            <div class="card-title"><i class="ti ti-briefcase"></i>Posición Consolidada — Relevamiento de Tableros</div>
+            <span class="badge b-navy">Corte: Ene–Ago 2026</span>
+          </div>
+          <div style="font-size:12px;color:var(--c-muted);line-height:1.55;margin-bottom:18px">Diagnóstico homogéneo y auditable del uso real de los tableros de Data + Tecnología: identifica oportunidades de mejora, errores/patrones comunes entre equipos y tableros fuera de uso, para que el Comité decida por tablero: mantener, mejorar, rediseñar, fusionar o discontinuar. Insumo base del proyecto de Workstation / Posición Consolidada.</div>
+          <div class="kpi-strip" style="grid-template-columns:repeat(6,1fr)">
+            <div class="kpi brand"><div class="kpi-label"><i class="ti ti-layout-grid"></i>Catálogo</div><div class="kpi-value">180</div><div class="kpi-foot">Tableros totales</div></div>
+            <div class="kpi crit"><div class="kpi-label"><i class="ti ti-list-check"></i>Clasificados</div><div class="kpi-value">8</div><div class="kpi-foot bad">De 180 en catálogo</div></div>
+            <div class="kpi crit"><div class="kpi-label"><i class="ti ti-activity"></i>Avance</div><div class="kpi-value">4,4%</div><div class="kpi-foot bad">Relevamiento cualitativo</div></div>
+            <div class="kpi ok"><div class="kpi-label"><i class="ti ti-circle-check"></i>Activos</div><div class="kpi-value">153</div><div class="kpi-foot ok">Según telemetría</div></div>
+            <div class="kpi warn"><div class="kpi-label"><i class="ti ti-alert-circle"></i>Bajo uso</div><div class="kpi-value">27</div><div class="kpi-foot warn">≤3 accesos en 8 meses</div></div>
+            <div class="kpi brand"><div class="kpi-label"><i class="ti ti-table"></i>Vistas</div><div class="kpi-value">74</div><div class="kpi-foot">Pestañas relevadas</div></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Clasificación propuesta</div></div>
+            <div class="tipo-row"><div class="tipo-name">Mantener</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#0d6639"></div></div><div class="tipo-n">1</div></div>
+            <div class="tipo-row"><div class="tipo-name">Mejorar</div><div class="tipo-bar"><div class="tipo-fill" style="width:2%;background:var(--c-vivid)"></div></div><div class="tipo-n">3</div></div>
+            <div class="tipo-row"><div class="tipo-name">Rediseñar</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#e6a000"></div></div><div class="tipo-n">2</div></div>
+            <div class="tipo-row"><div class="tipo-name">Fusionar</div><div class="tipo-bar"><div class="tipo-fill" style="width:0%;background:var(--c-blue)"></div></div><div class="tipo-n">0</div></div>
+            <div class="tipo-row"><div class="tipo-name">Discontinuar</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#a0160c"></div></div><div class="tipo-n">1</div></div>
+            <div class="tipo-row"><div class="tipo-name">A validar con otros equipos</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#8fa0b4"></div></div><div class="tipo-n">1</div></div>
+            <div class="tipo-row"><div class="tipo-name">Sin clasificar</div><div class="tipo-bar"><div class="tipo-fill" style="width:100%;background:#c5cfe0"></div></div><div class="tipo-n">172</div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-building"></i>Avance de relevamiento por equipo</div></div>
+            <div class="tipo-row"><div class="tipo-name">FAD</div><div class="tipo-bar"><div class="tipo-fill" style="width:100%;background:var(--c-vivid)"></div></div><div class="tipo-n">7/17 (41,2%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">Barzi</div><div class="tipo-bar"><div class="tipo-fill" style="width:75%;background:var(--c-vivid)"></div></div><div class="tipo-n">4/13 (30,8%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">Zenit</div><div class="tipo-bar"><div class="tipo-fill" style="width:49%;background:var(--c-vivid)"></div></div><div class="tipo-n">3/15 (20,0%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">Oteiza/Morales</div><div class="tipo-bar"><div class="tipo-fill" style="width:22%;background:var(--c-vivid)"></div></div><div class="tipo-n">1/11 (9,1%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">PARS</div><div class="tipo-bar"><div class="tipo-fill" style="width:12%;background:var(--c-vivid)"></div></div><div class="tipo-n">2/41 (4,9%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">Bereciartua</div><div class="tipo-bar"><div class="tipo-fill" style="width:11%;background:var(--c-vivid)"></div></div><div class="tipo-n">1/23 (4,3%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">Chile</div><div class="tipo-bar"><div class="tipo-fill" style="width:0%;background:var(--c-vivid)"></div></div><div class="tipo-n">0/3 (0,0%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">Colombia</div><div class="tipo-bar"><div class="tipo-fill" style="width:0%;background:var(--c-vivid)"></div></div><div class="tipo-n">0/0 (0,0%)</div></div>
+            <div class="tipo-row"><div class="tipo-name">VINO</div><div class="tipo-bar"><div class="tipo-fill" style="width:0%;background:var(--c-vivid)"></div></div><div class="tipo-n">0/20 (0,0%)</div></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Uso de tableros por equipo — telemetría Ene–Ago 2026</div></div>
+          <div style="font-size:11px;color:var(--c-subtle);margin-bottom:10px">24.012 accesos totales · líder en accesos: Bereciartúa · 112 tableros activos (suma equipos) · 15 bajo uso (suma equipos) · 414 accesos/usuario promedio</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Equipo</th><th>Accesos totales</th><th>Usuarios activos</th><th>Tableros catálogo</th><th>Activos</th><th>Bajo uso</th><th>Accesos/usuario</th></tr></thead>
+              <tbody>
+              <tr><td class="doc-name">Bereciartua</td><td class="muted">5.949</td><td class="muted">4</td><td class="muted">12</td><td class="muted">11</td><td class="muted">1</td><td class="muted">1.487</td></tr>
+              <tr><td class="doc-name">PARS</td><td class="muted">4.818</td><td class="muted">18</td><td class="muted">41</td><td class="muted">36</td><td class="muted">5</td><td class="muted">268</td></tr>
+              <tr><td class="doc-name">VINO</td><td class="muted">4.715</td><td class="muted">6</td><td class="muted">16</td><td class="muted">15</td><td class="muted">1</td><td class="muted">786</td></tr>
+              <tr><td class="doc-name">Zenit</td><td class="muted">4.637</td><td class="muted">15</td><td class="muted">14</td><td class="muted">14</td><td class="muted">0</td><td class="muted">309</td></tr>
+              <tr><td class="doc-name">Oteiza/Morales</td><td class="muted">1.577</td><td class="muted">3</td><td class="muted">11</td><td class="muted">11</td><td class="muted">0</td><td class="muted">526</td></tr>
+              <tr><td class="doc-name">FAD</td><td class="muted">1.047</td><td class="muted">4</td><td class="muted">17</td><td class="muted">13</td><td class="muted">4</td><td class="muted">262</td></tr>
+              <tr><td class="doc-name">Barzi</td><td class="muted">1.035</td><td class="muted">5</td><td class="muted">13</td><td class="muted">9</td><td class="muted">4</td><td class="muted">207</td></tr>
+              <tr><td class="doc-name">Chile</td><td class="muted">234</td><td class="muted">3</td><td class="muted">3</td><td class="muted">3</td><td class="muted">0</td><td class="muted">78</td></tr>
+              <tr><td class="doc-name">Colombia</td><td class="muted">0</td><td class="muted">0</td><td class="muted">0</td><td class="muted">0</td><td class="muted">0</td><td class="muted">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-head"><div class="card-title"><i class="ti ti-table"></i>Top 3 tableros por equipo (mayor uso)</div></div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Equipo</th><th>#1 Tablero</th><th>Accesos</th><th>#2 Tablero</th><th>Accesos</th><th>#3 Tablero</th><th>Accesos</th></tr></thead>
+              <tbody>
+              <tr><td class="doc-name">Zenit</td><td class="muted" title="Reporte Alyc Zenit">Reporte Alyc Zenit</td><td class="muted">1.778</td><td class="muted" title="Saldos diarios ZENIT">Saldos diarios ZENIT</td><td class="muted">1.088</td><td class="muted" title="Reporte Internacional Zenit">Reporte Internacional Zenit</td><td class="muted">794</td></tr>
+              <tr><td class="doc-name">Barzi</td><td class="muted" title="Cuenta Corriente ARG BARZI">Cuenta Corriente ARG BARZI</td><td class="muted">384</td><td class="muted" title="Cuenta Corriente UY BARZI">Cuenta Corriente UY BARZI</td><td class="muted">240</td><td class="muted" title="Cuenta Corriente UY BGT ASESOR">Cuenta Corriente UY BGT ASESOR</td><td class="muted">104</td></tr>
+              <tr><td class="doc-name">Bereciartua</td><td class="muted" title="Reporte Alyc Bereciartua">Reporte Alyc Bereciartua</td><td class="muted">2.252</td><td class="muted" title="Reporte Internacional Bereciartua">Reporte Internacional Bereciartua</td><td class="muted">1.343</td><td class="muted" title="Cuenta Corriente UY BERECIARTUA">Cuenta Corriente UY BERECIARTUA</td><td class="muted">1.105</td></tr>
+              <tr><td class="doc-name">FAD</td><td class="muted" title="WM LATAM FAD Acuerdos">WM LATAM FAD Acuerdos</td><td class="muted">298</td><td class="muted" title="WM LATAM FAD">WM LATAM FAD</td><td class="muted">257</td><td class="muted" title="Reporte Alyc FAD">Reporte Alyc FAD</td><td class="muted">225</td></tr>
+              <tr><td class="doc-name">Chile</td><td class="muted" title="Reporte Internacional AN.">Reporte Internacional AN.</td><td class="muted">148</td><td class="muted" title="Reporte Internacional GA">Reporte Internacional GA</td><td class="muted">76</td><td class="muted" title="Reporte Internacional MG">Reporte Internacional MG</td><td class="muted">10</td></tr>
+              <tr><td class="doc-name">Oteiza/Morales</td><td class="muted" title="Reporte Alyc Oteiza-Morales">Reporte Alyc Oteiza-Morales</td><td class="muted">366</td><td class="muted" title="Cuenta Corriente ARG OTEIZA">Cuenta Corriente ARG OTEIZA</td><td class="muted">225</td><td class="muted" title="Cuenta Corriente UY OTEIZA">Cuenta Corriente UY OTEIZA</td><td class="muted">212</td></tr>
+              <tr><td class="doc-name">PARS</td><td class="muted" title="Reporte Internacional PARS">Reporte Internacional PARS</td><td class="muted">792</td><td class="muted" title="Cuenta Corriente ARG PIERUZZINI ASESOR">Cuenta Corriente ARG PIERUZZINI ASESOR</td><td class="muted">642</td><td class="muted" title="Reporte Internacional Todorovich">Reporte Internacional Todorovich</td><td class="muted">563</td></tr>
+              <tr><td class="doc-name">VINO</td><td class="muted" title="Saldos diarios VINO">Saldos diarios VINO</td><td class="muted">1.470</td><td class="muted" title="Cuenta Corriente ARG VINO">Cuenta Corriente ARG VINO</td><td class="muted">1.436</td><td class="muted" title="Reporte Alyc VINO">Reporte Alyc VINO</td><td class="muted">468</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-database"></i>Carga por responsable de mantenimiento (Data)</div></div>
+            <div class="rank-row"><span class="rank-num">1</span><span class="rank-name" title="Nicolas Martin Komendat">Nicolas Martin Komendat</span><span class="rank-val">138 tab. · 24.967 acc.</span></div>
+            <div class="rank-row"><span class="rank-num">2</span><span class="rank-name" title="Camila Sobrino">Camila Sobrino</span><span class="rank-val">36 tab. · 5.664 acc.</span></div>
+            <div class="rank-row"><span class="rank-num">3</span><span class="rank-name" title="Producto">Producto</span><span class="rank-val">1 tab. · 67 acc.</span></div>
+            <div class="rank-row"><span class="rank-num">4</span><span class="rank-name" title="CDG">CDG</span><span class="rank-val">2 tab. · 64 acc.</span></div>
+            <div class="rank-row"><span class="rank-num">5</span><span class="rank-name" title="NULO (prueba de concepto)">NULO (prueba de concepto)</span><span class="rank-val">2 tab. · 10 acc.</span></div>
+            <div class="rank-row"><span class="rank-num">6</span><span class="rank-name" title="RRHH">RRHH</span><span class="rank-val">1 tab. · 7 acc.</span></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title" style="color:var(--c-warn-txt)"><i class="ti ti-alert-triangle" style="color:var(--c-warn-txt)"></i>Hallazgos cruzados</div></div>
+            <div class="alert-item sev-warn">
+              <div class="alert-icon"><i class="ti ti-alert-circle"></i></div>
+              <div><div class="alert-title">GPS de Fondos Comunes de Inversión desactualizado</div><div class="alert-desc">Reemplazado en la práctica por el Excel de fondos recomendados de CriterIN. Reportado de forma independiente por FAD y Bereciartúa.</div><div class="alert-meta">FAD · Bereciartúa</div></div>
+            </div>
+            <div class="alert-item sev-warn">
+              <div class="alert-icon"><i class="ti ti-alert-circle"></i></div>
+              <div><div class="alert-title">Corte del Reporte Internacional al exportar a PDF</div><div class="alert-desc">Se corta el detalle de cartera/movimientos con muchos activos. Pedido transversal prioritario.</div><div class="alert-meta">FAD · Zenit</div></div>
+            </div>
+            <div class="alert-item sev-warn">
+              <div class="alert-icon"><i class="ti ti-alert-circle"></i></div>
+              <div><div class="alert-title">Sin seguimiento de préstamos de clientes</div><div class="alert-desc">Falta evolución, cancelaciones e intereses en cualquier tablero del sistema. Gap transversal identificado por Barzi.</div><div class="alert-meta">Barzi</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ti ti-list-check"></i>Próximos pasos</div></div>
+          <div class="plan-item">
+            <div class="plan-num" style="background:var(--c-crit-bg);color:var(--c-crit-txt)">1</div>
+            <div class="plan-body"><div class="plan-title">Completar relevamiento cualitativo pendiente</div><div class="plan-desc">Bereciartúa, Chile, Oteiza/Morales, PARS, Colombia y VINO. Priorizar PARS y VINO por alta telemetría.</div></div>
+          </div>
+          <div class="plan-item">
+            <div class="plan-num" style="background:var(--c-warn-bg);color:var(--c-warn-txt)">2</div>
+            <div class="plan-body"><div class="plan-title">Confirmar tableros "a validar con otros equipos"</div><div class="plan-desc">Comparador de Tarifaria y GPS de Fondos: definir con Data si se discontinúan o se mantienen para el resto de los equipos.</div></div>
+          </div>
+          <div class="plan-item">
+            <div class="plan-num" style="background:var(--c-info-bg);color:var(--c-info-txt)">3</div>
+            <div class="plan-body"><div class="plan-title">Resolver el pedido transversal de exportación a PDF</div><div class="plan-desc">Reporte Internacional — trasladar a Tecnología.</div></div>
+          </div>
         </div>
       </div>
       <!-- ════ INDIE ════ -->
@@ -951,7 +1069,7 @@ const PAGE_META={
   docs:     ['Explorador de documentos','Filtrar y buscar en el repositorio'],
   criterin: ['Estado CriterIN','Calidad de fuentes del agente IA'],
   onboarding: ['Onboarding','Sin datos cargados aún'],
-  posicion:   ['Posición consolidada','Sin datos cargados aún'],
+  posicion:   ['Posición Consolidada','180 tableros en catálogo · 4,4% relevado'],
   indie:      ['Indie','Sin datos cargados aún'],
   omsfront:   ['OMS Front','Sin datos cargados aún'],
   alycia:     ['Alycia','Sin datos cargados aún'],
