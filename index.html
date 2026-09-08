@@ -268,6 +268,7 @@ td.muted{color:var(--c-muted);font-weight:500}
 
 /* ── GLOBAL FILTER STRIP ── */
 .filter-strip{background:#fff;border-bottom:1px solid var(--c-border);padding:0 28px;height:46px;display:flex;align-items:center;gap:8px;position:sticky;top:58px;z-index:49}
+.filter-strip[hidden]{display:none!important}
 .filter-strip-label{font-size:10px;font-weight:700;color:var(--c-muted);text-transform:uppercase;letter-spacing:.07em;margin-right:4px;white-space:nowrap}
 .fs-select{border:1px solid var(--c-border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:'Barlow',sans-serif;font-weight:600;background:var(--c-bg);color:var(--c-navy);outline:none;cursor:pointer;transition:border-color .12s,background .12s}
 .fs-select:focus{border-color:var(--c-vivid);box-shadow:0 0 0 2px rgba(44,125,222,.15)}
@@ -365,7 +366,6 @@ td.muted{color:var(--c-muted);font-weight:500}
       </svg>
       <div>
         <div class="logo-text">CRITERIA</div>
-        <div class="logo-sub">Gobierno Documental</div>
       </div>
     </div>
     <nav class="sidebar-nav">
@@ -1197,6 +1197,8 @@ Chart.defaults.color="#5a6e8a";
 
 let bizChartInst=null,critVigChartInst=null,consultasChartInst=null;
 
+const CRITERIN_TABS=['overview','negocios','alertas','criticos','docs','criterin'];
+
 function showTab(id){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.getAttribute('onclick').includes("'"+id+"'")));
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -1204,6 +1206,7 @@ function showTab(id){
   const[t,s]=PAGE_META[id]||['',''];
   document.getElementById('page-title').textContent=t;
   document.getElementById('page-sub').textContent=s;
+  document.getElementById('filterStrip').hidden=!CRITERIN_TABS.includes(id);
   refreshAllViews();
 }
 
