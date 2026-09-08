@@ -28,7 +28,7 @@ html,body{height:100%;font-family:'Barlow',sans-serif;font-size:14px;background:
   --c-muted:  #5a6e8a;
   --c-subtle: #8fa0b4;
   /* semantic */
-  --c-ok-bg:   #eaf6f0; --c-ok-txt:  #0d6639; --c-ok-bdr:  #9dd9be;
+  --c-ok-bg:   #eaf6f0; --c-ok-txt:  #107c41; --c-ok-bdr:  #9dd9be;
   --c-warn-bg: #fff8e6; --c-warn-txt:#7a4f00; --c-warn-bdr:#f5cc6b;
   --c-crit-bg: #fdf0ef; --c-crit-txt:#a0160c; --c-crit-bdr:#f0a09b;
   --c-info-bg: #eaf3fc; --c-info-txt:#1a4f8a; --c-info-bdr:#97c9ee;
@@ -90,7 +90,7 @@ html,body{height:100%;font-family:'Barlow',sans-serif;font-size:14px;background:
 .kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
 .kpi{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:16px 18px;position:relative;overflow:hidden}
 .kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--c-vivid)}
-.kpi.ok::before{background:#0d6639}
+.kpi.ok::before{background:#107c41}
 .kpi.warn::before{background:#e6a000}
 .kpi.crit::before{background:#a0160c}
 .kpi.brand::before{background:var(--c-navy)}
@@ -174,7 +174,7 @@ html,body{height:100%;font-family:'Barlow',sans-serif;font-size:14px;background:
 .biz-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .biz-card.bc-red::after{background:var(--c-crit-txt)}
 .biz-card.bc-yellow::after{background:#e6a000}
-.biz-card.bc-green::after{background:#0d6639}
+.biz-card.bc-green::after{background:#107c41}
 .biz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .biz-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c-navy);display:flex;align-items:center;gap:7px}
 .biz-name i{font-size:18px;color:var(--c-vivid)}
@@ -646,7 +646,7 @@ td.muted{color:var(--c-muted);font-weight:500}
           <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Comparativo por negocio</div></div>
           <div class="chart-wrap" style="height:250px"><canvas id="bizChart" role="img" aria-label="Comparativo documentos por negocio"></canvas></div>
           <div class="legend-row">
-            <div class="leg-item"><span class="leg-dot" style="background:#0d6639"></span>Completos</div>
+            <div class="leg-item"><span class="leg-dot" style="background:#107c41"></span>Completos</div>
             <div class="leg-item"><span class="leg-dot" style="background:#a0160c"></span>Incompletos</div>
             <div class="leg-item"><span class="leg-dot" style="background:var(--c-vivid)"></span>Críticos</div>
           </div>
@@ -806,7 +806,7 @@ td.muted{color:var(--c-muted);font-weight:500}
             </div>
             <div class="src-bar-wrap">
               <div class="src-label-row"><span class="src-label">OFFSHORE</span><span class="src-count">137 vigentes / 143 total</span></div>
-              <div class="src-bar"><div class="src-fill" style="width:96%;background:#0d6639"></div></div>
+              <div class="src-bar"><div class="src-fill" style="width:96%;background:#107c41"></div></div>
             </div>
             <div class="src-bar-wrap">
               <div class="src-label-row"><span class="src-label">MERCADO</span><span class="src-count">18 vigentes / 306 total</span></div>
@@ -955,7 +955,7 @@ td.muted{color:var(--c-muted);font-weight:500}
         <div class="grid-2">
           <div class="card">
             <div class="card-head"><div class="card-title"><i class="ti ti-chart-bar"></i>Clasificación propuesta</div></div>
-            <div class="tipo-row"><div class="tipo-name">Mantener</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#0d6639"></div></div><div class="tipo-n">1</div></div>
+            <div class="tipo-row"><div class="tipo-name">Mantener</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#107c41"></div></div><div class="tipo-n">1</div></div>
             <div class="tipo-row"><div class="tipo-name">Mejorar</div><div class="tipo-bar"><div class="tipo-fill" style="width:2%;background:var(--c-vivid)"></div></div><div class="tipo-n">3</div></div>
             <div class="tipo-row"><div class="tipo-name">Rediseñar</div><div class="tipo-bar"><div class="tipo-fill" style="width:1%;background:#e6a000"></div></div><div class="tipo-n">2</div></div>
             <div class="tipo-row"><div class="tipo-name">Fusionar</div><div class="tipo-bar"><div class="tipo-fill" style="width:0%;background:var(--c-blue)"></div></div><div class="tipo-n">0</div></div>
@@ -1271,7 +1271,7 @@ function renderCritVigChart(){
   critVigChartInst=new Chart(ctx,{type:'bar',data:{
     labels:['ONSHORE','OFFSHORE','MERCADO'],
     datasets:[{label:'% vigentes',data:[83,100,13],
-      backgroundColor:[BRAND.vivid,'#0d6639','#f0a09b'],borderRadius:4}]
+      backgroundColor:[BRAND.vivid,'#107c41','#f0a09b'],borderRadius:4}]
   },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
     scales:{y:{beginAtZero:true,max:100,grid:{color:gridColor},ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}});
 }
